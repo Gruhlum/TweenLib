@@ -1,9 +1,9 @@
 {
   "name": "com.hextecgames.tweenlib",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "TweenLib",
   "description": "Tween Library",
-  "unity": "2019.1",
+  "unity": "2020.1",
   "author": {
     "name": "HexTecGames"
   },
