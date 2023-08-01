@@ -9,10 +9,7 @@ namespace HexTecGames.TweenLib
     {
         public Color color = Color.white;
 
-        public RGBTween()
-        {
-        }
-
+        public RGBTween() { }
         public RGBTween(RGBTweenData data) : base(data)
         {
             color = data.color;

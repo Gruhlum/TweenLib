@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HexTecGames.TweenLib
+namespace HexTecGames
 {
-    public enum Mode { Addition, Multiply, Set }
+	public class GroupTween : MonoBehaviour
+	{
+	}
 }

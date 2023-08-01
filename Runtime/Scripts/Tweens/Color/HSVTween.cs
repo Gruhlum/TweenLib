@@ -13,10 +13,7 @@ namespace HexTecGames.TweenLib
         public bool useS;
         public bool useV;
 
-        public HSVTween()
-        {
-        }
-
+        public HSVTween() { }
         public HSVTween(HSVTweenData data) : base(data)
         {
             mode = data.mode;

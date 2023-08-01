@@ -1,3 +1,4 @@
+using HexTecGames.Basics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,6 +57,20 @@ namespace HexTecGames.TweenLib
             }
         }
         [SerializeField] private bool loop = false;
+        public int Repeats
+        {
+            get
+            {
+                return repeats;
+            }
+            set
+            {
+                repeats = value;
+            }
+        }
+        [DrawIf("loop", false)]
+        [SerializeField] private int repeats = default;
+
 
         public float Delay
         {
@@ -100,21 +115,39 @@ namespace HexTecGames.TweenLib
         {
             get
             {
-                return (Length / Speed) + Delay;
+                return (Length / Speed) * (Repeats + 1) + Delay;
             }
         }
 
-        public abstract void Init(GameObject go);
-
-        public Tween()
+        public float AnimationTime
         {
+            get
+            {
+                return elapsedTime * Speed - Delay;
+            }
+        }
+
+        private float elapsedTime;
+
+        protected GameObject targetGO;
+        //public event Action<Tween> FinishedPlaying;
+
+        public virtual void Init(GameObject go)
+        {
+            targetGO = go;
+            SetStartData();
         }
         protected Tween(TweenData data)
         {
             this.animationCurve = data.AnimationCurve;
             Loop = data.Loop;
+            Repeats = data.Repeats;
             Delay = data.Delay;
             Speed = data.Speed;
+        }
+
+        public Tween()
+        {
         }
 
 
@@ -132,8 +165,14 @@ namespace HexTecGames.TweenLib
         public virtual TweenData GetData()
         {
             TweenData data = CreateData();
+            //if (Mathf.Approximately(1.11f, data.Speed))
+            //{
+            //    Debug.Log(data.AnimationCurve.keys[^1].value);
+            //}
             data.AnimationCurve = animationCurve;
             data.Loop = Loop;
+            data.Repeats = Repeats;
+            data.Delay = Delay;
             data.Speed = Speed;
             return data;
         }
@@ -141,12 +180,16 @@ namespace HexTecGames.TweenLib
         protected float EvaluateCurve(float time)
         {
             return animationCurve.Evaluate(time);
-        }
+        }        
 
-        public event Action<Tween> FinishedPlaying;
+        public void Start()
+        {
+            //isStarting = true;
+        }
 
         public void Evaluate(float elapsedTime)
         {
+            this.elapsedTime = elapsedTime;
             if (IsFinished || IsEnabled == false)
             {
                 return;
@@ -159,33 +202,36 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            if (Loop == false && elapsedTime * Speed - Delay > Length)
+            if (Loop == false && AnimationTime > Length && AnimationTime > Length * Repeats)
             {
-                IsFinished = true;               
+                IsFinished = true;
                 if (Reverse)
                 {
                     DoAnimation(0);
                 }
                 else DoAnimation(Length);
-                FinishedPlaying?.Invoke(this);
+                //FinishedPlaying?.Invoke(this);
                 return;
             }
             else
             {
                 if (Reverse)
                 {
-                    DoAnimation(Length - (elapsedTime * Speed - Delay) % Length);
+                    DoAnimation(Length - AnimationTime % Length);
                 }
-                else DoAnimation((elapsedTime * Speed - Delay) % Length);
-            } 
+                else DoAnimation(AnimationTime % Length);
+            }
         }
         protected abstract void DoAnimation(float time);
+
+        protected abstract void SetStartData();
     }
     [System.Serializable]
     public abstract class TweenData
     {
         public AnimationCurve AnimationCurve;
         public bool Loop;
+        public int Repeats;
         public float Delay;
         public float Speed;
 

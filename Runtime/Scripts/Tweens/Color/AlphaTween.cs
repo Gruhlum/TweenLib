@@ -12,21 +12,16 @@ namespace HexTecGames.TweenLib
         public Mode mode = Mode.Addition;
         private float startAlpha;
 
-        public AlphaTween()
-        {
-        }
-
+        public AlphaTween() { }
         public AlphaTween(AlphaTweenData data) : base(data)
         {
             mode = data.mode;
         }
 
-        public override void Init(GameObject go)
+        protected override void SetStartData()
         {
-            base.Init(go);
             startAlpha = GetColor().a;
         }
-
         protected override TweenData CreateData()
         {
             AlphaTweenData data = new AlphaTweenData();
