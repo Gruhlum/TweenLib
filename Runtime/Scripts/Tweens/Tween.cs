@@ -85,6 +85,21 @@ namespace HexTecGames.TweenLib
         }
         [SerializeField] private float delay = 0;
 
+        public bool ApplyImmediately
+        {
+            get
+            {
+                return applyImmediately;
+            }
+            set
+            {
+                applyImmediately = value;
+            }
+        }
+        [DrawIf("delay", 0f, reverse: true)]
+        [SerializeField] private bool applyImmediately = true;
+
+
         public float Speed
         {
             get
@@ -123,15 +138,18 @@ namespace HexTecGames.TweenLib
         {
             get
             {
-                return elapsedTime * Speed - Delay;
+                return (elapsedTime - Delay) * Speed;
             }
         }
 
         private float elapsedTime;
 
         protected GameObject targetGO;
-        //public event Action<Tween> FinishedPlaying;
 
+        public void SetStartValues()
+        {
+            Init(targetGO);
+        }
         public virtual void Init(GameObject go)
         {
             targetGO = go;
@@ -177,14 +195,31 @@ namespace HexTecGames.TweenLib
             return data;
         }
 
+        public void Start()
+        {
+            IsFinished = false;
+            if (applyImmediately || Delay <= 0)
+            {
+                if (Reverse)
+                {
+                    DoAnimation(Length);
+                }
+                else DoAnimation(0);
+            }
+        }
+        public void Stop()
+        {
+            IsFinished = true;
+            if (Reverse)
+            {
+                DoAnimation(0);
+            }
+            else DoAnimation(Length);
+        }
+
         protected float EvaluateCurve(float time)
         {
             return animationCurve.Evaluate(time);
-        }        
-
-        public void Start()
-        {
-            //isStarting = true;
         }
 
         public void Evaluate(float elapsedTime)
@@ -194,7 +229,7 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            if (Speed == 0)
+            if (Speed <= 0)
             {
                 return;
             }
@@ -202,15 +237,9 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            if (Loop == false && AnimationTime > Length && AnimationTime > Length * Repeats)
+            if (Loop == false && AnimationTime >= Length * (Repeats + 1))
             {
-                IsFinished = true;
-                if (Reverse)
-                {
-                    DoAnimation(0);
-                }
-                else DoAnimation(Length);
-                //FinishedPlaying?.Invoke(this);
+                Stop();
                 return;
             }
             else

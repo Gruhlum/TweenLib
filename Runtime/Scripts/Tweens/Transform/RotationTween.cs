@@ -19,7 +19,7 @@ namespace HexTecGames.TweenLib
         }
         protected override void SetStartData()
         {
-            startVec = targetTransform.localEulerAngles;
+            startVec = targetTransform.eulerAngles;
         }
 
         protected override void DoAnimation(float time)
@@ -27,7 +27,7 @@ namespace HexTecGames.TweenLib
             Vector3 vec = CalculateVector(time);
 
             //Debug.Log(targetTransform.localEulerAngles + " - " + vec);
-            targetTransform.localEulerAngles = vec;
+            targetTransform.eulerAngles = vec;
         }
 
         protected override TweenData CreateData()

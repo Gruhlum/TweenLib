@@ -35,6 +35,7 @@ namespace HexTecGames.TweenLib
         [ContextMenu("Generate Preset")]
         public void GeneratePreset()
         {
+#if (UNITY_EDITOR)
             if (tweenPlayer == null)
             {
                 return;
@@ -46,6 +47,7 @@ namespace HexTecGames.TweenLib
             EditorUtility.SetDirty(preset);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+#endif
         }
     }
 }

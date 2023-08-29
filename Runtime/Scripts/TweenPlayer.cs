@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Plastic.Antlr3.Runtime;
 using UnityEditor;
 using UnityEngine;
 
@@ -46,7 +45,21 @@ namespace HexTecGames.TweenLib
 
         [SerializeField] private bool deactivateGOsAfterPlay = default;
 
-        //TODO deleta
+
+        public bool OnlyPlayOnce
+        {
+            get
+            {
+                return onlyPlayOnce;
+            }
+            set
+            {
+                onlyPlayOnce = value;
+            }
+        }
+        [SerializeField] private bool onlyPlayOnce = default;
+
+        //TODO delete
         public bool DestroyAfterPlay
         {
             get
@@ -75,7 +88,7 @@ namespace HexTecGames.TweenLib
         private float? duration = default;
 
 
-        private void Awake()
+        private void Start()
         {
             InitTweens();
         }
@@ -103,6 +116,17 @@ namespace HexTecGames.TweenLib
                 TweensFinishedPlaying();
             }
         }
+        private void Reset()
+        {
+            if (GOs == null)
+            {
+                GOs = new List<GameObject>();
+            }
+            if (GOs.Count == 0)
+            {
+                GOs.Add(gameObject);
+            }
+        }
 
         private void OnEnable()
         {
@@ -115,16 +139,17 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            IsPlaying = true;
-            actualTweens.ForEach(x => x.IsFinished = false);
-            actualTweens.ForEach(x => x.IsEnabled = true);
-
-            foreach (var tween in actualTweens)
+            Play();
+        }
+        private void OnDisable()
+        {
+            if (IsPlaying)
             {
-                if (tween != null)
+                foreach (var tween in actualTweens)
                 {
-                    tween.Evaluate(0);
+                    tween.Stop();
                 }
+                TweensFinishedPlaying();
             }
         }
         private void TweensFinishedPlaying()
@@ -139,7 +164,7 @@ namespace HexTecGames.TweenLib
             {
                 t.Reverse = false;
             }
-            
+
             if (deactivateGOsAfterPlay)
             {
                 foreach (var go in GOs)
@@ -148,6 +173,10 @@ namespace HexTecGames.TweenLib
                 }
             }
             FinishedPlaying?.Invoke();
+            if (OnlyPlayOnce)
+            {
+                this.enabled = false;
+            }
         }
 
         public List<TweenData> GetTweenData()
@@ -169,6 +198,13 @@ namespace HexTecGames.TweenLib
             this.GOs = new List<GameObject>();
             this.GOs.AddRange(GOs);
             InitTweens();
+        }
+        public void ResetStartValues()
+        {
+            foreach (var tween in actualTweens)
+            {
+                tween.SetStartValues();
+            }
         }
         private void InitTweens()
         {
@@ -198,7 +234,7 @@ namespace HexTecGames.TweenLib
             UpdateDuration();
         }
         public void LoadTweens(List<TweenData> tweenData)
-        {           
+        {
             if (tweenData == null)
             {
                 return;
@@ -223,6 +259,10 @@ namespace HexTecGames.TweenLib
             this.GOs.AddRange(GOs);
 
             LoadTweens(tweenData);
+            if (startOnEnabled)
+            {
+                Play();
+            }
         }
         public void UpdateDuration()
         {
@@ -261,33 +301,32 @@ namespace HexTecGames.TweenLib
             foreach (var tween in actualTweens)
             {
                 tween.Reverse = reversed;
-                tween.IsFinished = false;
+                tween.Start();
             }
             IsPlaying = true;
         }
-
-        [ContextMenu("Round Animation Keys")]
-        public void RoundAnimationKeys()
-        {
-            foreach (var tween in tweens)
-            {
-                for (int i = 0; i < tween.animationCurve.keys.Length; i++)
-                {
-                    Keyframe frame = tween.animationCurve.keys[i];
-                    if (frame.value - Mathf.RoundToInt(frame.value) < 0.1f && frame.value - Mathf.RoundToInt(frame.value) > 0 ||
-                        Mathf.RoundToInt(frame.value) - frame.value < 0.1f && Mathf.RoundToInt(frame.value) - frame.value > 0)
-                    {
-                        frame.value = Mathf.RoundToInt(frame.value);
-                    }
-                    if (frame.time - Mathf.RoundToInt(frame.time) < 0.1f && frame.time - Mathf.RoundToInt(frame.time) > 0 ||
-                        Mathf.RoundToInt(frame.time) - frame.time < 0.1f && Mathf.RoundToInt(frame.time) - frame.time > 0)
-                    {
-                        frame.time = Mathf.RoundToInt(frame.time);
-                    }
-                    tween.animationCurve.RemoveKey(i);
-                    tween.animationCurve.AddKey(frame);
-                }
-            }
-        }
+        //[ContextMenu("Round Animation Keys")]
+        //public void RoundAnimationKeys()
+        //{
+        //    foreach (var tween in tweens)
+        //    {
+        //        for (int i = 0; i < tween.animationCurve.keys.Length; i++)
+        //        {
+        //            Keyframe frame = tween.animationCurve.keys[i];
+        //            if (frame.value - Mathf.RoundToInt(frame.value) < 0.1f && frame.value - Mathf.RoundToInt(frame.value) > 0 ||
+        //                Mathf.RoundToInt(frame.value) - frame.value < 0.1f && Mathf.RoundToInt(frame.value) - frame.value > 0)
+        //            {
+        //                frame.value = Mathf.RoundToInt(frame.value);
+        //            }
+        //            if (frame.time - Mathf.RoundToInt(frame.time) < 0.1f && frame.time - Mathf.RoundToInt(frame.time) > 0 ||
+        //                Mathf.RoundToInt(frame.time) - frame.time < 0.1f && Mathf.RoundToInt(frame.time) - frame.time > 0)
+        //            {
+        //                frame.time = Mathf.RoundToInt(frame.time);
+        //            }
+        //            tween.animationCurve.RemoveKey(i);
+        //            tween.animationCurve.AddKey(frame);
+        //        }
+        //    }
+        //}
     }
 }
