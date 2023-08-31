@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 namespace HexTecGames.TweenLib
 {
-    [System.Serializable]
     public abstract class ColorTween : Tween
     {       
         private SpriteRenderer sr;
@@ -15,7 +14,6 @@ namespace HexTecGames.TweenLib
         protected Color startColor;
 
         public ColorTween() { }
-        public ColorTween(TweenData data) : base(data) { }
 
         public override void Init(GameObject go)
         {

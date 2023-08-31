@@ -1,55 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-using static HexTecGames.TweenLib.ColorTween;
-using static HexTecGames.TweenLib.Tween;
 
 namespace HexTecGames.TweenLib
 {
-    [System.Serializable]
     public class AlphaTween : ColorTween
     {
-        public Mode mode = Mode.Addition;
         private float startAlpha;
 
         public AlphaTween() { }
-        public AlphaTween(AlphaTweenData data) : base(data)
-        {
-            mode = data.mode;
-        }
 
         protected override void SetStartData()
         {
             startAlpha = GetColor().a;
         }
-        protected override TweenData CreateData()
-        {
-            AlphaTweenData data = new AlphaTweenData();
-            data.mode = mode;
-            return data;
-        }
 
         protected override void DoAnimation(float time)
         {
+            AlphaTweenData data = (AlphaTweenData)Data;
+
             Color col = GetColor();
-            if (mode == Mode.Addition)
+            if (data.mode == Mode.Addition)
             {
-                col.a = startAlpha + animationCurve.Evaluate(time);
+                col.a = startAlpha + Data.animationCurve.Evaluate(time);
             }
-            else if (mode == Mode.Multiply)
+            else if (data.mode == Mode.Multiply)
             {
-                col.a = startAlpha * animationCurve.Evaluate(time);
+                col.a = startAlpha * Data.animationCurve.Evaluate(time);
             }           
             SetColor(col, false);
         }
     }
+    [System.Serializable]
     public class AlphaTweenData : TweenData
     {
         public Mode mode;
 
         public override Tween Create()
         {
-            return new AlphaTween(this);
+            AlphaTween tween = new AlphaTween();
+            tween.Data = this;
+            return tween;
         }
     }
 }

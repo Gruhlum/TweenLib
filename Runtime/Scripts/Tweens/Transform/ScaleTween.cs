@@ -4,17 +4,13 @@ using UnityEngine;
 
 namespace HexTecGames.TweenLib
 {
-    [System.Serializable]
     public class ScaleTween : TransformTween
     {
         public ScaleTween() { }
-        public ScaleTween(ScaleTweenData data) : base(data)
-        {
-        }
 
         public override void Init(GameObject go)
         {
-            base.Init(go);           
+            base.Init(go);
         }
         protected override void SetStartData()
         {
@@ -24,18 +20,15 @@ namespace HexTecGames.TweenLib
         {
             targetTransform.localScale = CalculateVector(time);
         }
-
-        protected override TweenData CreateData()
-        {
-            ScaleTweenData data = new ScaleTweenData();
-            return data;
-        }
     }
+    [System.Serializable]
     public class ScaleTweenData : TransformData
     {
         public override Tween Create()
         {
-            return new ScaleTween(this);
+            ScaleTween tween = new ScaleTween();
+            tween.Data = this;
+            return tween;
         }
     }
 }

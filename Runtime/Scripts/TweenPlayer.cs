@@ -8,7 +8,7 @@ namespace HexTecGames.TweenLib
 {
     public class TweenPlayer : MonoBehaviour
     {
-        [SerializeField] private List<GameObject> GOs = default;
+        [SerializeField] private List<GameObject> gameObjects = default;
         public bool StartOnEnabled
         {
             get
@@ -23,10 +23,10 @@ namespace HexTecGames.TweenLib
         [SerializeField] private bool startOnEnabled = true;
 
         [SerializeReference, SubclassSelector]
-        protected List<Tween> tweens = new List<Tween>();
+        protected List<TweenData> tweenDatas = new List<TweenData>();
         private float timer;
 
-        protected List<Tween> actualTweens = new List<Tween>();
+        protected List<Tween> tweens = new List<Tween>();
 
         public event Action FinishedPlaying;
 
@@ -59,21 +59,6 @@ namespace HexTecGames.TweenLib
         }
         [SerializeField] private bool onlyPlayOnce = default;
 
-        //TODO delete
-        public bool DestroyAfterPlay
-        {
-            get
-            {
-                return destroyAfterPlay;
-            }
-            set
-            {
-                destroyAfterPlay = value;
-            }
-        }
-        [SerializeField] private bool destroyAfterPlay = default;
-
-
         public float? Duration
         {
             get
@@ -87,10 +72,15 @@ namespace HexTecGames.TweenLib
         }
         private float? duration = default;
 
+        private bool initDone;
 
         private void Start()
         {
-            InitTweens();
+            if (!initDone)
+            {
+                InitTweens();
+            }
+            
         }
 
         private void Update()
@@ -101,9 +91,9 @@ namespace HexTecGames.TweenLib
             }
             timer += Time.deltaTime;
 
-            if (actualTweens != null)
+            if (tweens != null)
             {
-                foreach (var tween in actualTweens)
+                foreach (var tween in tweens)
                 {
                     if (tween != null && tween.IsFinished == false)
                     {
@@ -113,29 +103,41 @@ namespace HexTecGames.TweenLib
             }
             if (timer >= Duration)
             {
+                foreach (var tween in tweens)
+                {
+                    if (!tween.IsFinished)
+                    {
+                        UpdateDuration();
+                        return;
+                    }
+                }
                 TweensFinishedPlaying();
             }
         }
         private void Reset()
         {
-            if (GOs == null)
+            if (gameObjects == null)
             {
-                GOs = new List<GameObject>();
+                gameObjects = new List<GameObject>();
             }
-            if (GOs.Count == 0)
+            if (gameObjects.Count == 0)
             {
-                GOs.Add(gameObject);
+                gameObjects.Add(gameObject);
             }
         }
 
         private void OnEnable()
         {
+            if (!initDone)
+            {
+                InitTweens();
+            }
             timer = 0;
             if (startOnEnabled == false)
             {
                 return;
             }
-            if (actualTweens == null)
+            if (tweens == null)
             {
                 return;
             }
@@ -145,7 +147,7 @@ namespace HexTecGames.TweenLib
         {
             if (IsPlaying)
             {
-                foreach (var tween in actualTweens)
+                foreach (var tween in tweens)
                 {
                     tween.Stop();
                 }
@@ -155,19 +157,10 @@ namespace HexTecGames.TweenLib
         private void TweensFinishedPlaying()
         {
             IsPlaying = false;
-            if (destroyAfterPlay)
-            {
-                Destroy(this);
-                return;
-            }
-            foreach (var t in actualTweens)
-            {
-                t.Reverse = false;
-            }
 
             if (deactivateGOsAfterPlay)
             {
-                foreach (var go in GOs)
+                foreach (var go in gameObjects)
                 {
                     go.SetActive(false);
                 }
@@ -181,71 +174,57 @@ namespace HexTecGames.TweenLib
 
         public List<TweenData> GetTweenData()
         {
-            List<TweenData> datas = new List<TweenData>();
-            foreach (var tween in tweens)
-            {
-                datas.Add(tween.GetData());
-            }
-            return datas;
+            return tweenDatas;
         }
         public void SetGameObject(GameObject go)
         {
-            this.GOs = new List<GameObject>() { go };
+            this.gameObjects = new List<GameObject>() { go };
             InitTweens();
         }
         public void SetGameObjects(List<GameObject> GOs)
         {
-            this.GOs = new List<GameObject>();
-            this.GOs.AddRange(GOs);
+            this.gameObjects = new List<GameObject>();
+            this.gameObjects.AddRange(GOs);
             InitTweens();
         }
         public void ResetStartValues()
         {
-            foreach (var tween in actualTweens)
+            foreach (var tween in tweens)
             {
                 tween.SetStartValues();
             }
         }
         private void InitTweens()
         {
-            actualTweens.Clear();
-            if (GOs == null)
+            initDone = true;
+            tweens.Clear();
+            if (gameObjects == null)
             {
                 Duration = 0;
                 return;
             }
-            foreach (var go in GOs)
+            foreach (var go in gameObjects)
             {
                 if (go == null)
                 {
                     continue;
                 }
-                foreach (var original in tweens)
+                foreach (var data in tweenDatas)
                 {
-                    if (!original.IsEnabled)
+                    if (!data.IsEnabled)
                     {
                         continue;
                     }
-                    Tween t = original.GetData().Create();
+                    Tween t = data.Create();
                     t.Init(go);
-                    actualTweens.Add(t);
+                    tweens.Add(t);
                 }
             }
             UpdateDuration();
         }
         public void LoadTweens(List<TweenData> tweenData)
         {
-            if (tweenData == null)
-            {
-                return;
-            }
-            tweens = new List<Tween>();
-
-            foreach (var data in tweenData)
-            {
-                Tween t = data.Create();
-                tweens.Add(t);
-            }
+            tweenDatas = tweenData;
             InitTweens();
         }
         public void LoadTweens(List<TweenData> tweenData, List<GameObject> GOs)
@@ -255,8 +234,8 @@ namespace HexTecGames.TweenLib
                 return;
             }
 
-            this.GOs = new List<GameObject>();
-            this.GOs.AddRange(GOs);
+            this.gameObjects = new List<GameObject>();
+            this.gameObjects.AddRange(GOs);
 
             LoadTweens(tweenData);
             if (startOnEnabled)
@@ -266,23 +245,23 @@ namespace HexTecGames.TweenLib
         }
         public void UpdateDuration()
         {
-            if (tweens == null || tweens.Count == 0)
+            if (tweenDatas == null || tweenDatas.Count == 0)
             {
                 Duration = 0;
                 return;
             }
-            if (tweens.Any(x => x.Loop))
+            if (tweenDatas.Any(x => x.Loop))
             {
                 Duration = null;
             }
-            else Duration = tweens.Max(x => x.Duration);
+            else Duration = tweens.GetDuration();
         }
-        [ContextMenu("Reset and Play")]
-        public void ResetAndPlay()
-        {
-            InitTweens();
-            Play(false);
-        }
+        //[ContextMenu("Reset and Play")]
+        //public void ResetAndPlay()
+        //{
+        //    InitTweens();
+        //    Play(false);
+        //}
         public void Play()
         {
             Play(false);
@@ -293,15 +272,15 @@ namespace HexTecGames.TweenLib
         }
         private void Play(bool reversed = false)
         {
-            if (GOs == null || GOs.Count == 0)
+            if (gameObjects == null || gameObjects.Count == 0)
             {
                 return;
             }
             timer = 0;
-            foreach (var tween in actualTweens)
+            foreach (var tween in tweens)
             {
-                tween.Reverse = reversed;
-                tween.Start();
+                //tween.Reverse = reversed;
+                tween.Start(reversed);
             }
             IsPlaying = true;
         }

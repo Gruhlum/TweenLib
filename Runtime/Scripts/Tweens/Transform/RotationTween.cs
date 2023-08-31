@@ -4,13 +4,9 @@ using UnityEngine;
 
 namespace HexTecGames.TweenLib
 {
-    [System.Serializable]
     public class RotationTween : TransformTween
     {
         public RotationTween() { }
-        public RotationTween(RotationTweenData data) : base(data)
-        {
-        }
 
         public override void Init(GameObject go)
         {
@@ -29,18 +25,15 @@ namespace HexTecGames.TweenLib
             //Debug.Log(targetTransform.localEulerAngles + " - " + vec);
             targetTransform.eulerAngles = vec;
         }
-
-        protected override TweenData CreateData()
-        {
-            RotationTweenData data = new RotationTweenData();
-            return data;
-        }
     }
+    [System.Serializable]
     public class RotationTweenData : TransformData
     {
         public override Tween Create()
         {
-            return new RotationTween(this);
+            RotationTween tween = new RotationTween();
+            tween.Data = this;
+            return tween;
         }
     }
 }

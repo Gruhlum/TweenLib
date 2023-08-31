@@ -10,17 +10,15 @@ namespace HexTecGames.TweenLib
 
         public List<TweenData> TweenDatas = new List<TweenData>();
 
-        public void Apply(GameObject parent, List<GameObject> affectedGOs, bool destroyAfterPlay)
+        public void Apply(GameObject parent, List<GameObject> affectedGOs)
         {
             TweenPlayer player = parent.AddComponent<TweenPlayer>();
             player.LoadTweens(TweenDatas, affectedGOs);
-            player.DestroyAfterPlay = destroyAfterPlay;
         }
-        public void Apply(GameObject go, bool destroyAfterPlay)
+        public void Apply(GameObject go)
         {
             TweenPlayer player = go.AddComponent<TweenPlayer>();
             player.LoadTweens(TweenDatas, new List<GameObject>() { go });
-            player.DestroyAfterPlay = destroyAfterPlay;
         }
     }
 }

@@ -7,15 +7,13 @@ using UnityEngine;
 
 namespace HexTecGames.TweenLib
 {
-    [System.Serializable]
     public abstract class Tween
     {
-        public AnimationCurve animationCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(1, 0) });
         public float Length
         {
             get
             {
-                return animationCurve.keys[animationCurve.length - 1].time;
+                return data.animationCurve.keys[data.animationCurve.length - 1].time;
             }
         }
 
@@ -32,105 +30,11 @@ namespace HexTecGames.TweenLib
         }
         private bool isFinished = false;
 
-        public bool IsEnabled
-        {
-            get
-            {
-                return isEnabled;
-            }
-            set
-            {
-                isEnabled = value;
-            }
-        }
-        [SerializeField] private bool isEnabled = true;
-
-        public bool Loop
-        {
-            get
-            {
-                return loop;
-            }
-            set
-            {
-                loop = value;
-            }
-        }
-        [SerializeField] private bool loop = false;
-        public int Repeats
-        {
-            get
-            {
-                return repeats;
-            }
-            set
-            {
-                repeats = value;
-            }
-        }
-        [DrawIf("loop", false)]
-        [SerializeField] private int repeats = default;
-
-
-        public float Delay
-        {
-            get
-            {
-                return delay;
-            }
-            set
-            {
-                delay = value;
-            }
-        }
-        [SerializeField] private float delay = 0;
-
-        public bool ApplyImmediately
-        {
-            get
-            {
-                return applyImmediately;
-            }
-            set
-            {
-                applyImmediately = value;
-            }
-        }
-        [DrawIf("delay", 0f, reverse: true)]
-        [SerializeField] private bool applyImmediately = true;
-
-
-        public float Speed
-        {
-            get
-            {
-                return speed;
-            }
-            set
-            {
-                speed = value;
-            }
-        }
-        [Min(0.001f)][SerializeField] private float speed = 1;
-
-        public bool Reverse
-        {
-            get
-            {
-                return reverse;
-            }
-            set
-            {
-                reverse = value;
-            }
-        }
-        private bool reverse = default;
-
         public float Duration
         {
             get
             {
-                return (Length / Speed) * (Repeats + 1) + Delay;
+                return (Length / data.Speed) * (data.Repeats + 1) + data.Delay;
             }
         }
 
@@ -138,13 +42,40 @@ namespace HexTecGames.TweenLib
         {
             get
             {
-                return (elapsedTime - Delay) * Speed;
+                return (elapsedTime - data.Delay) * data.Speed;
             }
         }
 
         private float elapsedTime;
 
         protected GameObject targetGO;
+
+        public TweenData Data
+        {
+            get
+            {
+                return data;
+            }
+            set
+            {
+                data = value;
+            }
+        }
+        [SerializeField] private TweenData data = default;
+
+        private bool temporaryReverse;
+
+        private bool Reversed
+        {
+            get
+            {
+                if (temporaryReverse)
+                {
+                    return !Data.Reverse;
+                }
+                else return Data.Reverse;
+            }
+        }
 
         public void SetStartValues()
         {
@@ -155,52 +86,22 @@ namespace HexTecGames.TweenLib
             targetGO = go;
             SetStartData();
         }
-        protected Tween(TweenData data)
-        {
-            this.animationCurve = data.AnimationCurve;
-            Loop = data.Loop;
-            Repeats = data.Repeats;
-            Delay = data.Delay;
-            Speed = data.Speed;
-        }
 
         public Tween()
         {
         }
 
-
-        //protected abstract void ApplyData(TweenData data);
-        //public void LoadData(TweenData data)
-        //{
-        //    ApplyData(data);
-        //    animationCurve = data.AnimationCurve;
-        //    Loop = data.Loop;
-        //    Delay = data.Delay;
-        //    Speed = data.Speed;
-        //}
-
-        protected abstract TweenData CreateData();
-        public virtual TweenData GetData()
+        public void Start(bool reversed = false)
         {
-            TweenData data = CreateData();
-            //if (Mathf.Approximately(1.11f, data.Speed))
-            //{
-            //    Debug.Log(data.AnimationCurve.keys[^1].value);
-            //}
-            data.AnimationCurve = animationCurve;
-            data.Loop = Loop;
-            data.Repeats = Repeats;
-            data.Delay = Delay;
-            data.Speed = Speed;
-            return data;
-        }
-
-        public void Start()
-        {
-            IsFinished = false;
-            if (applyImmediately || Delay <= 0)
+            if (Data == null)
             {
-                if (Reverse)
+                return;
+            }
+            temporaryReverse = reversed;
+            IsFinished = false;
+            if (data.ApplyImmediately || data.Delay <= 0)
+            {
+                if (Reversed)
                 {
                     DoAnimation(Length);
                 }
@@ -209,8 +110,13 @@ namespace HexTecGames.TweenLib
         }
         public void Stop()
         {
+            if (Data == null)
+            {
+                return;
+            }
+            temporaryReverse = false;
             IsFinished = true;
-            if (Reverse)
+            if (Reversed)
             {
                 DoAnimation(0);
             }
@@ -219,32 +125,36 @@ namespace HexTecGames.TweenLib
 
         protected float EvaluateCurve(float time)
         {
-            return animationCurve.Evaluate(time);
+            return data.animationCurve.Evaluate(time);
         }
 
         public void Evaluate(float elapsedTime)
         {
+            if (Data == null)
+            {
+                return;
+            }
             this.elapsedTime = elapsedTime;
-            if (IsFinished || IsEnabled == false)
+            if (IsFinished || data.IsEnabled == false)
             {
                 return;
             }
-            if (Speed <= 0)
+            if (data.Speed <= 0)
             {
                 return;
             }
-            if (Delay > elapsedTime)
+            if (data.Delay > elapsedTime)
             {
                 return;
             }
-            if (Loop == false && AnimationTime >= Length * (Repeats + 1))
+            if (data.Loop == false && AnimationTime >= Length * (data.Repeats + 1))
             {
                 Stop();
                 return;
             }
             else
             {
-                if (Reverse)
+                if (Reversed)
                 {
                     DoAnimation(Length - AnimationTime % Length);
                 }
@@ -254,16 +164,5 @@ namespace HexTecGames.TweenLib
         protected abstract void DoAnimation(float time);
 
         protected abstract void SetStartData();
-    }
-    [System.Serializable]
-    public abstract class TweenData
-    {
-        public AnimationCurve AnimationCurve;
-        public bool Loop;
-        public int Repeats;
-        public float Delay;
-        public float Speed;
-
-        public abstract Tween Create();
     }
 }

@@ -4,13 +4,9 @@ using UnityEngine;
 
 namespace HexTecGames.TweenLib
 {
-    [System.Serializable]
     public class PositionTween : TransformTween
     {
         public PositionTween() { }
-        public PositionTween(PositionData data) : base(data)
-        {         
-        }
        
         protected override void DoAnimation(float time)
         {
@@ -20,19 +16,15 @@ namespace HexTecGames.TweenLib
         {
             startVec = targetTransform.transform.localPosition;
         }
-
-        protected override TweenData CreateData()
-        {
-            PositionData data = new PositionData();
-            return data;
-        }
     }
     [System.Serializable]
     public class PositionData : TransformData
     {
         public override Tween Create()
         {
-            return new PositionTween(this);
+            PositionTween tween = new PositionTween();
+            tween.Data = this;
+            return tween;
         }
     }
 }

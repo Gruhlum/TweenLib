@@ -13,7 +13,7 @@ namespace HexTecGames.TweenLib
             {
                 return 0;
             }
-            if (tweens.Any(x => x.Loop))
+            if (tweens.Any(x => x.Data.Loop))
             {
                 return 0;
             }
