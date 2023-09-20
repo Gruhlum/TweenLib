@@ -54,5 +54,6 @@ namespace HexTecGames.TweenLib
         [SerializeField] private bool applyImmediately = true;
 
         public abstract Tween Create();
+        public virtual void AddRequiredComponents(GameObject go) { }
     }
 }

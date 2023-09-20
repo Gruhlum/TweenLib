@@ -160,7 +160,8 @@ namespace HexTecGames.TweenLib
                 }
                 else DoAnimation(AnimationTime % Length);
             }
-        }
+        }       
+
         protected abstract void DoAnimation(float time);
 
         protected abstract void SetStartData();

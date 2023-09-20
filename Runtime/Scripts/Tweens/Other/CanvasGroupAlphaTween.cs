@@ -18,13 +18,13 @@ namespace HexTecGames.TweenLib
 
         protected override void DoAnimation(float time)
         {
-            canvasGroup.alpha = EvaluateCurve(time);           
+            canvasGroup.alpha = EvaluateCurve(time);
         }
 
         protected override void SetStartData()
         {
 
-        }
+        }        
     }
     [System.Serializable]
     public class CanvasGroupAlphaTweenData : TweenData
@@ -34,6 +34,14 @@ namespace HexTecGames.TweenLib
             CanvasGroupAlphaTween tween = new CanvasGroupAlphaTween();
             tween.Data = this;
             return tween;
+        }
+        public override void AddRequiredComponents(GameObject go)
+        {
+            if (go.GetComponent<CanvasGroup>() != null)
+            {
+                return;
+            }
+            go.AddComponent<CanvasGroup>();
         }
     }
 }

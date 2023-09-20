@@ -1,9 +1,8 @@
 {
   "name": "com.hextecgames.tweenlib",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "displayName": "TweenLib",
-  "description": "Tween Library",
-  "unity": "2020.1",
+  "description": "Tween Library for easy and fast animations",
   "author": {
     "name": "HexTecGames"
   },

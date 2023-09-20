@@ -8,41 +8,52 @@ namespace HexTecGames.TweenLib
 {
     public class TweenPresetManager : MonoBehaviour
     {
+        public TweenPlayer TweenPlayer
+        {
+            get
+            {
+                return this.tweenPlayer;
+            }
+            private set
+            {
+                this.tweenPlayer = value;
+            }
+        }
+
         [SerializeField] private TweenPlayer tweenPlayer = default;
-        [SerializeField] private string folderLocation = "Assets/Scriptables/TweenPresets";
+        [SerializeField] private string folderLocation = "Assets/ScriptableObjects/TweenPresets";
         [SerializeField] private string presetName = "Preset";
-        [SerializeField] private TweenPreset presetToLoad = default;
 
         private void Reset()
         {
-            tweenPlayer = GetComponent<TweenPlayer>();
+            TweenPlayer = GetComponent<TweenPlayer>();
         }
 
-        [ContextMenu("Load Preset")]
-        public void LoadPreset()
-        {
-            if (tweenPlayer == null)
-            {
-                return;
-            }
-            if (presetToLoad == null)
-            {
-                return;
-            }
-            tweenPlayer.LoadTweens(presetToLoad.TweenDatas);
-        }
+        //[ContextMenu("Load Preset")]
+        //public void LoadPreset()
+        //{
+        //    if (tweenPlayer == null)
+        //    {
+        //        return;
+        //    }
+        //    if (presetToLoad == null)
+        //    {
+        //        return;
+        //    }
+        //    tweenPlayer.LoadTweens(presetToLoad.TweenDatas);
+        //}
 
         [ContextMenu("Generate Preset")]
         public void GeneratePreset()
         {
 #if (UNITY_EDITOR)
-            if (tweenPlayer == null)
+            if (TweenPlayer == null)
             {
                 return;
             }
             TweenPreset preset = ScriptableObject.CreateInstance<TweenPreset>();
             preset.name = presetName;
-            preset.TweenDatas = tweenPlayer.GetTweenData();
+            preset.TweenDatas = TweenPlayer.GetTweenData();
             AssetDatabase.CreateAsset(preset, Path.Combine(folderLocation, presetName) + ".asset");
             EditorUtility.SetDirty(preset);
             AssetDatabase.SaveAssets();

@@ -28,7 +28,11 @@ namespace HexTecGames.TweenLib
             else if (data.mode == Mode.Multiply)
             {
                 col.a = startAlpha * Data.animationCurve.Evaluate(time);
-            }           
+            }
+            else if (data.mode == Mode.Set)
+            {
+                col.a = Data.animationCurve.Evaluate(time);
+            }
             SetColor(col, false);
         }
     }
