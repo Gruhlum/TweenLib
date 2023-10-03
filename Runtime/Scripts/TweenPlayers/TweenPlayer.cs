@@ -105,6 +105,10 @@ namespace HexTecGames.TweenLib
             {
                 foreach (var tweenData in tweenDatas)
                 {
+                    if (tweenData == null)
+                    {
+                        continue;
+                    }
                     foreach (var go in gameObjects)
                     {
                         tweenData.AddRequiredComponents(go);
@@ -226,6 +230,36 @@ namespace HexTecGames.TweenLib
         public List<TweenData> GetTweenData()
         {
             return tweenDatas;
+        }
+        public void AddGameObject(GameObject GO)
+        {
+            if (GO == null)
+            {
+                return;
+            }
+            if (gameObjects.Contains(GO))
+            {
+                return;
+            }
+            gameObjects.Add(GO);
+            foreach (var data in tweenDatas)
+            {
+                if (!data.IsEnabled)
+                {
+                    continue;
+                }
+                Tween t = data.Create();
+                t.Init(GO);
+                tweens.Add(t);
+            }
+            UpdateDuration();
+        }
+        public void AddGameObjects(List<GameObject> GOs)
+        {
+            foreach (var go in GOs)
+            {
+                AddGameObject(go);
+            }
         }
         public void SetGameObject(GameObject go)
         {

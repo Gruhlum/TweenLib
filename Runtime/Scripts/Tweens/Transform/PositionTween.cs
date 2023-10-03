@@ -18,7 +18,7 @@ namespace HexTecGames.TweenLib
         }
     }
     [System.Serializable]
-    public class PositionData : TransformData
+    public class PositionTweenData : TransformData
     {
         public override Tween Create()
         {

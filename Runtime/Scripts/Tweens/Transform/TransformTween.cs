@@ -54,6 +54,6 @@ namespace HexTecGames.TweenLib
         public bool Y;
         public bool Z;
         public Mode Mode;
-        public float strength;
+        public float strength = 1;
     }
 }
