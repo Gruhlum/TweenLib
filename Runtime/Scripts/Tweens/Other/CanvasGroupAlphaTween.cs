@@ -11,19 +11,22 @@ namespace HexTecGames.TweenLib
 
         public CanvasGroupAlphaTween() { }
 
-        public override void Init(GameObject go)
+        protected override void SetStartObject(GameObject go)
         {
             canvasGroup = go.GetComponent<CanvasGroup>();
         }
 
         protected override void DoAnimation(float time)
         {
+            if (canvasGroup == null)
+            {
+                return;
+            }
             canvasGroup.alpha = EvaluateCurve(time);
         }
 
-        protected override void SetStartData()
+        public override void SetStartData()
         {
-
         }        
     }
     [System.Serializable]

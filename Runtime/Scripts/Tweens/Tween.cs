@@ -77,19 +77,15 @@ namespace HexTecGames.TweenLib
             }
         }
 
-        public void SetStartValues()
-        {
-            Init(targetGO);
-        }
-        public virtual void Init(GameObject go)
+        public Tween() { }
+
+        public void Init(GameObject go)
         {
             targetGO = go;
+            SetStartObject(go);
             SetStartData();
         }
-
-        public Tween()
-        {
-        }
+        protected abstract void SetStartObject(GameObject go);
 
         public void Start(bool reversed = false)
         {
@@ -164,6 +160,6 @@ namespace HexTecGames.TweenLib
 
         protected abstract void DoAnimation(float time);
 
-        protected abstract void SetStartData();
+        public abstract void SetStartData();
     }
 }

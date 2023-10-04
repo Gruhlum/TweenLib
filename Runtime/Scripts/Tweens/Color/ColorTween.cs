@@ -15,13 +15,13 @@ namespace HexTecGames.TweenLib
 
         public ColorTween() { }
 
-        public override void Init(GameObject go)
+        protected override void SetStartObject(GameObject go)
         {
             if (go.TryGetComponent(out sr)) { }
             else if (go.TryGetComponent(out img)) { }
             else if (go.TryGetComponent(out textGUI)) { }
         }
-        protected override void SetStartData()
+        public override void SetStartData()
         {           
             startColor = GetColor();
         }

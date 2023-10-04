@@ -42,10 +42,9 @@ namespace HexTecGames.TweenLib
             return result;
         }
 
-        public override void Init(GameObject go)
+        protected override void SetStartObject(GameObject go)
         {
             targetTransform = go.transform;
-            base.Init(go);
         }
     }
     public abstract class TransformData : TweenData

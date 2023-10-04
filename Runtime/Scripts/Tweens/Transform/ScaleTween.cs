@@ -8,16 +8,17 @@ namespace HexTecGames.TweenLib
     {
         public ScaleTween() { }
 
-        public override void Init(GameObject go)
-        {
-            base.Init(go);
-        }
-        protected override void SetStartData()
+
+        public override void SetStartData()
         {
             startVec = targetTransform.localScale;
         }
         protected override void DoAnimation(float time)
         {
+            if (targetTransform == null)
+            {
+                return;
+            }
             targetTransform.localScale = CalculateVector(time);
         }
     }

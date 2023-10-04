@@ -276,7 +276,7 @@ namespace HexTecGames.TweenLib
         {
             foreach (var tween in tweens)
             {
-                tween.SetStartValues();
+                tween.SetStartData();
             }
         }
         private void InitTweens()
@@ -296,7 +296,7 @@ namespace HexTecGames.TweenLib
                 }
                 foreach (var data in tweenDatas)
                 {
-                    if (!data.IsEnabled)
+                    if (data == null || !data.IsEnabled)
                     {
                         continue;
                     }

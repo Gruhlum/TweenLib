@@ -8,21 +8,18 @@ namespace HexTecGames.TweenLib
     {
         public RotationTween() { }
 
-        public override void Init(GameObject go)
-        {
-            base.Init(go);
-            
-        }
-        protected override void SetStartData()
+        public override void SetStartData()
         {
             startVec = targetTransform.eulerAngles;
         }
 
         protected override void DoAnimation(float time)
         {
+            if (targetTransform == null)
+            {
+                return;
+            }
             Vector3 vec = CalculateVector(time);
-
-            //Debug.Log(targetTransform.localEulerAngles + " - " + vec);
             targetTransform.eulerAngles = vec;
         }
     }

@@ -11,7 +11,7 @@ namespace HexTecGames.TweenLib
 
         public AlphaTween() { }
 
-        protected override void SetStartData()
+        public override void SetStartData()
         {
             startAlpha = GetColor().a;
         }

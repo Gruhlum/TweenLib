@@ -12,8 +12,12 @@ namespace HexTecGames.TweenLib
         {
             targetTransform.localPosition = CalculateVector(time);
         }
-        protected override void SetStartData()
+        public override void SetStartData()
         {
+            if (targetTransform == null)
+            {
+                return;
+            }
             startVec = targetTransform.transform.localPosition;
         }
     }
