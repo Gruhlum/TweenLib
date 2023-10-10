@@ -15,20 +15,20 @@ namespace HexTecGames.TweenLib
         protected Vector3 CalculateVector(float time)
         {
             TransformData data = (TransformData)Data;
-            Vector3 result = startVec;
+            Vector3 result = targetTransform.position;
             switch (data.Mode)
             {
                 case Mode.Multiply:
 
-                    if (data.X) result.x *=  EvaluateCurve(time) * data.strength;
-                    if (data.Y) result.y *=  EvaluateCurve(time) * data.strength;
-                    if (data.Z) result.z *=  EvaluateCurve(time) * data.strength;
+                    if (data.X) result.x = startVec.x * EvaluateCurve(time) * data.strength;
+                    if (data.Y) result.y = startVec.y * EvaluateCurve(time) * data.strength;
+                    if (data.Z) result.z = startVec.z * EvaluateCurve(time) * data.strength;
                     break;
 
                 case Mode.Addition:
-                    if (data.Y) result.y += EvaluateCurve(time) * data.strength;
-                    if (data.X) result.x += EvaluateCurve(time) * data.strength;
-                    if (data.Z) result.z += EvaluateCurve(time) * data.strength;
+                    if (data.Y) result.y = startVec.x + EvaluateCurve(time) * data.strength;
+                    if (data.X) result.x = startVec.x + EvaluateCurve(time) * data.strength;
+                    if (data.Z) result.z = startVec.x + EvaluateCurve(time) * data.strength;
                     break;
 
                 case Mode.Set:
