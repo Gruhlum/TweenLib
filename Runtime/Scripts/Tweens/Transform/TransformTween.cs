@@ -12,10 +12,10 @@ namespace HexTecGames.TweenLib
 
         public TransformTween() { }
 
-        protected Vector3 CalculateVector(float time)
+        protected Vector3 CalculateVector(float time, Vector3 currentVec)
         {
             TransformData data = (TransformData)Data;
-            Vector3 result = targetTransform.position;
+            Vector3 result = currentVec;
             switch (data.Mode)
             {
                 case Mode.Multiply:

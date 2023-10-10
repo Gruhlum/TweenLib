@@ -10,7 +10,7 @@ namespace HexTecGames.TweenLib
        
         protected override void DoAnimation(float time)
         {
-            targetTransform.localPosition = CalculateVector(time);
+            targetTransform.localPosition = CalculateVector(time, targetTransform.position);
         }
         public override void SetStartData()
         {

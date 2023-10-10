@@ -19,7 +19,7 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            Vector3 vec = CalculateVector(time);
+            Vector3 vec = CalculateVector(time, targetTransform.eulerAngles);
             targetTransform.eulerAngles = vec;
         }
     }

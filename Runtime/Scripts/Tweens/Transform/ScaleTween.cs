@@ -19,7 +19,7 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            targetTransform.localScale = CalculateVector(time);
+            targetTransform.localScale = CalculateVector(time, targetTransform.localScale);
         }
     }
     [System.Serializable]
