@@ -21,6 +21,12 @@ namespace HexTecGames.TweenLib
         }
         private bool state;
 
+
+        private void OnDisable()
+        {
+            SetState(false);
+        }
+
         public void ToggleState()
         {
             SetState(!State);
