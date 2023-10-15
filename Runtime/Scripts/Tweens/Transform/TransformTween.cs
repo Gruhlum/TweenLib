@@ -26,9 +26,9 @@ namespace HexTecGames.TweenLib
                     break;
 
                 case Mode.Addition:
-                    if (data.Y) result.y = startVec.x + EvaluateCurve(time) * data.strength;
                     if (data.X) result.x = startVec.x + EvaluateCurve(time) * data.strength;
-                    if (data.Z) result.z = startVec.x + EvaluateCurve(time) * data.strength;
+                    if (data.Y) result.y = startVec.y + EvaluateCurve(time) * data.strength;
+                    if (data.Z) result.z = startVec.z + EvaluateCurve(time) * data.strength;
                     break;
 
                 case Mode.Set:

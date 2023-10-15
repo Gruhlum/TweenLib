@@ -5,4 +5,6 @@ using UnityEngine;
 namespace HexTecGames.TweenLib
 {
     public enum Mode { Addition, Multiply, Set }
+
+    public enum Space { Local, World }
 }
