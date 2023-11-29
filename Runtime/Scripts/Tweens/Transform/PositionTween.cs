@@ -12,7 +12,7 @@ namespace HexTecGames.TweenLib
         protected override void DoAnimation(float time)
         {
             PositionTweenData posData = Data as PositionTweenData;
-            if (true)//posData.space == Space.Local)
+            if (posData.space == Space.Local)
             {
                 targetTransform.localPosition = CalculateVector(time, targetTransform.localPosition);
             }
@@ -26,7 +26,7 @@ namespace HexTecGames.TweenLib
                 return;
             }
             PositionTweenData posData = Data as PositionTweenData;
-            if (true)// posData.space == Space.Local)
+            if (posData.space == Space.Local)
             {
                 startVec = targetTransform.localPosition;
             }
@@ -36,7 +36,7 @@ namespace HexTecGames.TweenLib
     [System.Serializable]
     public class PositionTweenData : TransformData
     {
-        //[SerializeField] public Space space = default;
+        [SerializeField] public Space space = default;
         public override Tween Create()
         {
             PositionTween tween = new PositionTween();

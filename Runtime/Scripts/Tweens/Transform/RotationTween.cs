@@ -19,13 +19,18 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            Vector3 vec = CalculateVector(time, targetTransform.eulerAngles);
-            targetTransform.eulerAngles = vec;
+            RotationTweenData rotationData = Data as RotationTweenData;
+            if (rotationData.space == Space.Local)
+            {
+                targetTransform.localEulerAngles = CalculateVector(time, targetTransform.localEulerAngles);
+            }
+            else targetTransform.eulerAngles = CalculateVector(time, targetTransform.eulerAngles);
         }
     }
     [System.Serializable]
     public class RotationTweenData : TransformData
     {
+        [SerializeField] public Space space = default;
         public override Tween Create()
         {
             RotationTween tween = new RotationTween();
