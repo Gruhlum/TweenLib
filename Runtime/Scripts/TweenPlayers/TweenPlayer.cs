@@ -11,7 +11,8 @@ namespace HexTecGames.TweenLib
         [DrawIf("tweenDatas", 1, reverse: true)]
         [SerializeField] private TweenPreset preset = default;
 
-        [SerializeField] private List<GameObject> gameObjects = default;
+        [SerializeField] private List<GameObject> targetGOs = default;
+
 
         [SerializeReference, SubclassSelector]
         protected List<TweenData> tweenDatas = null;
@@ -109,7 +110,7 @@ namespace HexTecGames.TweenLib
                     {
                         continue;
                     }
-                    foreach (var go in gameObjects)
+                    foreach (var go in targetGOs)
                     {
                         tweenData.AddRequiredComponents(go);
                     }
@@ -171,13 +172,13 @@ namespace HexTecGames.TweenLib
         }
         private void Reset()
         {
-            if (gameObjects == null)
+            if (targetGOs == null)
             {
-                gameObjects = new List<GameObject>();
+                targetGOs = new List<GameObject>();
             }
-            if (gameObjects.Count == 0)
+            if (targetGOs.Count == 0)
             {
-                gameObjects.Add(gameObject);
+                targetGOs.Add(gameObject);
             }
         }
 
@@ -215,7 +216,7 @@ namespace HexTecGames.TweenLib
 
             if (deactivateGOsAfterPlay)
             {
-                foreach (var go in gameObjects)
+                foreach (var go in targetGOs)
                 {
                     go.SetActive(false);
                 }
@@ -237,11 +238,11 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            if (gameObjects.Contains(GO))
+            if (targetGOs.Contains(GO))
             {
                 return;
             }
-            gameObjects.Add(GO);
+            targetGOs.Add(GO);
             foreach (var data in tweenDatas)
             {
                 if (!data.IsEnabled)
@@ -263,13 +264,13 @@ namespace HexTecGames.TweenLib
         }
         public void SetGameObject(GameObject go)
         {
-            this.gameObjects = new List<GameObject>() { go };
+            this.targetGOs = new List<GameObject>() { go };
             InitTweens();
         }
         public void SetGameObjects(List<GameObject> GOs)
         {
-            this.gameObjects = new List<GameObject>();
-            this.gameObjects.AddRange(GOs);
+            this.targetGOs = new List<GameObject>();
+            this.targetGOs.AddRange(GOs);
             InitTweens();
         }
         public void ResetStartValues()
@@ -283,12 +284,12 @@ namespace HexTecGames.TweenLib
         {
             initDone = true;
             tweens.Clear();
-            if (gameObjects == null)
+            if (targetGOs == null)
             {
                 Duration = 0;
                 return;
             }
-            foreach (var go in gameObjects)
+            foreach (var go in targetGOs)
             {
                 if (go == null)
                 {
@@ -319,8 +320,8 @@ namespace HexTecGames.TweenLib
                 return;
             }
 
-            this.gameObjects = new List<GameObject>();
-            this.gameObjects.AddRange(GOs);
+            this.targetGOs = new List<GameObject>();
+            this.targetGOs.AddRange(GOs);
 
             LoadTweens(tweenData);
             if (startOnEnabled)
@@ -353,7 +354,7 @@ namespace HexTecGames.TweenLib
         }
         private void Play(bool reversed = false)
         {
-            if (gameObjects == null || gameObjects.Count == 0)
+            if (targetGOs == null || targetGOs.Count == 0)
             {
                 return;
             }
