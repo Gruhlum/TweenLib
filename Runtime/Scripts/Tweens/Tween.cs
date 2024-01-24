@@ -65,7 +65,7 @@ namespace HexTecGames.TweenLib
 
         private bool temporaryReverse;
 
-        private bool Reversed
+        public bool Reversed
         {
             get
             {
@@ -118,7 +118,14 @@ namespace HexTecGames.TweenLib
             }
             else DoAnimation(Length);
         }
-
+        public void ResetEffect()
+        {
+            if (Reversed)
+            {
+                Evaluate(Length);
+            }
+            else Evaluate(0);
+        }
         protected float EvaluateCurve(float time)
         {
             return data.animationCurve.Evaluate(time);

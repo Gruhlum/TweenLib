@@ -348,6 +348,17 @@ namespace HexTecGames.TweenLib
         {
             Play(false);
         }
+        public void ReverseEffect()
+        {
+            if (targetGOs == null || targetGOs.Count == 0)
+            {
+                return;
+            }
+            foreach (var tween in tweens)
+            {
+                tween.ResetEffect();
+            }
+        }
         public void PlayReversed()
         {
             Play(true);
