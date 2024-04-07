@@ -87,7 +87,7 @@ namespace HexTecGames.TweenLib
         {
             targetGO = go;
             SetStartObject(go);
-            if (data.Delay > 0 && !data.ApplyImmediately && !data.SetStartDataBeforePlay)
+            if (data.Delay > 0 && !data.ApplyImmediately)
             {
                 SetStartData();
             }
