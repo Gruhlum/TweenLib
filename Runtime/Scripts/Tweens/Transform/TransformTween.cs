@@ -10,7 +10,9 @@ namespace HexTecGames.TweenLib
         protected Vector3 startVec;
         protected Transform targetTransform;
 
-        public TransformTween() { }
+        public TransformTween(TransformData data) : base(data)
+        { 
+        }
 
         protected Vector3 CalculateVector(float time, Vector3 currentVec)
         {

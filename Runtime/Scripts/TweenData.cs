@@ -10,11 +10,35 @@ namespace HexTecGames.TweenLib
     {
         public AnimationCurve animationCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(1, 1) });
         public bool Loop;
-        [DrawIf("Loop", false)]
+        [DrawIf(nameof(Loop), false)]
         public int Repeats;
-        public float Delay;
         [Min(0.001f)]
         public float Speed = 1;
+        public float Delay;
+        public bool ApplyImmediately
+        {
+            get
+            {
+                return applyImmediately;
+            }
+            set
+            {
+                applyImmediately = value;
+            }
+        }
+        [DrawIf(nameof(Delay), 0f, reverse: true)][SerializeField] private bool applyImmediately = true;
+        public bool SetStartDataBeforePlay
+        {
+            get
+            {
+                return setStartDataBeforePlay;
+            }
+            private set
+            {
+                setStartDataBeforePlay = value;
+            }
+        }
+        [DrawIf(nameof(applyImmediately), false)][SerializeField] private bool setStartDataBeforePlay = true;        
         public bool Reverse
         {
             get
@@ -26,7 +50,7 @@ namespace HexTecGames.TweenLib
                 reverse = value;
             }
         }
-        [SerializeField] private bool reverse = default;
+        [Space][SerializeField] private bool reverse = default;
         public bool IsEnabled
         {
             get
@@ -39,19 +63,8 @@ namespace HexTecGames.TweenLib
             }
         }
         [SerializeField] private bool isEnabled = true;
-        public bool ApplyImmediately
-        {
-            get
-            {
-                return applyImmediately;
-            }
-            set
-            {
-                applyImmediately = value;
-            }
-        }
-        [DrawIf("Delay", 0f, reverse: true)]
-        [SerializeField] private bool applyImmediately = true;
+       
+
 
         public abstract Tween Create();
         public virtual void AddRequiredComponents(GameObject go) { }

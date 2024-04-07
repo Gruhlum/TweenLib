@@ -9,7 +9,8 @@ namespace HexTecGames.TweenLib
     {
         private float startAlpha;
 
-        public AlphaTween() { }
+        public AlphaTween(AlphaTweenData data) : base(data)
+        { }
 
         public override void SetStartData()
         {
@@ -43,8 +44,7 @@ namespace HexTecGames.TweenLib
 
         public override Tween Create()
         {
-            AlphaTween tween = new AlphaTween();
-            tween.Data = this;
+            AlphaTween tween = new AlphaTween(this);
             return tween;
         }
     }

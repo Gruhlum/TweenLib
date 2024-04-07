@@ -13,7 +13,9 @@ namespace HexTecGames.TweenLib
         private TextMeshProUGUI textGUI;
         protected Color startColor;
 
-        public ColorTween() { }
+        public ColorTween(TweenData data) : base(data)
+        { 
+        }
 
         protected override void SetStartObject(GameObject go)
         {

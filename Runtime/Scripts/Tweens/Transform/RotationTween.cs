@@ -6,7 +6,8 @@ namespace HexTecGames.TweenLib
 {
     public class RotationTween : TransformTween
     {
-        public RotationTween() { }
+        public RotationTween(RotationTweenData data) : base(data)
+        { }
 
         public override void SetStartData()
         {
@@ -33,8 +34,7 @@ namespace HexTecGames.TweenLib
         [SerializeField] public Space space = default;
         public override Tween Create()
         {
-            RotationTween tween = new RotationTween();
-            tween.Data = this;
+            RotationTween tween = new RotationTween(this);
             return tween;
         }
     }

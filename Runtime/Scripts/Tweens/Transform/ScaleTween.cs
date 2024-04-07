@@ -6,7 +6,9 @@ namespace HexTecGames.TweenLib
 {
     public class ScaleTween : TransformTween
     {
-        public ScaleTween() { }
+        public ScaleTween(ScaleTweenData data) : base(data)
+        { }
+
 
 
         public override void SetStartData()
@@ -27,8 +29,7 @@ namespace HexTecGames.TweenLib
     {
         public override Tween Create()
         {
-            ScaleTween tween = new ScaleTween();
-            tween.Data = this;
+            ScaleTween tween = new ScaleTween(this);
             return tween;
         }
     }

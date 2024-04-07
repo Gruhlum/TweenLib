@@ -9,7 +9,8 @@ namespace HexTecGames.TweenLib
     {
         private CanvasGroup canvasGroup;
 
-        public CanvasGroupAlphaTween() { }
+        public CanvasGroupAlphaTween(CanvasGroupAlphaTweenData data) : base(data)
+        { }
 
         protected override void SetStartObject(GameObject go)
         {
@@ -34,8 +35,7 @@ namespace HexTecGames.TweenLib
     {
         public override Tween Create()
         {
-            CanvasGroupAlphaTween tween = new CanvasGroupAlphaTween();
-            tween.Data = this;
+            CanvasGroupAlphaTween tween = new CanvasGroupAlphaTween(this);
             return tween;
         }
         public override void AddRequiredComponents(GameObject go)

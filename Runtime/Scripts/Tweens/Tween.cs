@@ -64,6 +64,7 @@ namespace HexTecGames.TweenLib
         [SerializeField] private TweenData data = default;
 
         private bool temporaryReverse;
+        private bool startDataIsSet;
 
         public bool Reversed
         {
@@ -77,13 +78,20 @@ namespace HexTecGames.TweenLib
             }
         }
 
-        public Tween() { }
+        public Tween(TweenData data) 
+        {
+            this.Data = data;
+        }
 
         public void Init(GameObject go)
         {
             targetGO = go;
             SetStartObject(go);
-            SetStartData();
+            if (data.Delay > 0 && !data.ApplyImmediately && !data.SetStartDataBeforePlay)
+            {
+                SetStartData();
+            }
+            
         }
         protected abstract void SetStartObject(GameObject go);
 
@@ -93,8 +101,9 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            temporaryReverse = reversed;
+            temporaryReverse = reversed;          
             IsFinished = false;
+
             if (data.ApplyImmediately || data.Delay <= 0)
             {
                 if (Reversed)
@@ -103,6 +112,7 @@ namespace HexTecGames.TweenLib
                 }
                 else DoAnimation(0);
             }
+            else startDataIsSet = false;
         }
         public void Stop()
         {
@@ -122,9 +132,9 @@ namespace HexTecGames.TweenLib
         {
             if (Reversed)
             {
-                Evaluate(Length);
+                DoAnimation(Length);
             }
-            else Evaluate(0);
+            else DoAnimation(0);
         }
         protected float EvaluateCurve(float time)
         {
@@ -149,6 +159,11 @@ namespace HexTecGames.TweenLib
             if (data.Delay > elapsedTime)
             {
                 return;
+            }
+            else if (!startDataIsSet)
+            {
+                SetStartData();
+                startDataIsSet = true;
             }
             if (data.Loop == false && AnimationTime >= Length * (data.Repeats + 1))
             {

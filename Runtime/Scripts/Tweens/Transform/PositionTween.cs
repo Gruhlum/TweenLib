@@ -7,7 +7,10 @@ namespace HexTecGames.TweenLib
 
     public class PositionTween : TransformTween
     {
-        public PositionTween() { }
+        public PositionTween(PositionTweenData data) : base(data)
+        { 
+
+        }
        
         protected override void DoAnimation(float time)
         {
@@ -39,8 +42,7 @@ namespace HexTecGames.TweenLib
         [SerializeField] public Space space = default;
         public override Tween Create()
         {
-            PositionTween tween = new PositionTween();
-            tween.Data = this;
+            PositionTween tween = new PositionTween(this);
             return tween;
         }
     }

@@ -6,7 +6,8 @@ namespace HexTecGames.TweenLib
 {
     public class RGBTween : ColorTween
     {
-        public RGBTween() { }
+        public RGBTween(RGBTweenData data) : base(data)
+        { }
 
         protected override void DoAnimation(float time)
         {
@@ -21,8 +22,7 @@ namespace HexTecGames.TweenLib
 
         public override Tween Create()
         {
-            RGBTween tween = new RGBTween();
-            tween.Data = this;
+            RGBTween tween = new RGBTween(this);
             return tween;
         }
     }
