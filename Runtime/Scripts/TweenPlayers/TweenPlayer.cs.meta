@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - preset: {instanceID: 0}
-  executionOrder: 5
+  executionOrder: -10
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 
