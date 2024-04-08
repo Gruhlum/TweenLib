@@ -108,10 +108,7 @@ namespace HexTecGames.TweenLib
                 }
                 else DoAnimation(0);
             }
-            if (data.SetStartDataBeforePlay)
-            {
-                startDataIsSet = false;
-            }
+            startDataIsSet = !data.SetStartDataBeforePlay;
         }
         public void Stop()
         {
