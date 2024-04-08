@@ -27,18 +27,18 @@ namespace HexTecGames.TweenLib
             }
         }
         [DrawIf(nameof(Delay), 0f, reverse: true)][SerializeField] private bool applyImmediately = true;
-        //public bool SetStartDataBeforePlay
-        //{
-        //    get
-        //    {
-        //        return setStartDataBeforePlay;
-        //    }
-        //    private set
-        //    {
-        //        setStartDataBeforePlay = value;
-        //    }
-        //}
-        //[DrawIf(nameof(ShowSetStartData), false)][SerializeField] private bool setStartDataBeforePlay = true;        
+        public bool SetStartDataBeforePlay
+        {
+            get
+            {
+                return setStartDataBeforePlay;
+            }
+            private set
+            {
+                setStartDataBeforePlay = value;
+            }
+        }
+        [SerializeField] private bool setStartDataBeforePlay;
         public bool Reverse
         {
             get

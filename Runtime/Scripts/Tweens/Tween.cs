@@ -87,11 +87,7 @@ namespace HexTecGames.TweenLib
         {
             targetGO = go;
             SetStartObject(go);
-            if (data.Delay > 0 && !data.ApplyImmediately)
-            {
-                SetStartData();
-            }
-            
+            SetStartData();
         }
         protected abstract void SetStartObject(GameObject go);
 
@@ -112,7 +108,10 @@ namespace HexTecGames.TweenLib
                 }
                 else DoAnimation(0);
             }
-            else startDataIsSet = false;
+            if (data.SetStartDataBeforePlay)
+            {
+                startDataIsSet = false;
+            }
         }
         public void Stop()
         {
@@ -160,7 +159,7 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            else if (!startDataIsSet)
+            if (!startDataIsSet)
             {
                 SetStartData();
                 startDataIsSet = true;
