@@ -37,7 +37,7 @@ namespace HexTecGames.TweenLib
         }
     }
     [System.Serializable]
-    public class PositionTweenData : TransformData
+    public class PositionTweenData : VectorData
     {
         [SerializeField] public Space space = default;
         public override Tween Create()

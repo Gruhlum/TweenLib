@@ -9,8 +9,6 @@ namespace HexTecGames.TweenLib
         public ScaleTween(ScaleTweenData data) : base(data)
         { }
 
-
-
         public override void SetStartData()
         {
             startVec = targetTransform.localScale;
@@ -25,7 +23,7 @@ namespace HexTecGames.TweenLib
         }
     }
     [System.Serializable]
-    public class ScaleTweenData : TransformData
+    public class ScaleTweenData : VectorData
     {
         public override Tween Create()
         {

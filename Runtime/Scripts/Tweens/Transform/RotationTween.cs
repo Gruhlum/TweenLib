@@ -29,7 +29,7 @@ namespace HexTecGames.TweenLib
         }
     }
     [System.Serializable]
-    public class RotationTweenData : TransformData
+    public class RotationTweenData : VectorData
     {
         [SerializeField] public Space space = default;
         public override Tween Create()
