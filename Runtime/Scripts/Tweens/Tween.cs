@@ -78,9 +78,11 @@ namespace HexTecGames.TweenLib
             }
         }
 
+        private Func<float, float> animationCurve;
+
         public Tween(TweenData data) 
         {
-            this.Data = data;
+            this.Data = data;           
         }
 
         public void Init(GameObject go)
@@ -88,6 +90,14 @@ namespace HexTecGames.TweenLib
             targetGO = go;
             SetStartObject(go);
             SetStartData();
+            UpdateAnimationCurve();
+        }
+        public void UpdateAnimationCurve()
+        {
+            if (!data.customCurve)
+            {
+                animationCurve = AnimationData.GetFunction(data.animationType, data.curve);
+            }
         }
         protected abstract void SetStartObject(GameObject go);
 
@@ -134,7 +144,11 @@ namespace HexTecGames.TweenLib
         }
         protected float EvaluateCurve(float time)
         {
-            return data.animationCurve.Evaluate(time);
+            if (Data.customCurve)
+            {
+                return Data.animationCurve.Evaluate(time);
+            }
+            return animationCurve(time);
         }
 
         public void Evaluate(float elapsedTime)

@@ -280,6 +280,13 @@ namespace HexTecGames.TweenLib
                 tween.SetStartData();
             }
         }
+        public void UpdateTweenData()
+        {
+            foreach (var tween in tweens)
+            {
+                tween.UpdateAnimationCurve();
+            }
+        }
         private void InitTweens()
         {
             initDone = true;

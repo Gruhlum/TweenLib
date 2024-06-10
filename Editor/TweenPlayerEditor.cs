@@ -15,6 +15,7 @@ namespace HexTecGames.TweenLib.Editor
             
             if (Application.isPlaying && GUILayout.Button("Play", GUILayout.Width(180), GUILayout.Height(30)))
             {
+                tweenPlayer.UpdateTweenData();
                 tweenPlayer.Play();
             }
             DrawDefaultInspector();

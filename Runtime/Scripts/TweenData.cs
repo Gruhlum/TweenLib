@@ -8,7 +8,11 @@ namespace HexTecGames.TweenLib
     [System.Serializable]
     public abstract class TweenData
     {
-        public AnimationCurve animationCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(1, 1) });
+        public bool customCurve;
+        [DrawIf(nameof(customCurve), false)] public AnimationType animationType;
+        [DrawIf(nameof(customCurve), false)] public Curve curve;
+        [DrawIf(nameof(customCurve), true)] public AnimationCurve animationCurve 
+            = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(1, 1) });
         public bool Loop;
         [DrawIf(nameof(Loop), false)]
         public int Repeats;
