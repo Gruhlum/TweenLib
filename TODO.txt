@@ -1,0 +1,8 @@
+
+
+Put animation data in a scriptableObject
+
+TweenPlayer and GroupTweenPlayer are responsible for playing their animation data
+
+
+animations need to be able to be chained, i.e. wait for the first animation to finish before playing the next
