@@ -13,10 +13,14 @@ namespace HexTecGames.TweenLib
         {
             get
             {
-                return data.animationCurve.keys[data.animationCurve.length - 1].time;
+                return length;            
+            }
+            private set
+            {
+                length = value;
             }
         }
-
+        private float length;
         public bool IsFinished
         {
             get
@@ -97,7 +101,10 @@ namespace HexTecGames.TweenLib
             if (!data.customCurve)
             {
                 animationCurve = AnimationData.GetFunction(data.animationType, data.curve);
+                Length = 1;
             }
+            else Length = data.animationCurve.keys[^0].time;
+            
         }
         protected abstract void SetStartObject(GameObject go);
 
@@ -126,8 +133,8 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            temporaryReverse = false;
             IsFinished = true;
+
             if (Reversed)
             {
                 DoAnimation(0);
@@ -136,11 +143,14 @@ namespace HexTecGames.TweenLib
         }
         public void ResetEffect()
         {
-            if (Reversed)
-            {
-                DoAnimation(Length);
-            }
-            else DoAnimation(0);
+            DoAnimation(0);
+
+            // Not neccessary for some reason.
+            //if (Reversed)
+            //{
+            //    DoAnimation(Length);
+            //}
+            //else DoAnimation(0);
         }
         protected float EvaluateCurve(float time)
         {
@@ -156,9 +166,12 @@ namespace HexTecGames.TweenLib
             if (Data == null)
             {
                 return;
+            }     
+            if (IsFinished)
+            {
+                return;
             }
-            this.elapsedTime = elapsedTime;
-            if (IsFinished || data.IsEnabled == false)
+            if (!data.IsEnabled)
             {
                 return;
             }
@@ -166,6 +179,9 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
+
+            this.elapsedTime = elapsedTime;
+
             if (data.Delay > elapsedTime)
             {
                 return;

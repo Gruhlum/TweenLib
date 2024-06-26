@@ -9,15 +9,32 @@ namespace HexTecGames.TweenLib.Editor
     [CustomEditor(typeof(ToggleTweenPlayer))]
     public class ToggleTweenPlayerEditor : TweenPlayerEditor
     {
-        public override void OnInspectorGUI()
-        {
-            ToggleTweenPlayer tweenPlayer = (ToggleTweenPlayer)target;
+        private bool hasCompletedCircle;
 
-            if (Application.isPlaying && GUILayout.Button("Toggle", GUILayout.Width(180), GUILayout.Height(30)))
+        protected override void OnDisable()
+        {
+            hasCompletedCircle = true;
+            base.OnDisable();
+        }
+
+        protected override void StartAnimation()
+        {
+            hasCompletedCircle = false;
+            base.StartAnimation();
+        }
+
+        protected override void StopAnimation()
+        {
+            if (hasCompletedCircle)
             {
-                tweenPlayer.ToggleState();
+                base.StopAnimation();
             }
-            DrawDefaultInspector();
+            else
+            {
+                tweenPlayer.PlayReversed();
+                hasCompletedCircle = true;
+                reachedEnd = false;
+            }
         }
     }
 }

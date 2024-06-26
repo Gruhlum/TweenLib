@@ -2,6 +2,7 @@ using HexTecGames.Basics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace HexTecGames.TweenLib
@@ -48,6 +49,14 @@ namespace HexTecGames.TweenLib
             }
         }
         private bool isPlaying;
+
+        public bool IsLooping
+        {
+            get
+            {
+                return !Duration.HasValue;
+            }
+        }    
 
         public bool StartOnEnabled
         {
@@ -138,26 +147,26 @@ namespace HexTecGames.TweenLib
 
         private void Update()
         {
-            if (IsPlaying == false)
+            AdvanceTime(Time.deltaTime);
+        }
+        public void AdvanceTime(float time)
+        {
+            if (!IsPlaying)
             {
                 return;
             }
-            timer += Time.deltaTime * TimeScale;
+            timer += time * TimeScale;
             if (tweens != null)
             {
                 foreach (var tween in tweens)
                 {
-                    if (tween != null && tween.IsFinished == false)
+                    if (tween != null && !tween.IsFinished)
                     {
                         tween.Evaluate(timer);
                     }
                 }
             }
-            if (timer <= 0)
-            {
-                TweensFinishedPlaying();
-            }
-            else if (timer >= Duration)
+            if (timer >= Duration)
             {
                 foreach (var tween in tweens)
                 {
@@ -287,7 +296,7 @@ namespace HexTecGames.TweenLib
                 tween.UpdateAnimationCurve();
             }
         }
-        private void InitTweens()
+        public void InitTweens()
         {
             initDone = true;
             tweens.Clear();
