@@ -6,7 +6,7 @@ namespace HexTecGames.TweenLib
 {
     public abstract class VectorTween : Tween
     {
-        protected Vector3 startVec;
+        protected Vector3 startVector;
         protected VectorData data;
 
         public VectorTween(VectorData data) : base(data)
@@ -20,21 +20,21 @@ namespace HexTecGames.TweenLib
             {
                 case Mode.Multiply:
 
-                    if (data.X) result.x = startVec.x * EvaluateCurve(time) * data.strength;
-                    if (data.Y) result.y = startVec.y * EvaluateCurve(time) * data.strength;
-                    if (data.Z) result.z = startVec.z * EvaluateCurve(time) * data.strength;
+                    if (data.X) result.x = startVector.x * EvaluateCurve(time) * data.strength - currentVec.x;
+                    if (data.Y) result.y = startVector.y * EvaluateCurve(time) * data.strength - currentVec.y;
+                    if (data.Z) result.z = startVector.z * EvaluateCurve(time) * data.strength - currentVec.z;
                     break;
 
                 case Mode.Addition:
-                    if (data.X) result.x = startVec.x + EvaluateCurve(time) * data.strength;
-                    if (data.Y) result.y = startVec.y + EvaluateCurve(time) * data.strength;
-                    if (data.Z) result.z = startVec.z + EvaluateCurve(time) * data.strength;
+                    if (data.X) result.x = startVector.x + EvaluateCurve(time) * data.strength - currentVec.x;
+                    if (data.Y) result.y = startVector.y + EvaluateCurve(time) * data.strength - currentVec.y;
+                    if (data.Z) result.z = startVector.z + EvaluateCurve(time) * data.strength - currentVec.z;
                     break;
 
                 case Mode.Set:
-                    if (data.X) result.x = EvaluateCurve(time) * data.strength;
-                    if (data.Y) result.y = EvaluateCurve(time) * data.strength;
-                    if (data.Z) result.z = EvaluateCurve(time) * data.strength;
+                    if (data.X) result.x = EvaluateCurve(time) * data.strength - currentVec.x;
+                    if (data.Y) result.y = EvaluateCurve(time) * data.strength - currentVec.y;
+                    if (data.Z) result.z = EvaluateCurve(time) * data.strength - currentVec.z;
                     break;
                 default:
                     break;

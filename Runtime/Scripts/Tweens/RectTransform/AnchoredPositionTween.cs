@@ -16,7 +16,7 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            startVec = rectTransform.anchoredPosition;
+            startVector = rectTransform.anchoredPosition;
         }
 
         protected override void DoAnimation(float time)

@@ -13,40 +13,63 @@ namespace HexTecGames.TweenLib
         {
             get
             {
-                return length;            
-            }
-            private set
-            {
-                length = value;
+                return AnimationLength / Data.Speed * (Data.Repeats + 1);
             }
         }
-        private float length;
-        public bool IsFinished
+
+        public float AnimationLength
         {
             get
             {
-                return isFinished;
+                return animationLength;
             }
-            set
+            private set
             {
-                isFinished = value;
+                animationLength = value;
             }
         }
-        private bool isFinished = false;
+        [SerializeField] private float animationLength;
+
+
+        //public bool IsFinished
+        //{
+        //    get
+        //    {
+        //        return isFinished;
+        //    }
+        //    set
+        //    {
+        //        isFinished = value;
+        //    }
+        //}
+        //private bool isFinished = false;
 
         public float Duration
         {
             get
             {
-                return (Length / data.Speed) * (data.Repeats + 1) + data.Delay;
+                return (Length / data.Speed) + Delay;
             }
         }
+
+        public float Delay
+        {
+            get
+            {
+                return delay;
+            }
+            private set
+            {
+                delay = value;
+            }
+        }
+        private float delay;
 
         public float AnimationTime
         {
             get
             {
-                return (elapsedTime - data.Delay) * data.Speed;
+                return (elapsedTime - Delay) * data.Speed;
             }
         }
 
@@ -67,26 +90,29 @@ namespace HexTecGames.TweenLib
         }
         [SerializeField] private TweenData data = default;
 
-        private bool temporaryReverse;
-        private bool startDataIsSet;
+        //private bool temporaryReverse;
+        //private bool startDataIsSet;
 
-        public bool Reversed
-        {
-            get
-            {
-                if (temporaryReverse)
-                {
-                    return !Data.Reverse;
-                }
-                else return Data.Reverse;
-            }
-        }
+        //public bool Reversed
+        //{
+        //    get
+        //    {
+        //        if (temporaryReverse)
+        //        {
+        //            return !Data.Reverse;
+        //        }
+        //        else return Data.Reverse;
+        //    }
+        //}
+
+        private bool reversed;
 
         private Func<float, float> animationCurve;
 
-        public Tween(TweenData data) 
+        public Tween(TweenData data)
         {
-            this.Data = data;           
+            this.Data = data;
+            Delay = data.Delay;
         }
 
         public void Init(GameObject go)
@@ -94,17 +120,22 @@ namespace HexTecGames.TweenLib
             targetGO = go;
             SetStartObject(go);
             SetStartData();
+            
             UpdateAnimationCurve();
         }
         public void UpdateAnimationCurve()
         {
-            if (!data.customCurve)
+            if (!data.CustomCurve)
             {
                 animationCurve = AnimationData.GetFunction(data.animationType, data.curve);
-                Length = 1;
+                AnimationLength = 1;
             }
-            else Length = data.animationCurve.keys[^0].time;
-            
+            else AnimationLength = data.animationCurve.keys[^0].time;
+
+        }
+        public void AddDelay(float time)
+        {
+            Delay += time;
         }
         protected abstract void SetStartObject(GameObject go);
 
@@ -114,37 +145,30 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            temporaryReverse = reversed;          
-            IsFinished = false;
 
-            if (data.ApplyImmediately || data.Delay <= 0)
+            this.reversed = reversed;
+            if (data.ApplyImmediately || Delay <= 0)
             {
-                if (Reversed)
+                if (reversed)
                 {
                     DoAnimation(Length);
                 }
                 else DoAnimation(0);
             }
-            startDataIsSet = !data.SetStartDataBeforePlay;
         }
+
         public void Stop()
         {
-            if (Data == null)
-            {
-                return;
-            }
-            IsFinished = true;
-
-            if (Reversed)
+            if (reversed)
             {
                 DoAnimation(0);
             }
             else DoAnimation(Length);
         }
-        public void ResetEffect()
+        
+        public virtual void ResetEffect()
         {
             DoAnimation(0);
-
             // Not neccessary for some reason.
             //if (Reversed)
             //{
@@ -154,11 +178,11 @@ namespace HexTecGames.TweenLib
         }
         protected float EvaluateCurve(float time)
         {
-            if (Data.customCurve)
+            if (Data.CustomCurve)
             {
-                return Data.animationCurve.Evaluate(time);
+                return Data.animationCurve.Evaluate(time * Data.Speed);
             }
-            return animationCurve(time);
+            return animationCurve(time * Data.Speed);
         }
 
         public void Evaluate(float elapsedTime)
@@ -166,45 +190,13 @@ namespace HexTecGames.TweenLib
             if (Data == null)
             {
                 return;
-            }     
-            if (IsFinished)
-            {
-                return;
             }
-            if (!data.IsEnabled)
+            if (reversed)
             {
-                return;
+                DoAnimation(Length - elapsedTime % Length);
             }
-            if (data.Speed <= 0)
-            {
-                return;
-            }
-
-            this.elapsedTime = elapsedTime;
-
-            if (data.Delay > elapsedTime)
-            {
-                return;
-            }
-            if (!startDataIsSet)
-            {
-                SetStartData();
-                startDataIsSet = true;
-            }
-            if (data.Loop == false && AnimationTime >= Length * (data.Repeats + 1))
-            {
-                Stop();
-                return;
-            }
-            else
-            {
-                if (Reversed)
-                {
-                    DoAnimation(Length - AnimationTime % Length);
-                }
-                else DoAnimation(AnimationTime % Length);
-            }
-        }       
+            else DoAnimation(elapsedTime % Length);
+        }
 
         protected abstract void DoAnimation(float time);
 

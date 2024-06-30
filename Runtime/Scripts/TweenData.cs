@@ -8,16 +8,19 @@ namespace HexTecGames.TweenLib
     [System.Serializable]
     public abstract class TweenData
     {
-        public bool customCurve;
-        [DrawIf(nameof(customCurve), false)] public AnimationType animationType;
-        [DrawIf(nameof(customCurve), false)] public Curve curve;
-        [DrawIf(nameof(customCurve), true)] public AnimationCurve animationCurve 
+        public bool CustomCurve;
+        [DrawIf(nameof(CustomCurve), false)] public AnimationType animationType;
+        [DrawIf(nameof(CustomCurve), false)] public Curve curve;
+        [DrawIf(nameof(CustomCurve), true)] public AnimationCurve animationCurve 
             = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(1, 1) });
-        public bool Loop;
-        [DrawIf(nameof(Loop), false)]
+
+        [Space]
+        public bool EndlessLoop;
+        public LoopMode LoopMode;
+        [DrawIf(nameof(EndlessLoop), false)]
         public int Repeats;
-        [Min(0.001f)]
-        public float Speed = 1;
+
+        [Space, Min(0.001f)] public float Speed = 1;
         public float Delay;
         public bool ApplyImmediately
         {
@@ -43,30 +46,30 @@ namespace HexTecGames.TweenLib
             }
         }
         [SerializeField] private bool setStartDataBeforePlay;
-        public bool Reverse
-        {
-            get
-            {
-                return reverse;
-            }
-            private set
-            {
-                reverse = value;
-            }
-        }
-        [Space][SerializeField] private bool reverse = default;
-        public bool IsEnabled
-        {
-            get
-            {
-                return isEnabled;
-            }
-            set
-            {
-                isEnabled = value;
-            }
-        }
-        [SerializeField] private bool isEnabled = true;
+        //public bool Reverse
+        //{
+        //    get
+        //    {
+        //        return reverse;
+        //    }
+        //    private set
+        //    {
+        //        reverse = value;
+        //    }
+        //}
+        //[Space][SerializeField] private bool reverse = default;
+        //public bool IsEnabled
+        //{
+        //    get
+        //    {
+        //        return isEnabled;
+        //    }
+        //    set
+        //    {
+        //        isEnabled = value;
+        //    }
+        //}
+        //[SerializeField] private bool isEnabled = true;
 
 
         public abstract Tween Create();

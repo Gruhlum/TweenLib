@@ -8,4 +8,6 @@ namespace HexTecGames.TweenLib
     public enum Curve { Sine, Quad, Cubic, Quart, Quint, Expo, Circ, Back, Elastic, Bounce }
     public enum Mode { Addition, Multiply, Set }
     public enum Space { Local, World }
+    public enum TargetVector { Position, Rotation, Scale }
+    public enum LoopMode { Mirror, Repeat }
 }

@@ -22,10 +22,10 @@ namespace HexTecGames.TweenLib
         private bool state;
 
 
-        private void OnDisable()
-        {
-            SetState(false);
-        }
+        //private void OnDisable()
+        //{
+        //    SetState(false);
+        //}
 
         public void ToggleState()
         {
@@ -39,11 +39,7 @@ namespace HexTecGames.TweenLib
                 return;
             }
             State = active;
-            TimeScale = active ? 1 : -1;
-            if (!IsPlaying)
-            {
-                Play();
-            }
+            Play(!State);
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace HexTecGames.TweenLib
 {
-	public class TweenAnim
+	public class AnimationEnumerators
 	{
         public static IEnumerator LerpColor(Image img, float duration, Color startCol, Color endCol)
         {

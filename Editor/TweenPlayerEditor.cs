@@ -1,4 +1,3 @@
-using HexTecGames.TweenLib;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,97 +5,111 @@ using UnityEngine;
 
 namespace HexTecGames.TweenLib.Editor
 {
-    [CustomEditor(typeof(TweenPlayer))]
+    [CustomEditor(typeof(TweenPlayerBase), true)]
     public class TweenPlayerEditor : UnityEditor.Editor
     {
         protected TweenPlayer tweenPlayer;
 
-        private float endDelay = 0.5f;
-        private float endTimer = 0;
+        protected float endDelay = 0.5f;
+        protected float endTimer = 0;
         protected bool reachedEnd;
         protected bool isPlaying;
-
-        protected virtual void OnDisable()
-        {
-            if (!EditorApplication.isPlaying && isPlaying)
-            {
-                StopAnimation();
-            }           
-        }
+        private bool hasPlayed;
 
         public override void OnInspectorGUI()
         {
             tweenPlayer = (TweenPlayer)target;
 
-            if (isPlaying)
+            if (isPlaying || Application.isPlaying)
             {
-                if (tweenPlayer.IsLooping)
+                if (CreateButton("Play"))
                 {
-                    if (CreateButton("Stop"))
-                    {
-                        StopAnimation();
-                    }
+                    StopAnimation();
+                    StartAnimation(false, true);
                 }
-                else
-                {
-                    if (CreateButton("Play"))
-                    {
-                        StopAnimation();
-                        StartAnimation();
-                    }
-                }                
             }
             else
             {
                 if (CreateButton("Play"))
                 {
-                    StartAnimation();
+                    StartAnimation(false, true);
                 }
             }
             DrawDefaultInspector();
         }
-        private bool CreateButton(string text)
+
+        protected virtual void OnDisable()
+        {
+            if (hasPlayed && !EditorApplication.isPlaying)
+            {
+                StopAnimation();
+            }
+        }
+
+        protected bool CreateButton(string text)
         {
             return GUILayout.Button(text, GUILayout.ExpandWidth(true), GUILayout.Height(30));
         }
-        protected virtual void StartAnimation()
+        protected virtual void StartAnimation(bool reversed, bool initTweens)
         {
-            isPlaying = true;
-            tweenPlayer.InitTweens();
-            tweenPlayer.Play();
-
-            if (!EditorApplication.isPlaying)
+            hasPlayed = true;
+            reachedEnd = false;
+            endTimer = 0;
+            if (!isPlaying && !EditorApplication.isPlaying)
             {
                 EditorApplication.update += AdvanceTime;
-                tweenPlayer.FinishedPlaying += TweenPlayer_FinishedPlaying;
             }
-        }
-        private void TweenPlayer_FinishedPlaying()
-        {
-            reachedEnd = true;
+            isPlaying = true;
+            if (initTweens)
+            {
+                tweenPlayer.InitTweens();
+            }
+            
+            tweenPlayer.Play(reversed);
         }
 
-        private void AdvanceTime()
+        protected void AdvanceTime()
         {
             if (reachedEnd)
             {
                 endTimer += Time.deltaTime;
                 if (endTimer >= endDelay)
                 {
-                    StopAnimation();
+                    EndTimeReached();
                 }
             }
-            else tweenPlayer.AdvanceTime(Mathf.Min(Time.deltaTime, Time.fixedDeltaTime));
+            else
+            {
+                if (tweenPlayer.AdvanceTime(CalculateTimeStep()))
+                {
+                    reachedEnd = true;
+                }
+            }
         }
-
-        protected virtual void StopAnimation()
+        protected virtual void EndTimeReached()
+        {
+            StopAnimation();
+            reachedEnd = false;
+        }
+        protected virtual float CalculateTimeStep()
+        {
+            return Mathf.Min(Time.deltaTime, Time.fixedDeltaTime);
+        }
+        protected virtual void StopAnimation(bool resetEffects = true)
+        {
+            ResetValues();
+            EditorApplication.update -= AdvanceTime;
+            if (resetEffects)
+            {
+                tweenPlayer.ResetEffects();
+            }           
+        }
+        protected void ResetValues()
         {
             isPlaying = false;
             reachedEnd = false;
             endTimer = 0;
-            EditorApplication.update -= AdvanceTime;
-            tweenPlayer.FinishedPlaying -= TweenPlayer_FinishedPlaying;
-            tweenPlayer.ReverseEffect();
+            
         }
     }
 }
