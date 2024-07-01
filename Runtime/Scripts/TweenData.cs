@@ -14,12 +14,23 @@ namespace HexTecGames.TweenLib
         [DrawIf(nameof(CustomCurve), true)] public AnimationCurve animationCurve 
             = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(1, 1) });
 
-        [Space]
-        public bool EndlessLoop;
+        public bool Reverse
+        {
+            get
+            {
+                return reverse;
+            }
+            private set
+            {
+                reverse = value;
+            }
+        }
+        [Space][SerializeField] private bool reverse = default;
+        [Space] public bool EndlessLoop;
         public LoopMode LoopMode;
         [DrawIf(nameof(EndlessLoop), false)]
         public int Repeats;
-
+        
         [Space, Min(0.001f)] public float Speed = 1;
         public float Delay;
         public bool ApplyImmediately
@@ -34,43 +45,19 @@ namespace HexTecGames.TweenLib
             }
         }
         [DrawIf(nameof(Delay), 0f, reverse: true)][SerializeField] private bool applyImmediately = true;
-        public bool SetStartDataBeforePlay
-        {
-            get
-            {
-                return setStartDataBeforePlay;
-            }
-            private set
-            {
-                setStartDataBeforePlay = value;
-            }
-        }
-        [SerializeField] private bool setStartDataBeforePlay;
-        //public bool Reverse
+        //public bool SetStartDataBeforePlay
         //{
         //    get
         //    {
-        //        return reverse;
+        //        return setStartDataBeforePlay;
         //    }
         //    private set
         //    {
-        //        reverse = value;
+        //        setStartDataBeforePlay = value;
         //    }
         //}
-        //[Space][SerializeField] private bool reverse = default;
-        //public bool IsEnabled
-        //{
-        //    get
-        //    {
-        //        return isEnabled;
-        //    }
-        //    set
-        //    {
-        //        isEnabled = value;
-        //    }
-        //}
-        //[SerializeField] private bool isEnabled = true;
-
+        //[SerializeField] private bool setStartDataBeforePlay;
+       
 
         public abstract Tween Create();
         public virtual void AddRequiredComponents(GameObject go) { }

@@ -88,24 +88,25 @@ namespace HexTecGames.TweenLib
                 data = value;
             }
         }
+
         [SerializeField] private TweenData data = default;
 
-        //private bool temporaryReverse;
-        //private bool startDataIsSet;
+        private bool temporaryReverse;
 
-        //public bool Reversed
-        //{
-        //    get
-        //    {
-        //        if (temporaryReverse)
-        //        {
-        //            return !Data.Reverse;
-        //        }
-        //        else return Data.Reverse;
-        //    }
-        //}
 
-        private bool reversed;
+        public bool Reversed
+        {
+            get
+            {
+                if (temporaryReverse)
+                {
+                    return !Data.Reverse;
+                }
+                else return Data.Reverse;
+            }
+        }
+
+
 
         private Func<float, float> animationCurve;
 
@@ -146,7 +147,7 @@ namespace HexTecGames.TweenLib
                 return;
             }
 
-            this.reversed = reversed;
+            temporaryReverse = reversed;
             if (data.ApplyImmediately || Delay <= 0)
             {
                 if (reversed)
@@ -159,23 +160,15 @@ namespace HexTecGames.TweenLib
 
         public void Stop()
         {
-            if (reversed)
+            if (Reversed)
             {
                 DoAnimation(0);
             }
             else DoAnimation(Length);
         }
-        
-        public virtual void ResetEffect()
-        {
-            DoAnimation(0);
-            // Not neccessary for some reason.
-            //if (Reversed)
-            //{
-            //    DoAnimation(Length);
-            //}
-            //else DoAnimation(0);
-        }
+
+        public abstract void ResetEffect();
+
         protected float EvaluateCurve(float time)
         {
             if (Data.CustomCurve)
@@ -191,7 +184,11 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            if (reversed)
+            if (elapsedTime > Length * (Data.Repeats + 1))
+            {
+                return;
+            }
+            if (Reversed)
             {
                 DoAnimation(Length - elapsedTime % Length);
             }

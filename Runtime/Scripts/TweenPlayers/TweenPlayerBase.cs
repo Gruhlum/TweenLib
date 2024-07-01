@@ -45,7 +45,6 @@ namespace HexTecGames.TweenLib
         protected void Awake()
         {
             InitTweens();
-            this.enabled = false;
         }
 
         protected void Update()
@@ -57,6 +56,7 @@ namespace HexTecGames.TweenLib
         {
             if (!PlayOnEnable)
             {
+                Deactivate();
                 return;
             }
             foreach (var playData in tweenPlayDatas)

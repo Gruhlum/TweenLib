@@ -1,11 +1,17 @@
 
 
-Put animation data in a scriptableObject
+AnimationGroup:
+Multiple items, each can be turned on or off.
+One animation for active items and another one for deactivated ones.
 
-TweenPlayer and GroupTweenPlayer are responsible for playing their animation data
 
-Tweens of the same type should be able to work together, i.e. moving up and left at the same time
+SingleSelectAnimationGroup:
 
-animations need to be able to be chained, i.e. wait for the first animation to finish before playing the next
+Only 1 item can be active at the same time
 
-Loop should have an option to start reversed
+HoverSelectAnimationGroup:
+
+UI element that the mouse is hovering over will be the selected one
+
+
+MouseTogglePlayer:

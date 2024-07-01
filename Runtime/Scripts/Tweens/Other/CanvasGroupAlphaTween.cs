@@ -9,12 +9,26 @@ namespace HexTecGames.TweenLib
     {
         private CanvasGroup canvasGroup;
 
+        //private new CanvasGroupAlphaTweenData Data;
+        private float startAlpha;
+
         public CanvasGroupAlphaTween(CanvasGroupAlphaTweenData data) : base(data)
-        { }
+        {
+            //Data = data;
+        }
 
         protected override void SetStartObject(GameObject go)
         {
             canvasGroup = go.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                Debug.Log($"{go.name} does not have a {typeof(CanvasGroup)} component");
+            }
+        }
+
+        public override void ResetEffect()
+        {
+            canvasGroup.alpha = startAlpha;
         }
 
         protected override void DoAnimation(float time)
@@ -28,6 +42,7 @@ namespace HexTecGames.TweenLib
 
         public override void SetStartData()
         {
+            startAlpha = canvasGroup.alpha;
         }        
     }
     [System.Serializable]

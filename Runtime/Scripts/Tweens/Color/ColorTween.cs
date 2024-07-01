@@ -27,6 +27,11 @@ namespace HexTecGames.TweenLib
         {           
             startColor = GetColor();
         }
+        public override void ResetEffect()
+        {
+            SetColor(startColor, false);
+        }
+
         protected Color GetColor()
         {
             if (sr != null)

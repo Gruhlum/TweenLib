@@ -21,7 +21,10 @@ namespace HexTecGames.TweenLib
         {
             startVector = GetVector();
         }
-
+        public override void ResetEffect()
+        {
+            SetVector(startVector);
+        }
         private Vector3 GetVector()
         {
             switch (data.targetVector)
@@ -48,7 +51,7 @@ namespace HexTecGames.TweenLib
             }
         }
 
-        private void ApplyVector(Vector3 vector)
+        private void SetVector(Vector3 vector)
         {
             if (targetTransform == null)
             {
@@ -59,30 +62,62 @@ namespace HexTecGames.TweenLib
                 case TargetVector.Position:
                     if (data.space == Space.Local)
                     {
-                        targetTransform.localPosition += vector;
+                        targetTransform.localPosition = vector;
                     }
-                    else targetTransform.position += vector;
+                    else targetTransform.position = vector;
                     break;
 
                 case TargetVector.Rotation:
                     if (data.space == Space.Local)
                     {
-                        targetTransform.localEulerAngles += vector;
+                        targetTransform.localEulerAngles = vector;
                     }
-                    else targetTransform.eulerAngles += vector;
+                    else targetTransform.eulerAngles = vector;
                     break;
 
                 case TargetVector.Scale:
-                    targetTransform.localScale += vector;
+                    targetTransform.localScale = vector;
                     break;
 
                 default:
                     break;
             }
         }
+        //private void AddVector(Vector3 vector)
+        //{
+        //    if (targetTransform == null)
+        //    {
+        //        return;
+        //    }
+        //    switch (data.targetVector)
+        //    {
+        //        case TargetVector.Position:
+        //            if (data.space == Space.Local)
+        //            {
+        //                targetTransform.localPosition += vector;
+        //            }
+        //            else targetTransform.position += vector;
+        //            break;
+
+        //        case TargetVector.Rotation:
+        //            if (data.space == Space.Local)
+        //            {
+        //                targetTransform.localEulerAngles += vector;
+        //            }
+        //            else targetTransform.eulerAngles += vector;
+        //            break;
+
+        //        case TargetVector.Scale:
+        //            targetTransform.localScale += vector;
+        //            break;
+
+        //        default:
+        //            break;
+        //    }
+        //}
         protected override void DoAnimation(float time)
         {
-            ApplyVector(CalculateVector(time, GetVector()));
+            SetVector(CalculateVector(time, GetVector()));
         }
 
         protected override void SetStartObject(GameObject go)
