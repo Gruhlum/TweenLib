@@ -8,13 +8,19 @@ namespace HexTecGames.TweenLib.Editor
     [CustomEditor(typeof(ToggleTweenPlayer), true)]
     public class TweenTogglePlayerEditor : TweenPlayerEditor
     {
-        private int multiplier = 1;
         private bool isExpanded;
+
 
         public override void OnInspectorGUI()
         {
-            tweenPlayer = (TweenPlayer)target;
+            if (EditorUtility.IsPersistent(target))
+            {
+                DrawDefaultInspector();
+                return;
+            }
 
+            tweenPlayer = (TweenPlayer)target;
+           
             if (isExpanded || Application.isPlaying)
             {
                 if (CreateButton("Toggle Off"))
@@ -32,6 +38,11 @@ namespace HexTecGames.TweenLib.Editor
                 }
             }
             DrawDefaultInspector();
+        }
+
+        protected override void InitTweens()
+        {
+            base.InitTweens();
         }
         protected override void EndTimeReached()
         {

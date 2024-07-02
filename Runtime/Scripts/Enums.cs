@@ -11,4 +11,5 @@ namespace HexTecGames.TweenLib
     public enum TargetVector { Position, Rotation, Scale }
     public enum LoopMode { Mirror, Repeat }
     public enum FadeMode { FadeIn, FadeOut }
+    public enum Position { Start, End }
 }

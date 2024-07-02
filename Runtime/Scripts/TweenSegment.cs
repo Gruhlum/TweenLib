@@ -19,7 +19,7 @@ namespace HexTecGames.TweenLib
                 results.AddRange(animation.GenerateTweens(go));                              
             }
             TweenPlayData playData = new TweenPlayData(results, go);
-            playData.AddDelay(delay);
+            playData.AddDelay(delay, Position.Start);
             return playData;
         }
     }

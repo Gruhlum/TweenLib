@@ -34,6 +34,7 @@ namespace HexTecGames.TweenLib
 
         public void SetState(bool active)
         {
+            //Debug.Log("Set state: " + active);
             if (State == active)
             {
                 return;

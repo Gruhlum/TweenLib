@@ -32,19 +32,20 @@ namespace HexTecGames.TweenLib
         public int Repeats;
         
         [Space, Min(0.001f)] public float Speed = 1;
-        public float Delay;
-        public bool ApplyImmediately
-        {
-            get
-            {
-                return applyImmediately;
-            }
-            set
-            {
-                applyImmediately = value;
-            }
-        }
-        [DrawIf(nameof(Delay), 0f, reverse: true)][SerializeField] private bool applyImmediately = true;
+        public float StartDelay;
+        public float EndDelay;
+        //public bool ApplyImmediately
+        //{
+        //    get
+        //    {
+        //        return applyImmediately;
+        //    }
+        //    set
+        //    {
+        //        applyImmediately = value;
+        //    }
+        //}
+        //[DrawIf(nameof(StartDelay), 0f, reverse: true)][SerializeField] private bool applyImmediately = true;
         //public bool SetStartDataBeforePlay
         //{
         //    get

@@ -95,9 +95,9 @@ namespace HexTecGames.TweenLib
                     IsEndless = true;
                     break;
                 }
-                if (tween.Length > duration)
+                if (tween.Duration > duration)
                 {
-                    duration = tween.Length;
+                    duration = tween.Duration;
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace HexTecGames.TweenLib
                 tween.Init(go);
             }
 
-            Debug.Log("Duration: " + duration);
+            //Debug.Log("Duration: " + duration);
             oldTweens.AddRange(tweens);
         }
         /// <summary>
@@ -125,8 +125,9 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-
             timer += timeStep;
+
+            //Debug.Log(timer + " D: " + duration);
 
             if (!IsEndless && timer >= duration)
             {
@@ -149,16 +150,18 @@ namespace HexTecGames.TweenLib
                 tween.Evaluate(timer);
             }
         }
-        public void AddDelay(float delay)
+        public void AddDelay(float delay, Position position)
         {
             foreach (var tween in tweens)
             {
-                tween.AddDelay(delay);
+                tween.AddDelay(delay, position);
             }
+            SetDuration();
         }
         public void Start(bool reverse)
         {
             IsPlaying = true;
+            //Debug.Log(reverse + " - " + timer + " - " + duration);
             if (timer > 0)
             {
                 timer = duration - timer;

@@ -1,20 +1,21 @@
 using HexTecGames.Basics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace HexTecGames.TweenLib
 {
-	public abstract class TweenPlayerBase : MonoBehaviour
-	{
-		//TODO:
-		// ToggleTweenPlayer working
-		// GroupTweenPlayer working
+    public abstract class TweenPlayerBase : MonoBehaviour
+    {
+        //TODO:
+        // ToggleTweenPlayer working
+        // GroupTweenPlayer working
 
-		[SerializeField] private List<TweenInfo> animations;
+        [SerializeField] public List<TweenInfo> animations;
 
-		private List<TweenPlayData> tweenPlayDatas;
-    
+        protected List<TweenPlayData> tweenPlayDatas;
+
         public bool PlayOnEnable
         {
             get
@@ -41,31 +42,37 @@ namespace HexTecGames.TweenLib
         }
         [SerializeField] private float timeScale = 1;
 
+        public event Action<TweenPlayerBase> OnDisabled;
 
-        protected void Awake()
-        {
-            InitTweens();
-        }
+        private bool tweensAreInitialized;
 
-        protected void Update()
-        {
-			AdvanceTime(Time.deltaTime);
-        }
-
-        protected void OnEnable()
+        protected void Start()
         {
             if (!PlayOnEnable)
             {
                 Deactivate();
-                return;
             }
+        }
+
+        protected void Update()
+        {
+            AdvanceTime(Time.deltaTime);
+        }
+
+        protected void OnEnable()
+        {
+            if (!tweensAreInitialized)
+            {
+                InitTweens();
+            }
+
             foreach (var playData in tweenPlayDatas)
             {
                 playData.Start(false);
             }
         }
         public bool AdvanceTime(float timeStep)
-		{
+        {
             for (int i = tweenPlayDatas.Count - 1; i >= 0; i--)
             {
                 tweenPlayDatas[i].Evaluate(timeStep * TimeScale);
@@ -85,31 +92,38 @@ namespace HexTecGames.TweenLib
             if (Application.isPlaying)
             {
                 this.enabled = false;
+                OnDisabled?.Invoke(this);
             }
         }
         protected abstract List<GameObject> GetTargetGameObjects();
-        public void InitTweens()
+        public virtual void InitTweens()
         {
+            tweensAreInitialized = true;
+
             tweenPlayDatas = new List<TweenPlayData>();
             List<GameObject> targetGOs = GetTargetGameObjects();
 
-            foreach (var go in targetGOs)
+            foreach (var targetGO in targetGOs)
             {
-                if (go == null)
-                {
-                    continue;
-                }
-                foreach (var anim in animations)
-                {
-                    tweenPlayDatas.Add(anim.GenerateTweenPlayData(go));
-                }
-            }         
+                tweenPlayDatas.AddRange(GetTweenPlayData(targetGO));
+            }
+
             if (tweenPlayDatas == null)
             {
                 Debug.Log("No tweens");
                 Deactivate();
             }
         }
+        private List<TweenPlayData> GetTweenPlayData(GameObject go)
+        {
+            List<TweenPlayData> results = new List<TweenPlayData>();
+            foreach (var anim in animations)
+            {
+                results.Add(anim.GenerateTweenPlayData(go));
+            }
+            return results;
+        }
+
         public void Play(bool reversed)
         {
             this.enabled = true;

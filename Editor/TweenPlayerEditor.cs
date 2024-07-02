@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace HexTecGames.TweenLib.Editor
 {
     [CustomEditor(typeof(TweenPlayerBase), true)]
     public class TweenPlayerEditor : UnityEditor.Editor
     {
-        protected TweenPlayer tweenPlayer;
+        protected TweenPlayerBase tweenPlayer;
 
         protected float endDelay = 0.5f;
         protected float endTimer = 0;
@@ -16,9 +18,37 @@ namespace HexTecGames.TweenLib.Editor
         protected bool isPlaying;
         private bool hasPlayed;
 
+
+        //public override VisualElement CreateInspectorGUI()
+        //{
+        //    TweenPlayer tweenPlayer = (TweenPlayer)target;
+
+        //    var root = new VisualElement();
+
+        //    var foldout = new Foldout();
+
+        //    //if (tweenPlayer.animations.Count > 0)
+        //    //{
+        //    //    InspectorElement animationElement = new InspectorElement();
+        //    //    InspectorElement.FillDefaultInspector(animationElement, new SerializedObject(tweenPlayer.animations[0]), this);
+        //    //    foldout.Add(animationElement);
+        //    //}
+
+        //    InspectorElement.FillDefaultInspector(foldout, serializedObject, this);
+        //    root.Add(foldout);
+            
+        //    return root;
+        //}
+
         public override void OnInspectorGUI()
         {
-            tweenPlayer = (TweenPlayer)target;
+            if (EditorUtility.IsPersistent(target))
+            {
+                DrawDefaultInspector();
+                return;
+            }
+
+            tweenPlayer = (TweenPlayerBase)target;
 
             if (isPlaying || Application.isPlaying)
             {
@@ -62,12 +92,15 @@ namespace HexTecGames.TweenLib.Editor
             isPlaying = true;
             if (initTweens)
             {
-                tweenPlayer.InitTweens();
+                InitTweens();
             }
             
             tweenPlayer.Play(reversed);
         }
-
+        protected virtual void InitTweens()
+        {
+            tweenPlayer.InitTweens();
+        }
         protected void AdvanceTime()
         {
             if (reachedEnd)

@@ -20,21 +20,21 @@ namespace HexTecGames.TweenLib
             {
                 case Mode.Multiply:
 
-                    if (data.X) result.x = startVector.x * EvaluateCurve(time) * data.strength;
-                    if (data.Y) result.y = startVector.y * EvaluateCurve(time) * data.strength;
-                    if (data.Z) result.z = startVector.z * EvaluateCurve(time) * data.strength;
+                    if (data.X) result.x = startVector.x * GetAnimationCurveValue(time) * data.strength;
+                    if (data.Y) result.y = startVector.y * GetAnimationCurveValue(time) * data.strength;
+                    if (data.Z) result.z = startVector.z * GetAnimationCurveValue(time) * data.strength;
                     break;
 
                 case Mode.Addition:
-                    if (data.X) result.x = startVector.x + EvaluateCurve(time) * data.strength;
-                    if (data.Y) result.y = startVector.y + EvaluateCurve(time) * data.strength;
-                    if (data.Z) result.z = startVector.z + EvaluateCurve(time) * data.strength;
+                    if (data.X) result.x = startVector.x + GetAnimationCurveValue(time) * data.strength;
+                    if (data.Y) result.y = startVector.y + GetAnimationCurveValue(time) * data.strength;
+                    if (data.Z) result.z = startVector.z + GetAnimationCurveValue(time) * data.strength;
                     break;
 
                 case Mode.Set:
-                    if (data.X) result.x = EvaluateCurve(time) * data.strength;
-                    if (data.Y) result.y = EvaluateCurve(time) * data.strength;
-                    if (data.Z) result.z = EvaluateCurve(time) * data.strength;
+                    if (data.X) result.x = GetAnimationCurveValue(time) * data.strength;
+                    if (data.Y) result.y = GetAnimationCurveValue(time) * data.strength;
+                    if (data.Z) result.z = GetAnimationCurveValue(time) * data.strength;
                     break;
                 default:
                     break;

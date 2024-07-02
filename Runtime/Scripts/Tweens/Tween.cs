@@ -13,10 +13,23 @@ namespace HexTecGames.TweenLib
         {
             get
             {
-                return AnimationLength / Data.Speed * (Data.Repeats + 1);
+                return (AnimationLength / Data.Speed);
             }
         }
 
+        public float Duration
+        {
+            get
+            {
+                return (Length * (Data.Repeats + 1)) + StartDelay;
+
+                if (Reversed)
+                {
+                    return (Length * (Data.Repeats + 1)) + EndDelay;
+                }
+                else return (Length * (Data.Repeats + 1)) + StartDelay;
+            }
+        }
         public float AnimationLength
         {
             get
@@ -29,7 +42,6 @@ namespace HexTecGames.TweenLib
             }
         }
         [SerializeField] private float animationLength;
-
 
         //public bool IsFinished
         //{
@@ -44,32 +56,38 @@ namespace HexTecGames.TweenLib
         //}
         //private bool isFinished = false;
 
-        public float Duration
+        public float StartDelay
         {
             get
             {
-                return (Length / data.Speed) + Delay;
-            }
-        }
-
-        public float Delay
-        {
-            get
-            {
-                return delay;
+                return startDelay;
             }
             private set
             {
-                delay = value;
+                startDelay = value;
             }
         }
-        private float delay;
+        private float startDelay;
+
+        public float EndDelay
+        {
+            get
+            {
+                return endDelay;
+            }
+            private set
+            {
+                endDelay = value;
+            }
+        }
+        private float endDelay;
+
 
         public float AnimationTime
         {
             get
             {
-                return (elapsedTime - Delay) * data.Speed;
+                return (elapsedTime * data.Speed) - StartDelay;
             }
         }
 
@@ -93,7 +111,6 @@ namespace HexTecGames.TweenLib
 
         private bool temporaryReverse;
 
-
         public bool Reversed
         {
             get
@@ -106,14 +123,13 @@ namespace HexTecGames.TweenLib
             }
         }
 
-
-
         private Func<float, float> animationCurve;
 
         public Tween(TweenData data)
         {
             this.Data = data;
-            Delay = data.Delay;
+            StartDelay = data.StartDelay;
+            EndDelay = data.EndDelay;
         }
 
         public void Init(GameObject go)
@@ -121,7 +137,7 @@ namespace HexTecGames.TweenLib
             targetGO = go;
             SetStartObject(go);
             SetStartData();
-            
+
             UpdateAnimationCurve();
         }
         public void UpdateAnimationCurve()
@@ -134,9 +150,13 @@ namespace HexTecGames.TweenLib
             else AnimationLength = data.animationCurve.keys[^0].time;
 
         }
-        public void AddDelay(float time)
+        public void AddDelay(float time, Position position)
         {
-            Delay += time;
+            if (position == Position.Start)
+            {
+                StartDelay += time;
+            }
+            else EndDelay += time;
         }
         protected abstract void SetStartObject(GameObject go);
 
@@ -148,14 +168,12 @@ namespace HexTecGames.TweenLib
             }
 
             temporaryReverse = reversed;
-            if (data.ApplyImmediately || Delay <= 0)
+
+            if (Reversed)
             {
-                if (reversed)
-                {
-                    DoAnimation(Length);
-                }
-                else DoAnimation(0);
+                DoAnimation(AnimationLength);
             }
+            else DoAnimation(0);
         }
 
         public void Stop()
@@ -164,35 +182,79 @@ namespace HexTecGames.TweenLib
             {
                 DoAnimation(0);
             }
-            else DoAnimation(Length);
+            else DoAnimation(AnimationLength);
         }
 
         public abstract void ResetEffect();
 
-        protected float EvaluateCurve(float time)
+        protected float GetAnimationCurveValue(float time)
         {
             if (Data.CustomCurve)
             {
-                return Data.animationCurve.Evaluate(time * Data.Speed);
+                return Data.animationCurve.Evaluate(time);
             }
-            return animationCurve(time * Data.Speed);
+            return animationCurve(time);
         }
 
-        public void Evaluate(float elapsedTime)
+        public void Evaluate(float currentTime)
         {
+            elapsedTime = currentTime;
+
             if (Data == null)
             {
                 return;
             }
-            if (elapsedTime > Length * (Data.Repeats + 1))
+            //Debug.Log(elapsedTime);
+
+            //if (Reversed)
+            //{
+            //    if (elapsedTime < EndDelay)
+            //    {
+            //        DoAnimation(Length);
+            //        return;
+            //    }
+            //    if (elapsedTime > Duration - StartDelay)
+            //    {
+            //        DoAnimation(0);
+            //        return;
+            //    }
+            //}
+            //else 
+            //{
+            //    if (elapsedTime < StartDelay)
+            //    {
+            //        return;
+            //    }
+            //    if (elapsedTime > Duration - EndDelay)
+            //    {
+            //        return;
+            //    }
+            //}
+
+            //Debug.Log(EndDelay + " - " + StartDelay + " - " + elapsedTime);
+
+            
+
+            elapsedTime -= startDelay;
+            elapsedTime *= Data.Speed;
+            if (elapsedTime < 0)
+            {
+                elapsedTime = 0;
+            }
+            if (elapsedTime > AnimationLength * (Data.Repeats + 1))
             {
                 return;
             }
+
+
             if (Reversed)
             {
-                DoAnimation(Length - elapsedTime % Length);
+                DoAnimation(AnimationLength - (elapsedTime) % AnimationLength);
             }
-            else DoAnimation(elapsedTime % Length);
+            else
+            {
+                DoAnimation(elapsedTime % AnimationLength);
+            }
         }
 
         protected abstract void DoAnimation(float time);

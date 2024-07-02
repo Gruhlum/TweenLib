@@ -37,7 +37,7 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            canvasGroup.alpha = EvaluateCurve(time);
+            canvasGroup.alpha = GetAnimationCurveValue(time);
         }
 
         public override void SetStartData()
