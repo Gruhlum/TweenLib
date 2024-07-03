@@ -21,10 +21,12 @@ namespace HexTecGames.TweenLib
         }
         private bool state;
 
-
         //private void OnDisable()
         //{
-        //    SetState(false);
+        //    if (this.enabled)
+        //    {
+        //        SetAnimationToStart();
+        //    }          
         //}
 
         public void ToggleState()

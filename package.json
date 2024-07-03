@@ -1,6 +1,6 @@
 {
   "name": "com.hextecgames.tweenlib",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "displayName": "TweenLib",
   "description": "Tween Library for easy and fast animations",
   "author": {
@@ -8,5 +8,12 @@
   },
   "dependencies": {
     "com.hextecgames.basics": "1.0.0"
-  }
+  },
+  "samples": [
+    {
+      "displayName": "Example 1",
+      "description": "Basic UI example",
+      "path": "Samples/Example 1"
+    }
+  ]
 }

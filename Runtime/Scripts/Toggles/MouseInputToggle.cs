@@ -7,10 +7,10 @@ using UnityEngine.UI;
 namespace HexTecGames.TweenLib
 {
     [RequireComponent(typeof(ToggleTweenPlayer))]
-    public class MouseInputTweenPlayer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class MouseInputToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private ToggleTweenPlayer toggleTweenPlayer = default;
-        [SerializeField] private Selectable selectable = default;
+        [SerializeField, Tooltip("(Optional) Won't activate when this is not interactable")] private Selectable selectable = default;
 
         private void Reset()
         {

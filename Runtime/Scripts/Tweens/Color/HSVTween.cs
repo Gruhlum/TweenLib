@@ -36,11 +36,11 @@ namespace HexTecGames.TweenLib
         }
         protected override void DoAnimation(float time)
         {
-            SetColor(GenerateColor(Data.animationCurve.Evaluate(time)), false);
+            SetColor(GenerateColor(GetAnimationCurveValue(time)), false);
         }
     }
     [System.Serializable]
-    public class HSVTweenData : TweenData
+    public class HSVTweenData : ColorTweenData
     {
         public Mode mode;
         public bool useH;

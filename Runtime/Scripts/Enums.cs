@@ -12,4 +12,6 @@ namespace HexTecGames.TweenLib
     public enum LoopMode { Mirror, Repeat }
     public enum FadeMode { FadeIn, FadeOut }
     public enum Position { Start, End }
+    public enum ColorTarget { Image, SpriteRenderer, TMP_Text }
+    public enum ComponentTarget { Current, Parent, Child }
 }

@@ -22,6 +22,15 @@ namespace HexTecGames.TweenLib
         [SerializeField, Tooltip("How many seconds of delay between each gameObject")] private float spacing;
 
 
+        public void Play(GameObject go, bool reversed)
+        {
+            var results = tweenPlayDatas.FindAll(x => x.TargetGO == go);
+            foreach (var result in results)
+            {
+                result.Start(reversed);
+            }
+        }
+
         public override void InitTweens()
         {
             base.InitTweens();

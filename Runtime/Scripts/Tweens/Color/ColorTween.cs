@@ -10,19 +10,55 @@ namespace HexTecGames.TweenLib
     {       
         private SpriteRenderer sr;
         private Image img;
-        private TextMeshProUGUI textGUI;
+        private TMP_Text textGUI;
         protected Color startColor;
 
-        public ColorTween(TweenData data) : base(data)
-        { 
+        protected new ColorTweenData Data;
+
+        public ColorTween(ColorTweenData data) : base(data)
+        {
+            this.Data = data;
         }
 
         protected override void SetStartObject(GameObject go)
         {
-            if (go.TryGetComponent(out sr)) { }
-            else if (go.TryGetComponent(out img)) { }
-            else if (go.TryGetComponent(out textGUI)) { }
+            if (Data.ComponentTarget == ComponentTarget.Current)
+            {
+                GetComponentFromGameObject(go);
+            }
+            else if (Data.ComponentTarget == ComponentTarget.Parent)
+            {
+                GetComponentFromGameObject(go.transform.parent.gameObject);
+            }
+            else if (Data.ComponentTarget == ComponentTarget.Child)
+            {
+                for (int i = 0; i < go.transform.childCount; i++)
+                {
+                    if (GetComponentFromGameObject(go.transform.GetChild(i).gameObject))
+                    {
+                        return;
+                    }                   
+                }
+            }
         }
+
+        private bool GetComponentFromGameObject(GameObject go)
+        {
+            if (Data.ColorTarget == ColorTarget.Image)
+            {
+                return go.TryGetComponent(out img);
+            }
+            else if (Data.ColorTarget == ColorTarget.SpriteRenderer)
+            {
+                return go.TryGetComponent(out sr);
+            }
+            else if (Data.ColorTarget == ColorTarget.TMP_Text)
+            {
+                return go.TryGetComponent(out textGUI);
+            }
+            return false;
+        }
+
         public override void SetStartData()
         {           
             startColor = GetColor();
@@ -55,5 +91,12 @@ namespace HexTecGames.TweenLib
             else if (textGUI != null)
                 textGUI.color = col;
         }
+    }
+
+    [System.Serializable]
+    public abstract class ColorTweenData : TweenData
+    {
+        public ColorTarget ColorTarget;
+        public ComponentTarget ComponentTarget;
     }
 }

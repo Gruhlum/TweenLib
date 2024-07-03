@@ -23,6 +23,13 @@ namespace HexTecGames.TweenLib
         }
         private TweenPlayData nextData;
 
+        public GameObject TargetGO
+        {
+            get
+            {
+                return targetGO;
+            }
+        }
         private GameObject targetGO;
         private float timer = 0;
 
@@ -158,6 +165,15 @@ namespace HexTecGames.TweenLib
             }
             SetDuration();
         }
+        public void Stop()
+        {
+            IsPlaying = false;
+            timer = 0;
+            foreach (var tween in tweens)
+            {
+                tween.Stop();
+            }
+        }
         public void Start(bool reverse)
         {
             IsPlaying = true;
@@ -173,7 +189,20 @@ namespace HexTecGames.TweenLib
                 tween.Start(reverse);
             }
         }
-
+        public void SetAnimationToStart()
+        {
+            foreach (var tween in tweens)
+            {
+                tween.Start();
+            }
+        }
+        public void SetAnimationToEnd()
+        {
+            foreach (var tween in tweens)
+            {
+                tween.Stop();
+            }
+        }
         public void ReverseEffect()
         {
             if (oldTweens == null)

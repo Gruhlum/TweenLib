@@ -24,21 +24,21 @@ namespace HexTecGames.TweenLib
             Color col = GetColor();
             if (data.mode == Mode.Addition)
             {
-                col.a = startAlpha + Data.animationCurve.Evaluate(time);
+                col.a = startAlpha + GetAnimationCurveValue(time);
             }
             else if (data.mode == Mode.Multiply)
             {
-                col.a = startAlpha * Data.animationCurve.Evaluate(time);
+                col.a = startAlpha * GetAnimationCurveValue(time);
             }
             else if (data.mode == Mode.Set)
             {
-                col.a = Data.animationCurve.Evaluate(time);
+                col.a = GetAnimationCurveValue(time);
             }
             SetColor(col, false);
         }
     }
     [System.Serializable]
-    public class AlphaTweenData : TweenData
+    public class AlphaTweenData : ColorTweenData
     {
         public Mode mode;
 

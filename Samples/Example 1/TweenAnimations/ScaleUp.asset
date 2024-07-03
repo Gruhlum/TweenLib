@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e338c623ddbc83f47a88d5ab32c9e762, type: 3}
+  m_Name: ScaleUp
+  m_EditorClassIdentifier: 
+  tweenDatas:
+  - rid: 5143280726649864200
+  - rid: 5155751946804527108
+  references:
+    version: 2
+    RefIds:
+    - rid: 5143280726649864200
+      type: {class: TransformTweenData, ns: HexTecGames.TweenLib, asm: HexTecGames.TweenLib}
+      data:
+        CustomCurve: 0
+        animationType: 2
+        curve: 2
+        animationCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        reverse: 0
+        EndlessLoop: 0
+        LoopMode: 0
+        Repeats: 0
+        Speed: 4
+        StartDelay: 0
+        EndDelay: 0
+        X: 1
+        Y: 1
+        Z: 1
+        Mode: 0
+        strength: 0.04
+        targetVector: 2
+        space: 0
+    - rid: 5155751946804527108
+      type: {class: RGBTweenData, ns: HexTecGames.TweenLib, asm: HexTecGames.TweenLib}
+      data:
+        CustomCurve: 0
+        animationType: 0
+        curve: 0
+        animationCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        reverse: 0
+        EndlessLoop: 0
+        LoopMode: 0
+        Repeats: 0
+        Speed: 4
+        StartDelay: 0
+        EndDelay: 0
+        ColorTarget: 0
+        ComponentTarget: 0
+        color: {r: 0.7058824, g: 0.5686275, b: 0.8862746, a: 1}
+        ignoreAlpha: 1

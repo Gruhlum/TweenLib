@@ -6,19 +6,24 @@ namespace HexTecGames.TweenLib
 {
     public class RGBTween : ColorTween
     {
+        private new RGBTweenData Data;
+
         public RGBTween(RGBTweenData data) : base(data)
-        { }
+        {
+            this.Data = data;
+        }
 
         protected override void DoAnimation(float time)
         {
-            RGBTweenData data = (RGBTweenData)Data;
-            SetColor(Color.Lerp(startColor, data.color, data.animationCurve.Evaluate(time)), true);
+            //Debug.Log(startColor + " - " + Data.color + " - " + GetAnimationCurveValue(time));
+            SetColor(Color.Lerp(startColor, Data.color, GetAnimationCurveValue(time)), Data.ignoreAlpha);
         }
     }
     [System.Serializable]
-    public class RGBTweenData : TweenData
+    public class RGBTweenData : ColorTweenData
     {
-        public Color color;
+        public Color color = Color.white;
+        public bool ignoreAlpha = true;
 
         public override Tween Create()
         {

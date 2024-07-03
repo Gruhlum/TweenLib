@@ -22,12 +22,6 @@ namespace HexTecGames.TweenLib
             get
             {
                 return (Length * (Data.Repeats + 1)) + StartDelay;
-
-                if (Reversed)
-                {
-                    return (Length * (Data.Repeats + 1)) + EndDelay;
-                }
-                else return (Length * (Data.Repeats + 1)) + StartDelay;
             }
         }
         public float AnimationLength
@@ -147,7 +141,7 @@ namespace HexTecGames.TweenLib
                 animationCurve = AnimationData.GetFunction(data.animationType, data.curve);
                 AnimationLength = 1;
             }
-            else AnimationLength = data.animationCurve.keys[^0].time;
+            else AnimationLength = data.animationCurve.keys[^1].time;
 
         }
         public void AddDelay(float time, Position position)

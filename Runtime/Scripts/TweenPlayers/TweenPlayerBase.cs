@@ -46,7 +46,7 @@ namespace HexTecGames.TweenLib
 
         private bool tweensAreInitialized;
 
-        protected void Start()
+        protected virtual void Start()
         {
             if (!PlayOnEnable)
             {
@@ -54,21 +54,30 @@ namespace HexTecGames.TweenLib
             }
         }
 
-        protected void Update()
+        protected virtual void Update()
         {
             AdvanceTime(Time.deltaTime);
         }
 
-        protected void OnEnable()
+        protected virtual void OnDisable()
+        {
+            if (this.enabled)
+            {
+                StopAnimations();
+            }
+        }
+        protected virtual void OnEnable()
         {
             if (!tweensAreInitialized)
             {
                 InitTweens();
             }
-
-            foreach (var playData in tweenPlayDatas)
+            if (PlayOnEnable)
             {
-                playData.Start(false);
+                foreach (var playData in tweenPlayDatas)
+                {
+                    playData.Start(false);
+                }
             }
         }
         public bool AdvanceTime(float timeStep)
@@ -91,7 +100,7 @@ namespace HexTecGames.TweenLib
         {
             if (Application.isPlaying)
             {
-                this.enabled = false;
+                this.enabled = false;                
                 OnDisabled?.Invoke(this);
             }
         }
@@ -132,6 +141,28 @@ namespace HexTecGames.TweenLib
                 playData.Start(reversed);
             }
         }
+        public void SetAnimationToStart()
+        {
+            if (tweenPlayDatas == null)
+            {
+                return;
+            }
+            foreach (var playData in tweenPlayDatas)
+            {
+                playData.SetAnimationToStart();
+            }
+        }
+        public void SetAnimationToEnd()
+        {
+            if (tweenPlayDatas == null)
+            {
+                return;
+            }
+            foreach (var playData in tweenPlayDatas)
+            {
+                playData.SetAnimationToEnd();
+            }
+        }
         public void ResetEffects()
         {
             if (tweenPlayDatas == null)
@@ -141,6 +172,17 @@ namespace HexTecGames.TweenLib
             foreach (var playData in tweenPlayDatas)
             {
                 playData.ReverseEffect();
+            }
+        }
+        public void StopAnimations()
+        {
+            if (tweenPlayDatas == null)
+            {
+                return;
+            }
+            foreach (var playData in tweenPlayDatas)
+            {
+                playData.Stop();
             }
         }
     }
