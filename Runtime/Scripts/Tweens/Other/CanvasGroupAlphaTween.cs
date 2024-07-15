@@ -17,6 +17,13 @@ namespace HexTecGames.TweenLib
             //Data = data;
         }
 
+        protected override void SetStartObject(Component component)
+        {
+            if (component is CanvasGroup canvasGroup)
+            {
+                this.canvasGroup = canvasGroup;
+            }
+        }
         protected override void SetStartObject(GameObject go)
         {
             canvasGroup = go.GetComponent<CanvasGroup>();

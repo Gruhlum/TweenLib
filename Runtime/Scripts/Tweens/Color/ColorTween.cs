@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace HexTecGames.TweenLib
 {
     public abstract class ColorTween : Tween
-    {       
+    {
         private SpriteRenderer sr;
         private Image img;
         private TMP_Text textGUI;
@@ -19,7 +19,21 @@ namespace HexTecGames.TweenLib
         {
             this.Data = data;
         }
-
+        protected override void SetStartObject(Component component)
+        {
+            if (component is SpriteRenderer sr)
+            {
+                this.sr = sr;
+            }
+            else if (component is Image img)
+            {
+                this.img = img;
+            }
+            else if (component is TMP_Text textGUI)
+            {
+                this.textGUI = textGUI;
+            }
+        }
         protected override void SetStartObject(GameObject go)
         {
             if (Data.ComponentTarget == ComponentTarget.Current)
@@ -37,7 +51,7 @@ namespace HexTecGames.TweenLib
                     if (GetComponentFromGameObject(go.transform.GetChild(i).gameObject))
                     {
                         return;
-                    }                   
+                    }
                 }
             }
         }
@@ -60,7 +74,7 @@ namespace HexTecGames.TweenLib
         }
 
         public override void SetStartData()
-        {           
+        {
             startColor = GetColor();
         }
         public override void ResetEffect()

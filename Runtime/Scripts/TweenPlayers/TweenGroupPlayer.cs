@@ -6,6 +6,7 @@ namespace HexTecGames.TweenLib
 {
     public class TweenGroupPlayer : TweenPlayerBase
     {
+        [SerializeField] public List<TweenInfo> animations;
         [SerializeField] private List<GameObject> targetGOs = default;
 
         public float Spacing
@@ -49,9 +50,18 @@ namespace HexTecGames.TweenLib
             }
         }
 
-        protected override List<GameObject> GetTargetGameObjects()
+        protected override List<TweenPlayData> GenerateTweenPlayDatas()
         {
-            return targetGOs;
+            List<TweenPlayData> results = new List<TweenPlayData>();
+
+            foreach (var targetGO in targetGOs)
+            {
+                foreach (var animation in animations)
+                {
+                    results.Add(animation.GenerateTweenPlayData(targetGO));
+                }
+            }
+            return results;
         }
     }
 }

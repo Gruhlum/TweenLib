@@ -8,13 +8,21 @@ namespace HexTecGames.TweenLib
 {
     public abstract class TweenPlayerBase : MonoBehaviour
     {
-        //TODO:
-        // ToggleTweenPlayer working
-        // GroupTweenPlayer working
-
-        [SerializeField] public List<TweenInfo> animations;
-
         protected List<TweenPlayData> tweenPlayDatas;
+
+        public bool IsActive
+        {
+            get
+            {
+                return isActive;
+            }
+            private set
+            {
+                isActive = value;
+            }
+        }
+        private bool isActive;
+
 
         public bool PlayOnEnable
         {
@@ -56,12 +64,16 @@ namespace HexTecGames.TweenLib
 
         protected virtual void Update()
         {
+            if (!IsActive)
+            {
+                return;
+            }
             AdvanceTime(Time.deltaTime);
         }
 
         protected virtual void OnDisable()
         {
-            if (this.enabled)
+            if (IsActive)
             {
                 StopAnimations();
             }
@@ -74,10 +86,7 @@ namespace HexTecGames.TweenLib
             }
             if (PlayOnEnable)
             {
-                foreach (var playData in tweenPlayDatas)
-                {
-                    playData.Start(false);
-                }
+                Play();
             }
         }
         public bool AdvanceTime(float timeStep)
@@ -100,22 +109,16 @@ namespace HexTecGames.TweenLib
         {
             if (Application.isPlaying)
             {
-                this.enabled = false;                
+                IsActive = false;
                 OnDisabled?.Invoke(this);
             }
         }
-        protected abstract List<GameObject> GetTargetGameObjects();
+
         public virtual void InitTweens()
         {
             tweensAreInitialized = true;
 
-            tweenPlayDatas = new List<TweenPlayData>();
-            List<GameObject> targetGOs = GetTargetGameObjects();
-
-            foreach (var targetGO in targetGOs)
-            {
-                tweenPlayDatas.AddRange(GetTweenPlayData(targetGO));
-            }
+            tweenPlayDatas = GenerateTweenPlayDatas();
 
             if (tweenPlayDatas == null)
             {
@@ -123,19 +126,12 @@ namespace HexTecGames.TweenLib
                 Deactivate();
             }
         }
-        private List<TweenPlayData> GetTweenPlayData(GameObject go)
-        {
-            List<TweenPlayData> results = new List<TweenPlayData>();
-            foreach (var anim in animations)
-            {
-                results.Add(anim.GenerateTweenPlayData(go));
-            }
-            return results;
-        }
+        protected abstract List<TweenPlayData> GenerateTweenPlayDatas();
 
-        public void Play(bool reversed)
+        public void Play(bool reversed = false)
         {
-            this.enabled = true;
+            IsActive = true;
+
             foreach (var playData in tweenPlayDatas)
             {
                 playData.Start(reversed);
@@ -183,6 +179,18 @@ namespace HexTecGames.TweenLib
             foreach (var playData in tweenPlayDatas)
             {
                 playData.Stop();
+            }
+            IsActive = false;
+        }
+        public void ResetStartData()
+        {
+            if (tweenPlayDatas == null)
+            {
+                return;
+            }
+            foreach (var playData in tweenPlayDatas)
+            {
+                playData.ResetStartDatas();
             }
         }
     }

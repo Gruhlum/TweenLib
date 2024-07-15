@@ -189,6 +189,13 @@ namespace HexTecGames.TweenLib
                 tween.Start(reverse);
             }
         }
+        public void ResetStartDatas()
+        {
+            foreach (var tween in tweens)
+            {
+                tween.SetStartData();
+            }
+        }
         public void SetAnimationToStart()
         {
             foreach (var tween in tweens)

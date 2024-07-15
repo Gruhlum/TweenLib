@@ -305,6 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleTweenPlayer: {fileID: 1283662535679617712}
+  selectable: {fileID: 0}
 --- !u!114 &1283662535679617712
 MonoBehaviour:
   m_ObjectHideFlags: 0

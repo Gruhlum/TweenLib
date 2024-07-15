@@ -76,7 +76,6 @@ namespace HexTecGames.TweenLib
         }
         private float endDelay;
 
-
         public float AnimationTime
         {
             get
@@ -126,6 +125,14 @@ namespace HexTecGames.TweenLib
             EndDelay = data.EndDelay;
         }
 
+        public void Init(Component component)
+        {
+            targetGO = component.gameObject;
+            SetStartObject(component);
+            SetStartData();
+
+            UpdateAnimationCurve();
+        }
         public void Init(GameObject go)
         {
             targetGO = go;
@@ -153,6 +160,7 @@ namespace HexTecGames.TweenLib
             else EndDelay += time;
         }
         protected abstract void SetStartObject(GameObject go);
+        protected abstract void SetStartObject(Component component);
 
         public void Start(bool reversed = false)
         {
@@ -169,18 +177,20 @@ namespace HexTecGames.TweenLib
             }
             else DoAnimation(0);
         }
-
         public void Stop()
         {
-            if (Reversed)
+            bool direction = Reversed;
+            if (Data.LoopMode == LoopMode.Mirror && Data.Repeats % 2 != 0)
+            {
+                direction = !direction;
+            }
+            if (direction)
             {
                 DoAnimation(0);
             }
             else DoAnimation(AnimationLength);
         }
-
         public abstract void ResetEffect();
-
         protected float GetAnimationCurveValue(float time)
         {
             if (Data.CustomCurve)
@@ -189,7 +199,6 @@ namespace HexTecGames.TweenLib
             }
             return animationCurve(time);
         }
-
         public void Evaluate(float currentTime)
         {
             elapsedTime = currentTime;
@@ -198,39 +207,10 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            //Debug.Log(elapsedTime);
-
-            //if (Reversed)
-            //{
-            //    if (elapsedTime < EndDelay)
-            //    {
-            //        DoAnimation(Length);
-            //        return;
-            //    }
-            //    if (elapsedTime > Duration - StartDelay)
-            //    {
-            //        DoAnimation(0);
-            //        return;
-            //    }
-            //}
-            //else 
-            //{
-            //    if (elapsedTime < StartDelay)
-            //    {
-            //        return;
-            //    }
-            //    if (elapsedTime > Duration - EndDelay)
-            //    {
-            //        return;
-            //    }
-            //}
-
-            //Debug.Log(EndDelay + " - " + StartDelay + " - " + elapsedTime);
-
-            
 
             elapsedTime -= startDelay;
             elapsedTime *= Data.Speed;
+
             if (elapsedTime < 0)
             {
                 elapsedTime = 0;
@@ -240,8 +220,18 @@ namespace HexTecGames.TweenLib
                 return;
             }
 
+            bool playDirection = Reversed;
 
-            if (Reversed)
+            if (Data.Repeats > 0 && Data.LoopMode == LoopMode.Mirror)
+            {
+                bool isUneven = Mathf.FloorToInt(elapsedTime / AnimationLength) % 2 != 0;
+                //Debug.Log(elapsedTime + " - " + "- " + AnimationLength + " - " + isUneven);
+                if (isUneven)
+                {
+                    playDirection = !playDirection;
+                }
+            }
+            if (playDirection)
             {
                 DoAnimation(AnimationLength - (elapsedTime) % AnimationLength);
             }
@@ -250,9 +240,7 @@ namespace HexTecGames.TweenLib
                 DoAnimation(elapsedTime % AnimationLength);
             }
         }
-
         protected abstract void DoAnimation(float time);
-
         public abstract void SetStartData();
     }
 }

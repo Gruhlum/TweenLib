@@ -124,6 +124,13 @@ namespace HexTecGames.TweenLib
         {
             targetTransform = go.transform;
         }
+        protected override void SetStartObject(Component component)
+        {
+            if (component is Transform transform)
+            {
+                targetTransform = transform;
+            }
+        }
     }
 
     [System.Serializable]

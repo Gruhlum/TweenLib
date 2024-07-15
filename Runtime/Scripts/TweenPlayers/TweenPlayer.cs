@@ -6,6 +6,7 @@ namespace HexTecGames.TweenLib
 {
     public class TweenPlayer : TweenPlayerBase
     {
+        [SerializeField] public List<TweenInfo> animations;
         [SerializeField] private GameObject target;
 
         protected void Reset()
@@ -13,9 +14,14 @@ namespace HexTecGames.TweenLib
             target = this.gameObject;
         }
 
-        protected override List<GameObject> GetTargetGameObjects()
+        protected override List<TweenPlayData> GenerateTweenPlayDatas()
         {
-            return new List<GameObject>() { target };
+            List<TweenPlayData> results = new List<TweenPlayData>();
+            foreach (var anim in animations)
+            {
+                results.Add(anim.GenerateTweenPlayData(target));
+            }
+            return results;
         }
     }
 }
