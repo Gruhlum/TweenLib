@@ -9,30 +9,22 @@ namespace HexTecGames.TweenLib
     public class InteractableToggle : MonoBehaviour
 	{
 		[SerializeField] private TweenPlayerBase tweenPlayer = default;
-        [SerializeField] private CanvasGroup canvasGroup = default;
-        private bool isActive;
+        [SerializeField] private Selectable selectable = default;
 
         private void Reset()
         {
             tweenPlayer = GetComponent<TweenPlayerBase>();
-            canvasGroup = GetComponent<CanvasGroup>();
-        }
-
-        void Awake()
-        {
-            if (gameObject.activeSelf)
-            {
-                isActive = true;
-            }
-            else if (canvasGroup != null)
-            {
-                canvasGroup.interactable = false;
-            }
+            selectable = GetComponent<Selectable>();
         }
 
         private void OnEnable()
         {
             tweenPlayer.OnDisabled += TweenPlayer_OnDisabled;
+
+            if (selectable != null)
+            {
+                selectable.interactable = false;
+            }
         }
 
         private void OnDisable()
@@ -42,31 +34,7 @@ namespace HexTecGames.TweenLib
 
         private void TweenPlayer_OnDisabled(TweenPlayerBase obj)
         {
-            if (!isActive)
-            {
-                gameObject.SetActive(false);
-            }          
-        }
-
-        public void SetState(bool active)
-        {
-            if (isActive == active)
-            {
-                return;
-            }
-
-            if (canvasGroup != null)
-            {
-                canvasGroup.interactable = active;
-            }
-            
-            isActive = active;
-
-            if (active)
-            {
-                gameObject.SetActive(true);
-            }
-            tweenPlayer.Play(!active);
+            selectable.interactable = true;
         }
     }
 }

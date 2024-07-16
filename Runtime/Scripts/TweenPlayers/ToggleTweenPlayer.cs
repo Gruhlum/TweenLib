@@ -6,8 +6,8 @@ using UnityEngine.SocialPlatforms;
 
 namespace HexTecGames.TweenLib
 {
-	public class ToggleTweenPlayer : TweenPlayer
-    {       
+    public class ToggleTweenPlayer : TweenPlayer
+    {
         public bool State
         {
             get
@@ -21,13 +21,13 @@ namespace HexTecGames.TweenLib
         }
         private bool state;
 
-        //private void OnDisable()
-        //{
-        //    if (this.enabled)
-        //    {
-        //        SetAnimationToStart();
-        //    }          
-        //}
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            State = false;
+            ResetEffects();
+        }
 
         public void ToggleState()
         {
@@ -36,7 +36,6 @@ namespace HexTecGames.TweenLib
 
         public void SetState(bool active)
         {
-            //Debug.Log("Set state: " + active);
             if (State == active)
             {
                 return;

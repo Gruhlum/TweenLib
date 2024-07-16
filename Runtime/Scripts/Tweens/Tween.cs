@@ -21,6 +21,10 @@ namespace HexTecGames.TweenLib
         {
             get
             {
+                if (Data.EndlessLoop)
+                {
+                    return -1;
+                }
                 return (Length * (Data.Repeats + 1)) + StartDelay;
             }
         }
@@ -138,7 +142,6 @@ namespace HexTecGames.TweenLib
             targetGO = go;
             SetStartObject(go);
             SetStartData();
-
             UpdateAnimationCurve();
         }
         public void UpdateAnimationCurve()
@@ -215,14 +218,14 @@ namespace HexTecGames.TweenLib
             {
                 elapsedTime = 0;
             }
-            if (elapsedTime > AnimationLength * (Data.Repeats + 1))
+            if (!Data.EndlessLoop && elapsedTime > AnimationLength * (Data.Repeats + 1))
             {
                 return;
             }
 
             bool playDirection = Reversed;
 
-            if (Data.Repeats > 0 && Data.LoopMode == LoopMode.Mirror)
+            if ((Data.EndlessLoop || Data.Repeats > 0) && Data.LoopMode == LoopMode.Mirror)
             {
                 bool isUneven = Mathf.FloorToInt(elapsedTime / AnimationLength) % 2 != 0;
                 //Debug.Log(elapsedTime + " - " + "- " + AnimationLength + " - " + isUneven);

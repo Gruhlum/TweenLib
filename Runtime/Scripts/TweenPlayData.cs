@@ -102,7 +102,7 @@ namespace HexTecGames.TweenLib
                     IsEndless = true;
                     break;
                 }
-                if (tween.Duration > duration)
+                else if (tween.Duration > duration)
                 {
                     duration = tween.Duration;
                 }

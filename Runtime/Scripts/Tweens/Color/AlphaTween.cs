@@ -15,6 +15,7 @@ namespace HexTecGames.TweenLib
         public override void SetStartData()
         {
             startAlpha = GetColor().a;
+            base.SetStartData();
         }
 
         protected override void DoAnimation(float time)

@@ -75,7 +75,7 @@ namespace HexTecGames.TweenLib
         {
             if (IsActive)
             {
-                StopAnimations();
+                Stop();
             }
         }
         protected virtual void OnEnable()
@@ -102,8 +102,12 @@ namespace HexTecGames.TweenLib
                     return false;
                 }
             }
-            Deactivate();
+            ReachedEndOfAnimation();
             return true;
+        }
+        protected virtual void ReachedEndOfAnimation()
+        {
+            Deactivate();
         }
         public void Deactivate()
         {
@@ -128,6 +132,14 @@ namespace HexTecGames.TweenLib
         }
         protected abstract List<TweenPlayData> GenerateTweenPlayDatas();
 
+        public IEnumerator PlayCoroutine(bool reversed = false)
+        {
+            Play(reversed);
+            while (IsActive)
+            {
+                yield return null;
+            }
+        }
         public void Play(bool reversed = false)
         {
             IsActive = true;
@@ -170,7 +182,7 @@ namespace HexTecGames.TweenLib
                 playData.ReverseEffect();
             }
         }
-        public void StopAnimations()
+        public virtual void Stop()
         {
             if (tweenPlayDatas == null)
             {
