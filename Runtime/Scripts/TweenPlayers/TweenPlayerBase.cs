@@ -2,6 +2,7 @@ using HexTecGames.Basics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace HexTecGames.TweenLib
@@ -49,6 +50,18 @@ namespace HexTecGames.TweenLib
             }
         }
         [SerializeField] private float timeScale = 1;
+
+        public bool IsEndless
+        {
+            get
+            {
+                if (tweenPlayDatas == null || tweenPlayDatas.Count == 0)
+                {
+                    return false;
+                }
+                return tweenPlayDatas.Any(x => x.IsEndless);
+            }
+        }
 
         public event Action<TweenPlayerBase> OnDisabled;
 

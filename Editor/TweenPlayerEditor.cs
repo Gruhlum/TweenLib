@@ -52,11 +52,22 @@ namespace HexTecGames.TweenLib.Editor
 
             if (isPlaying || Application.isPlaying)
             {
-                if (CreateButton("Play"))
+                if (tweenPlayer.IsEndless)
                 {
-                    StopAnimation();
-                    StartAnimation(false, true);
+                    if (CreateButton("Stop"))
+                    {
+                        StopAnimation();
+                    }
                 }
+                else
+                {
+                    if (CreateButton("Play"))
+                    {
+                        StopAnimation();
+                        StartAnimation(false, true);
+                    }
+                }
+                
             }
             else
             {

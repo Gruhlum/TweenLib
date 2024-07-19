@@ -176,10 +176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ed57422827d9a45bcdee9893554f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animations:
-  - {fileID: 11400000, guid: 9329899c498ad1f43ad677908f03a503, type: 2}
   playOnEnable: 0
   timeScale: 1
+  animations:
+  - {fileID: 11400000, guid: 9329899c498ad1f43ad677908f03a503, type: 2}
   target: {fileID: 37292547}
 --- !u!225 &37292550
 CanvasGroup:
@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenPlayer: {fileID: 38907706}
-  canvasGroup: {fileID: 38907701}
+  selectable: {fileID: 0}
 --- !u!114 &38907706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,10 +352,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bbc34177c58baf4484c397601a15131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animations:
-  - {fileID: 11400000, guid: cd50005dc266553478e76e7e7bcadd94, type: 2}
   playOnEnable: 1
   timeScale: 1
+  animations:
+  - {fileID: 11400000, guid: cd50005dc266553478e76e7e7bcadd94, type: 2}
   targetGOs:
   - {fileID: 1138821028}
   - {fileID: 1002868771}
@@ -632,11 +632,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ed57422827d9a45bcdee9893554f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animations:
-  - {fileID: 11400000, guid: 9329899c498ad1f43ad677908f03a503, type: 2}
   playOnEnable: 0
   timeScale: 1
+  animations:
+  - {fileID: 11400000, guid: 9329899c498ad1f43ad677908f03a503, type: 2}
   target: {fileID: 247187041}
+--- !u!1 &499390858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 499390859}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &499390859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499390858}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &518701111
 GameObject:
   m_ObjectHideFlags: 0
@@ -1248,10 +1279,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ed57422827d9a45bcdee9893554f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animations:
-  - {fileID: 11400000, guid: 9329899c498ad1f43ad677908f03a503, type: 2}
   playOnEnable: 1
   timeScale: 1
+  animations:
+  - {fileID: 11400000, guid: 9329899c498ad1f43ad677908f03a503, type: 2}
   target: {fileID: 1312690832}
 --- !u!1001 &1435200078
 PrefabInstance:
@@ -1855,6 +1886,37 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1780346432}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1912279046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912279047}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912279047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912279046}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -2865,7 +2927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenPlayer: {fileID: 3831924205220216159}
-  canvasGroup: {fileID: 3831924205220216158}
+  selectable: {fileID: 0}
 --- !u!1001 &4057855514302536494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3242,3 +3304,5 @@ SceneRoots:
   - {fileID: 2035951049}
   - {fileID: 518701114}
   - {fileID: 1312690836}
+  - {fileID: 1912279047}
+  - {fileID: 499390859}
