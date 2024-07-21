@@ -8,7 +8,7 @@ namespace HexTecGames.TweenLib
     [System.Serializable]
     public class GroupTweenTarget : TweenTarget
     {
-        public List<TweenAnimation> animations = new List<TweenAnimation>();
+        public List<TweenInfo> animations = new List<TweenInfo>();
         public List<GameObject> targetGOs = new List<GameObject>();
 
         public override List<TweenPlayData> GenerateTweenPlayData()
