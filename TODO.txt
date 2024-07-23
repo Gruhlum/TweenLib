@@ -1,17 +1,18 @@
 
 
-AnimationGroup:
-Multiple items, each can be turned on or off.
-One animation for active items and another one for deactivated ones.
+Rework floors:
+- 12 rooms, upgrades on 8, 4, 0
 
 
-SingleSelectAnimationGroup:
-
-Only 1 item can be active at the same time
-
-HoverSelectAnimationGroup:
-
-UI element that the mouse is hovering over will be the selected one
+Add PowerUps:
+Full Heal
+Add Time
+Ankh (Res when dead)
 
 
-MouseTogglePlayer:
+Add Glass and Hammer
+
+
+Fix Leaderboard name change
+
+numpad math question

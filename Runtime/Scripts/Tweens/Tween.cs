@@ -133,14 +133,16 @@ namespace HexTecGames.TweenLib
         {
             targetGO = component.gameObject;
             SetStartObject(component);
-            SetStartData();
-
-            UpdateAnimationCurve();
+            Init();
         }
         public void Init(GameObject go)
         {
             targetGO = go;
             SetStartObject(go);
+            Init();          
+        }
+        private void Init()
+        {
             SetStartData();
             UpdateAnimationCurve();
         }

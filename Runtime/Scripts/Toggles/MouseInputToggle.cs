@@ -24,11 +24,19 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
+            if (!toggleTweenPlayer.enabled)
+            {
+                return;
+            }
             toggleTweenPlayer.SetState(true);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (!toggleTweenPlayer.enabled)
+            {
+                return;
+            }
             toggleTweenPlayer.SetState(false);
         }
     }
