@@ -1,3 +1,4 @@
+using HexTecGames.Basics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,36 +6,57 @@ using UnityEngine.UI;
 
 namespace HexTecGames.TweenLib
 {
+    /// <summary>
+    /// Script that makes sure that the assigned UI elements are not interactable while an animation plays
+    /// </summary>
     [RequireComponent(typeof(TweenPlayerBase))]
     public class InteractableToggle : MonoBehaviour
 	{
-		[SerializeField] private TweenPlayerBase tweenPlayer = default;
-        [SerializeField] private Selectable selectable = default;
+		public enum ToggleType { CanvasGroup, Selectable }
+        public ToggleType toggleType;
+        [SerializeField] private TweenPlayerBase tweenPlayer = default;
+        [SerializeField, DrawIf(nameof(toggleType), ToggleType.Selectable)] private Selectable selectable = default;
+        [SerializeField, DrawIf(nameof(toggleType), ToggleType.CanvasGroup)] private CanvasGroup canvasGroup = default;
 
         private void Reset()
         {
             tweenPlayer = GetComponent<TweenPlayerBase>();
             selectable = GetComponent<Selectable>();
+            canvasGroup = GetComponent<CanvasGroup>();
         }
 
-        private void OnEnable()
+        private void Awake()
         {
+            tweenPlayer.OnStartPlaying += TweenPlayer_OnStartPlaying;
             tweenPlayer.OnDisabled += TweenPlayer_OnDisabled;
+        }
+      
+        void OnDestroy()
+        {
+            tweenPlayer.OnStartPlaying -= TweenPlayer_OnStartPlaying;
+            tweenPlayer.OnDisabled -= TweenPlayer_OnDisabled;
+        }
 
-            if (selectable != null)
+        private void ToggleInteractability(bool interactable)
+        {
+            if (toggleType == ToggleType.Selectable)
             {
-                selectable.interactable = false;
+                selectable.interactable = interactable;
+            }
+            else if (toggleType == ToggleType.CanvasGroup)
+            {
+                canvasGroup.interactable = interactable;
             }
         }
 
-        private void OnDisable()
+        private void TweenPlayer_OnStartPlaying(TweenPlayerBase obj)
         {
-            tweenPlayer.OnDisabled -= TweenPlayer_OnDisabled;
+            ToggleInteractability(false);
         }
 
         private void TweenPlayer_OnDisabled(TweenPlayerBase obj)
         {
-            selectable.interactable = true;
+            ToggleInteractability(true);
         }
     }
 }

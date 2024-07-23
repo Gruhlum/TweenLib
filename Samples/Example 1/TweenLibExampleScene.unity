@@ -336,8 +336,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144360df5f3861645a6789677c2863de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tweenPlayer: {fileID: 0}
+  toggleType: 0
+  tweenPlayer: {fileID: 38907706}
   selectable: {fileID: 0}
+  canvasGroup: {fileID: 38907701}
 --- !u!114 &38907706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,15 +352,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bbc34177c58baf4484c397601a15131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animations:
-  - {fileID: 11400000, guid: cd50005dc266553478e76e7e7bcadd94, type: 2}
-  tweenPlayDatas: []
   playOnEnable: 1
   timeScale: 1
+  animations:
+  - {fileID: 11400000, guid: cd50005dc266553478e76e7e7bcadd94, type: 2}
   targetGOs:
   - {fileID: 1138821028}
   - {fileID: 1002868771}
   - {fileID: 2114129291}
+  spacing: 0
 --- !u!1001 &81844121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -772,12 +774,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e48256b039ce0b4da26d683172f8748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tweenPlayers:
-  - {fileID: 247187046}
-  sceneSelectType: 2
-  sceneName: 
-  sceneIndex: 0
-  loadingScreen: {fileID: 518701113}
 --- !u!4 &712593156
 Transform:
   m_ObjectHideFlags: 0
@@ -811,7 +807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &716931994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1874,7 +1870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1912279047
 Transform:
   m_ObjectHideFlags: 0
@@ -2962,8 +2958,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144360df5f3861645a6789677c2863de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toggleType: 0
   tweenPlayer: {fileID: 3831924205220216159}
   selectable: {fileID: 0}
+  canvasGroup: {fileID: 0}
 --- !u!1001 &4057855514302536494
 PrefabInstance:
   m_ObjectHideFlags: 0

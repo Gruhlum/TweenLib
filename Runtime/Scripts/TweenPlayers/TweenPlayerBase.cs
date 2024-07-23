@@ -64,16 +64,10 @@ namespace HexTecGames.TweenLib
         }
 
         public event Action<TweenPlayerBase> OnDisabled;
+        public event Action<TweenPlayerBase> OnStartPlaying;
 
         private bool tweensAreInitialized;
 
-        protected virtual void Start()
-        {
-            if (!PlayOnEnable)
-            {
-                Deactivate();
-            }
-        }
 
         protected virtual void Update()
         {
@@ -161,6 +155,7 @@ namespace HexTecGames.TweenLib
             {
                 playData.Start(reversed);
             }
+            OnStartPlaying?.Invoke(this);
         }
         public void SetAnimationToStart()
         {
