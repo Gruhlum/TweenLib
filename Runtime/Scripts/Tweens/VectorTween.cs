@@ -1,3 +1,4 @@
+using HexTecGames.Basics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,25 +17,25 @@ namespace HexTecGames.TweenLib
         protected Vector3 CalculateVector(float time, Vector3 currentVec)
         {
             Vector3 result = currentVec;
-            switch (data.Mode)
+            switch (data.mode)
             {
                 case Mode.Multiply:
 
-                    if (data.X) result.x = startVector.x * GetAnimationCurveValue(time) * data.strength;
-                    if (data.Y) result.y = startVector.y * GetAnimationCurveValue(time) * data.strength;
-                    if (data.Z) result.z = startVector.z * GetAnimationCurveValue(time) * data.strength;
+                    if (data.X) result.x = startVector.x * GetAnimationCurveValue(time) * data.strength * data.multiplierX;
+                    if (data.Y) result.y = startVector.y * GetAnimationCurveValue(time) * data.strength * data.multiplierY;
+                    if (data.Z) result.z = startVector.z * GetAnimationCurveValue(time) * data.strength * data.multiplierZ;
                     break;
 
                 case Mode.Addition:
-                    if (data.X) result.x = startVector.x + GetAnimationCurveValue(time) * data.strength;
-                    if (data.Y) result.y = startVector.y + GetAnimationCurveValue(time) * data.strength;
-                    if (data.Z) result.z = startVector.z + GetAnimationCurveValue(time) * data.strength;
+                    if (data.X) result.x = startVector.x + GetAnimationCurveValue(time) * data.strength * data.multiplierX;
+                    if (data.Y) result.y = startVector.y + GetAnimationCurveValue(time) * data.strength * data.multiplierY;
+                    if (data.Z) result.z = startVector.z + GetAnimationCurveValue(time) * data.strength * data.multiplierZ;
                     break;
 
                 case Mode.Set:
-                    if (data.X) result.x = GetAnimationCurveValue(time) * data.strength;
-                    if (data.Y) result.y = GetAnimationCurveValue(time) * data.strength;
-                    if (data.Z) result.z = GetAnimationCurveValue(time) * data.strength;
+                    if (data.X) result.x = GetAnimationCurveValue(time) * data.strength * data.multiplierX;
+                    if (data.Y) result.y = GetAnimationCurveValue(time) * data.strength * data.multiplierY;
+                    if (data.Z) result.z = GetAnimationCurveValue(time) * data.strength * data.multiplierZ;
                     break;
                 default:
                     break;
@@ -44,10 +45,15 @@ namespace HexTecGames.TweenLib
     }
     public abstract class VectorData : TweenData
     {
-        public bool X;
-        public bool Y;
-        public bool Z;
-        public Mode Mode;
+        [Space]
+        public Mode mode;
         public float strength = 1;
+
+        public bool X;
+        [DrawIf(nameof(X), true)] public float multiplierX = 1;
+        public bool Y;
+        [DrawIf(nameof(Y), true)] public float multiplierY = 1;
+        public bool Z;
+        [DrawIf(nameof(Z), true)] public float multiplierZ = 1;       
     }
 }

@@ -51,7 +51,7 @@ MonoBehaviour:
         reverse: 1
         EndlessLoop: 0
         LoopMode: 1
-        Repeats: 2
+        Repeats: 0
         Speed: 1.5
         StartDelay: 0
         EndDelay: 0

@@ -11,8 +11,8 @@ namespace HexTecGames.TweenLib
         public bool CustomCurve;
         [DrawIf(nameof(CustomCurve), false)] public AnimationType animationType;
         [DrawIf(nameof(CustomCurve), false)] public Curve curve;
-        [DrawIf(nameof(CustomCurve), true)] public AnimationCurve animationCurve 
-            = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(1, 1) });
+        [DrawIf(nameof(CustomCurve), true)] 
+        public AnimationCurve animationCurve  = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(1, 1) });
 
         public bool Reverse
         {

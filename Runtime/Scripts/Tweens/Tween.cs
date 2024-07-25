@@ -202,7 +202,7 @@ namespace HexTecGames.TweenLib
             {
                 return Data.animationCurve.Evaluate(time);
             }
-            return animationCurve(time);
+            else return animationCurve(time);
         }
         public void Evaluate(float currentTime)
         {
