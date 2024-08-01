@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Open
+  m_text: Start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -92,13 +92,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 32
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -168,11 +168,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3572451023459696808, guid: 3ef03d037f3a45f4ba1bbd7c90a8c329, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 3572451023459696808, guid: 3ef03d037f3a45f4ba1bbd7c90a8c329, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3572451023459696808, guid: 3ef03d037f3a45f4ba1bbd7c90a8c329, type: 3}
       propertyPath: m_LocalPosition.x
@@ -318,11 +318,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15265201ffc67024d8a05badc1366f6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animations:
-  - {fileID: 11400000, guid: c0227123c618d524bb0063752b7addf0, type: 2}
   playOnEnable: 0
   timeScale: 1
-  target: {fileID: 604003098172817130}
+  animationTargets: []
 --- !u!114 &5262602294328753879 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3645365013609095487, guid: 3ef03d037f3a45f4ba1bbd7c90a8c329, type: 3}

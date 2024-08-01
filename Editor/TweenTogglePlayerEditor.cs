@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HexTecGames.TweenLib.Editor
 {
-    [CustomEditor(typeof(ToggleTweenPlayer), true)]
+    [CustomEditor(typeof(ToggleTweenPlayer), true), CanEditMultipleObjects]
     public class TweenTogglePlayerEditor : TweenPlayerEditor
     {
         private bool isExpanded;

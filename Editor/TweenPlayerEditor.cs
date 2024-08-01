@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace HexTecGames.TweenLib.Editor
 {
-    [CustomEditor(typeof(TweenPlayerBase), true)]
+    [CustomEditor(typeof(TweenPlayerBase), true), CanEditMultipleObjects]
     public class TweenPlayerEditor : UnityEditor.Editor
     {
         protected TweenPlayerBase tweenPlayer;

@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace HexTecGames.TweenLib
 {
-    [CreateAssetMenu(menuName = "HexTecGames/TweenLib/Animation")]
+    [CreateAssetMenu(menuName = "HexTecGames/TweenLib/Animation"), CanEditMultipleObjects]
     public class TweenAnimation : TweenInfo
     {
         [SerializeReference, SubclassSelector] protected List<TweenData> tweenDatas = null;

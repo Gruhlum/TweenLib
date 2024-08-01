@@ -16,8 +16,18 @@ namespace HexTecGames.TweenLib
             List<TweenPlayData> results = new List<TweenPlayData>();
             foreach (var targetGO in targetGOs)
             {
+                if (targetGO == null)
+                {
+                    Debug.Log("Target GameObject is null!");
+                    continue;
+                }
                 foreach (var animation in animations)
                 {
+                    if (animation == null)
+                    {
+                        Debug.Log("No Animation data!");
+                        continue;
+                    }
                     results.Add(animation.GenerateTweenPlayData(targetGO));
                 }
             }
