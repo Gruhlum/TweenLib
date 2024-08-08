@@ -7,66 +7,78 @@ namespace HexTecGames.TweenLib
 {
     public class CanvasGroupAlphaTween : Tween
     {
-        private CanvasGroup canvasGroup;
+        private CanvasGroup CanvasGroup
+        {
+            get
+            {
+                return Data.target;
+            }
+        }
 
-        //private new CanvasGroupAlphaTweenData Data;
+        private new CanvasGroupAlphaTweenData Data;
         private float startAlpha;
 
         public CanvasGroupAlphaTween(CanvasGroupAlphaTweenData data) : base(data)
         {
-            //Data = data;
+            Data = data;
         }
 
-        protected override void SetStartObject(Component component)
-        {
-            if (component is CanvasGroup canvasGroup)
-            {
-                this.canvasGroup = canvasGroup;
-            }
-        }
-        protected override void SetStartObject(GameObject go)
-        {
-            canvasGroup = go.GetComponent<CanvasGroup>();
-            if (canvasGroup == null)
-            {
-                Debug.Log($"{go.name} does not have a {typeof(CanvasGroup)} component");
-            }
-        }
+        //protected override void SetStartObject(Component component)
+        //{
+        //    if (component is CanvasGroup canvasGroup)
+        //    {
+        //        this.canvasGroup = canvasGroup;
+        //    }
+        //}
+        //protected override void SetStartObject(GameObject go)
+        //{
+        //    canvasGroup = go.GetComponent<CanvasGroup>();
+        //    if (canvasGroup == null)
+        //    {
+        //        Debug.Log($"{go.name} does not have a {typeof(CanvasGroup)} component");
+        //    }
+        //}
 
         public override void ResetEffect()
         {
-            canvasGroup.alpha = startAlpha;
+            CanvasGroup.alpha = startAlpha;
         }
 
         protected override void DoAnimation(float time)
         {
-            if (canvasGroup == null)
+            if (CanvasGroup == null)
             {
                 return;
             }
-            canvasGroup.alpha = GetAnimationCurveValue(time);
+            CanvasGroup.alpha = GetAnimationCurveValue(time);
         }
 
         public override void SetStartData()
         {
-            startAlpha = canvasGroup.alpha;
+            startAlpha = CanvasGroup.alpha;
         }        
     }
     [System.Serializable]
     public class CanvasGroupAlphaTweenData : TweenData
     {
+        [Space]
+        public CanvasGroup target;
         public override Tween Create()
         {
             CanvasGroupAlphaTween tween = new CanvasGroupAlphaTween(this);
             return tween;
         }
-        public override void AddRequiredComponents(GameObject go)
+        public override void GetRequiredComponent(GameObject go)
         {
-            if (go.GetComponent<CanvasGroup>() != null)
+            if (target != null)
             {
                 return;
             }
-            go.AddComponent<CanvasGroup>();
+            if (go.TryGetComponent(out CanvasGroup canvasGroup))
+            {
+                target = canvasGroup;
+            }
+            else target = go.AddComponent<CanvasGroup>();
         }
     }
 }

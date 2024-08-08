@@ -21,6 +21,11 @@ namespace HexTecGames.TweenLib
         }
         private bool state;
 
+        protected override void Reset()
+        {
+            base.Reset();
+            PlayOnEnable = false;
+        }
 
         protected override void OnDisable()
         {

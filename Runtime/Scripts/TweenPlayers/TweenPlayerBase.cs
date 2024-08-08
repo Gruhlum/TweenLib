@@ -9,7 +9,7 @@ namespace HexTecGames.TweenLib
 {
     public abstract class TweenPlayerBase : MonoBehaviour
     {
-        protected List<TweenPlayData> tweenPlayDatas;
+        protected List<TweenPlayDataGroup> tweenPlayDatas;
 
         public bool IsActive
         {
@@ -98,6 +98,7 @@ namespace HexTecGames.TweenLib
         }
         public bool AdvanceTime(float timeStep)
         {
+            //Debug.Log(tweenPlayDatas.Count + " - " + tweenPlayDatas.Count(x => x.IsPlaying == true));
             for (int i = tweenPlayDatas.Count - 1; i >= 0; i--)
             {
                 tweenPlayDatas[i].Evaluate(timeStep * TimeScale);
@@ -137,7 +138,7 @@ namespace HexTecGames.TweenLib
                 Deactivate();
             }
         }
-        protected abstract List<TweenPlayData> GenerateTweenPlayDatas();
+        protected abstract List<TweenPlayDataGroup> GenerateTweenPlayDatas();
 
         public IEnumerator PlayCoroutine(bool reversed = false)
         {
@@ -157,28 +158,7 @@ namespace HexTecGames.TweenLib
             }
             OnStartPlaying?.Invoke(this);
         }
-        public void SetAnimationToStart()
-        {
-            if (tweenPlayDatas == null)
-            {
-                return;
-            }
-            foreach (var playData in tweenPlayDatas)
-            {
-                playData.SetAnimationToStart();
-            }
-        }
-        public void SetAnimationToEnd()
-        {
-            if (tweenPlayDatas == null)
-            {
-                return;
-            }
-            foreach (var playData in tweenPlayDatas)
-            {
-                playData.SetAnimationToEnd();
-            }
-        }
+        
         public void ResetEffects()
         {
             if (tweenPlayDatas == null)
@@ -187,7 +167,7 @@ namespace HexTecGames.TweenLib
             }
             foreach (var playData in tweenPlayDatas)
             {
-                playData.ReverseEffect();
+                playData.ResetEffect();
             }
         }
         public virtual void Stop()

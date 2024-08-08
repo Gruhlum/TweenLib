@@ -8,12 +8,12 @@ namespace HexTecGames.TweenLib
     [System.Serializable]
     public class GroupTweenTarget : TweenTarget
     {
-        public List<TweenInfo> animations = new List<TweenInfo>();
+        [SubclassSelector, SerializeReference]public List<TweenData> animations = new List<TweenData>();
         public List<GameObject> targetGOs = new List<GameObject>();
 
-        public override List<TweenPlayData> GenerateTweenPlayData()
+        public override List<TweenPlayDataGroup> GenerateTweenPlayData()
         {
-            List<TweenPlayData> results = new List<TweenPlayData>();
+            List<TweenPlayDataGroup> results = new List<TweenPlayDataGroup>();
             foreach (var targetGO in targetGOs)
             {
                 if (targetGO == null)
@@ -28,7 +28,7 @@ namespace HexTecGames.TweenLib
                         Debug.Log("No Animation data!");
                         continue;
                     }
-                    results.Add(animation.GenerateTweenPlayData(targetGO));
+                    //results.Add(animation.GenerateTweenPlayData(targetGO));
                 }
             }
             return results;

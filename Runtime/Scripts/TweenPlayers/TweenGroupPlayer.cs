@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace HexTecGames.TweenLib
 {
-    public class TweenGroupPlayer : TweenPlayerBase
+    public class GroupTweenPlayer : TweenPlayerBase
     {
-        [SerializeField] public List<TweenInfo> animations;
+        [SerializeField] public List<TweenPresetBase> animations;
         [SerializeField] private List<GameObject> targetGOs = default;
 
         public float Spacing
@@ -21,16 +21,6 @@ namespace HexTecGames.TweenLib
             }
         }
         [SerializeField, Tooltip("How many seconds of delay between each gameObject")] private float spacing;
-
-
-        public void Play(GameObject go, bool reversed)
-        {
-            var results = tweenPlayDatas.FindAll(x => x.TargetGO == go);
-            foreach (var result in results)
-            {
-                result.Start(reversed);
-            }
-        }
 
         public override void InitTweens()
         {
@@ -55,9 +45,9 @@ namespace HexTecGames.TweenLib
             }
         }
 
-        protected override List<TweenPlayData> GenerateTweenPlayDatas()
+        protected override List<TweenPlayDataGroup> GenerateTweenPlayDatas()
         {
-            List<TweenPlayData> results = new List<TweenPlayData>();
+            List<TweenPlayDataGroup> results = new List<TweenPlayDataGroup>();
 
             foreach (var targetGO in targetGOs)
             {

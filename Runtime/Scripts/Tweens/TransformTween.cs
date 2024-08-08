@@ -9,7 +9,15 @@ namespace HexTecGames.TweenLib
     [System.Serializable]
     public class TransformTween : VectorTween
     {              
-        protected Transform targetTransform;
+        //protected Transform targetTransform;
+
+        private Transform targetTransform
+        {
+            get
+            {
+                return data.target;
+            }
+        }
 
         private new TransformTweenData data;
 
@@ -120,23 +128,24 @@ namespace HexTecGames.TweenLib
             SetVector(CalculateVector(time, GetVector()));
         }
 
-        protected override void SetStartObject(GameObject go)
-        {
-            targetTransform = go.transform;
-        }
-        protected override void SetStartObject(Component component)
-        {
-            if (component is Transform transform)
-            {
-                targetTransform = transform;
-            }
-        }
+        //protected override void SetStartObject(GameObject go)
+        //{
+        //    targetTransform = go.transform;
+        //}
+        //protected override void SetStartObject(Component component)
+        //{
+        //    if (component is Transform transform)
+        //    {
+        //        targetTransform = transform;
+        //    }
+        //}
     }
 
     [System.Serializable]
     public class TransformTweenData : VectorData
     {
         [Space]
+        public Transform target;
         public TargetVector targetVector;
         [DrawIf(nameof(targetVector), TargetVector.Scale, reverse: true)]
         public Space space = default;
@@ -144,6 +153,11 @@ namespace HexTecGames.TweenLib
         {
             TransformTween tween = new TransformTween(this);
             return tween;
+        }
+
+        public override void GetRequiredComponent(GameObject go)
+        {
+            target = go.transform;
         }
     }
 }

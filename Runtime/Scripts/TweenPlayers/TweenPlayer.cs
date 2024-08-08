@@ -7,39 +7,51 @@ namespace HexTecGames.TweenLib
 {
     public class TweenPlayer : TweenPlayerBase
     {
-        //[SerializeField] public List<TweenInfo> animations;      
-        //[SerializeField] private GameObject target;
-        //public enum TargetMode { Single, Group}
-        //public TargetMode targetMode;
-        //[SerializeField, DrawIf(nameof(targetMode), false)] private List<SingleTweenTarget> singleTargets = default;
-        [SerializeField] private List<GroupTweenTarget> animationTargets = default;
+        [SerializeField, SubclassSelector, SerializeReference] private List<TweenData> tweenDatas = default;
 
-        protected List<TweenPlayData> GenerateSpecificTweenPlayDatas()
+        private void OnValidate()
         {
-            List<TweenPlayData> results = new List<TweenPlayData>();
-            foreach (var tweenItem in animationTargets)
+            foreach (var animation in tweenDatas)
             {
-                results.AddRange(tweenItem.GenerateTweenPlayData());
+                if (animation != null)
+                {
+                    animation.GetRequiredComponent(gameObject);
+                }
             }
-            return results;
-        }
-        protected void Reset()
-        {
-            //target = this.gameObject;
-            animationTargets = new List<GroupTweenTarget>();
-            GroupTweenTarget groupTweenTarget = new GroupTweenTarget();
-            groupTweenTarget.targetGOs.Add(this.gameObject);
-            groupTweenTarget.animations.Add(null);
-            animationTargets.Add(groupTweenTarget);
         }
 
-        protected override List<TweenPlayData> GenerateTweenPlayDatas()
+        //protected List<TweenPlayDataGroup> GenerateSpecificTweenPlayDatas()
+        //{
+        //    List<TweenPlayDataGroup> results = new List<TweenPlayDataGroup>();
+        //    foreach (var tweenItem in tweenDatas)
+        //    {
+        //        //results.AddRange(tweenItem.GenerateTweenPlayData());
+        //    }
+        //    return results;
+        //}
+        protected virtual void Reset()
         {
-            List<TweenPlayData> results = new List<TweenPlayData>();
-            foreach (var anim in animationTargets)
+            //animationTargets = new List<GroupTweenTarget>();
+            //GroupTweenTarget groupTweenTarget = new GroupTweenTarget();
+            //groupTweenTarget.targetGOs.Add(this.gameObject);
+            //groupTweenTarget.animations.Add(null);
+            //animationTargets.Add(groupTweenTarget);
+        }
+
+        protected override List<TweenPlayDataGroup> GenerateTweenPlayDatas()
+        {
+            List<TweenPlayDataGroup> results = new List<TweenPlayDataGroup>();
+            List<Tween> tweens = new List<Tween>();
+            foreach (var anim in tweenDatas)
             {
-                results.AddRange(anim.GenerateTweenPlayData());
+                if (anim == null)
+                {
+                    continue;
+                }
+                Tween tween = anim.Create();
+                tweens.Add(tween);
             }
+            results.Add(new TweenPlayDataGroup(tweens));
             return results;
         }
     }

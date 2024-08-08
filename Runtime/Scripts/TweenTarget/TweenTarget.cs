@@ -8,6 +8,6 @@ namespace HexTecGames.TweenLib
 	[System.Serializable]
 	public abstract class TweenTarget
 	{
-		public abstract List<TweenPlayData> GenerateTweenPlayData();
+		public abstract List<TweenPlayDataGroup> GenerateTweenPlayData();
     }
 }

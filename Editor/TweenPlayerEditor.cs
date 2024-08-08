@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -12,7 +13,8 @@ namespace HexTecGames.TweenLib.Editor
     {
         protected TweenPlayerBase tweenPlayer;
 
-        protected float endDelay = 0.5f;
+        DateTime startTime;
+        protected float endDelay = 1f;
         protected float endTimer = 0;
         protected bool reachedEnd;
         protected bool isPlaying;
@@ -116,8 +118,7 @@ namespace HexTecGames.TweenLib.Editor
         {
             if (reachedEnd)
             {
-                endTimer += Time.deltaTime;
-                if (endTimer >= endDelay)
+                if (DateTime.Now > startTime)
                 {
                     EndTimeReached();
                 }
@@ -127,6 +128,7 @@ namespace HexTecGames.TweenLib.Editor
                 if (tweenPlayer.AdvanceTime(CalculateTimeStep()))
                 {
                     reachedEnd = true;
+                    startTime = DateTime.Now + TimeSpan.FromSeconds(endDelay);
                 }
             }
         }

@@ -34,18 +34,7 @@ namespace HexTecGames.TweenLib
         [Space, Min(0.001f)] public float Speed = 1;
         public float StartDelay;
         public float EndDelay;
-        //public bool ApplyImmediately
-        //{
-        //    get
-        //    {
-        //        return applyImmediately;
-        //    }
-        //    set
-        //    {
-        //        applyImmediately = value;
-        //    }
-        //}
-        //[DrawIf(nameof(StartDelay), 0f, reverse: true)][SerializeField] private bool applyImmediately = true;
+      
         //public bool SetStartDataBeforePlay
         //{
         //    get
@@ -61,6 +50,6 @@ namespace HexTecGames.TweenLib
        
 
         public abstract Tween Create();
-        public virtual void AddRequiredComponents(GameObject go) { }
+        public abstract void GetRequiredComponent(GameObject go);
     }
 }

@@ -8,12 +8,12 @@ namespace HexTecGames.TweenLib
     [System.Serializable]
     public class SingleTweenTarget : TweenTarget
     {
-        public TweenAnimation animation;
+        public TweenPreset animation;
         public GameObject targetGO;
 
-        public override List<TweenPlayData> GenerateTweenPlayData()
+        public override List<TweenPlayDataGroup> GenerateTweenPlayData()
         {
-            return new List<TweenPlayData>() { animation.GenerateTweenPlayData(targetGO) };
+            return new List<TweenPlayDataGroup>() { animation.GenerateTweenPlayData(targetGO) };
         }
     }
 }

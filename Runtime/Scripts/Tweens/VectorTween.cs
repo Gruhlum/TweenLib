@@ -21,9 +21,9 @@ namespace HexTecGames.TweenLib
             {
                 case Mode.Multiply:
 
-                    if (data.X) result.x = startVector.x * GetAnimationCurveValue(time) * data.strength * data.multiplierX;
-                    if (data.Y) result.y = startVector.y * GetAnimationCurveValue(time) * data.strength * data.multiplierY;
-                    if (data.Z) result.z = startVector.z * GetAnimationCurveValue(time) * data.strength * data.multiplierZ;
+                    if (data.X) result.x = startVector.x + startVector.x * GetAnimationCurveValue(time) * data.strength * data.multiplierX;
+                    if (data.Y) result.y = startVector.y + startVector.y * GetAnimationCurveValue(time) * data.strength * data.multiplierY;
+                    if (data.Z) result.z = startVector.z + startVector.z * GetAnimationCurveValue(time) * data.strength * data.multiplierZ;
                     break;
 
                 case Mode.Addition:

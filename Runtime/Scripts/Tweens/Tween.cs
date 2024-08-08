@@ -90,7 +90,7 @@ namespace HexTecGames.TweenLib
 
         private float elapsedTime;
 
-        protected GameObject targetGO;
+        //protected GameObject targetGO;
 
         public TweenData Data
         {
@@ -127,25 +127,10 @@ namespace HexTecGames.TweenLib
             this.Data = data;
             StartDelay = data.StartDelay;
             EndDelay = data.EndDelay;
-        }
-
-        public void Init(Component component)
-        {
-            targetGO = component.gameObject;
-            SetStartObject(component);
-            Init();
-        }
-        public void Init(GameObject go)
-        {
-            targetGO = go;
-            SetStartObject(go);
-            Init();          
-        }
-        private void Init()
-        {
             SetStartData();
             UpdateAnimationCurve();
         }
+
         public void UpdateAnimationCurve()
         {
             if (!data.CustomCurve)
@@ -164,8 +149,8 @@ namespace HexTecGames.TweenLib
             }
             else EndDelay += time;
         }
-        protected abstract void SetStartObject(GameObject go);
-        protected abstract void SetStartObject(Component component);
+        //protected abstract void SetStartObject(GameObject go);
+        //protected abstract void SetStartObject(Component component);
 
         public void Start(bool reversed = false)
         {
