@@ -9,7 +9,7 @@ namespace HexTecGames.TweenLib
     {
         private float startAlpha;
 
-        public AlphaTween(AlphaTweenData data) : base(data)
+        public AlphaTween(AlphaTweenData data, Component component) : base(data, component)
         { }
 
         public override void SetStartData()
@@ -43,9 +43,9 @@ namespace HexTecGames.TweenLib
     {
         public Mode mode;
 
-        public override Tween Create()
+        public override Tween Create(Component component)
         {
-            AlphaTween tween = new AlphaTween(this);
+            AlphaTween tween = new AlphaTween(this, component);
             return tween;
         }
     }

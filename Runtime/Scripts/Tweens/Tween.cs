@@ -90,8 +90,6 @@ namespace HexTecGames.TweenLib
 
         private float elapsedTime;
 
-        //protected GameObject targetGO;
-
         public TweenData Data
         {
             get
@@ -122,12 +120,11 @@ namespace HexTecGames.TweenLib
 
         private Func<float, float> animationCurve;
 
-        public Tween(TweenData data)
+        public Tween(TweenData data, Component component)
         {
             this.Data = data;
             StartDelay = data.StartDelay;
             EndDelay = data.EndDelay;
-            SetStartData();
             UpdateAnimationCurve();
         }
 

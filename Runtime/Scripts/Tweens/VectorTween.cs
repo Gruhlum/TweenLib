@@ -10,7 +10,7 @@ namespace HexTecGames.TweenLib
         protected Vector3 startVector;
         protected VectorData data;
 
-        public VectorTween(VectorData data) : base(data)
+        public VectorTween(VectorData data, Component component) : base(data, component)
         {
             this.data = data;
         }

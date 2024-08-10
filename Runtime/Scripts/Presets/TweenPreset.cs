@@ -17,7 +17,7 @@ namespace HexTecGames.TweenLib
         public List<Tween> GenerateTweens(GameObject go)
         {
             List<Tween> results = new List<Tween>();
-            Tween t = tweenData.Create();
+            Tween t = null;// tweenData.Create();
             results.Add(t);
             return results;
         }

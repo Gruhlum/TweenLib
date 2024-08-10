@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +8,15 @@ namespace HexTecGames.TweenLib
 {
     public class CanvasGroupAlphaTween : Tween
     {
-        private CanvasGroup CanvasGroup
-        {
-            get
-            {
-                return Data.target;
-            }
-        }
+        private CanvasGroup canvasGroup;
 
         private new CanvasGroupAlphaTweenData Data;
         private float startAlpha;
 
-        public CanvasGroupAlphaTween(CanvasGroupAlphaTweenData data) : base(data)
+        public CanvasGroupAlphaTween(CanvasGroupAlphaTweenData data, CanvasGroup canvasGroup) : base(data, canvasGroup)
         {
             Data = data;
+            this.canvasGroup = canvasGroup;
         }
 
         //protected override void SetStartObject(Component component)
@@ -41,44 +37,35 @@ namespace HexTecGames.TweenLib
 
         public override void ResetEffect()
         {
-            CanvasGroup.alpha = startAlpha;
+            canvasGroup.alpha = startAlpha;
         }
 
         protected override void DoAnimation(float time)
         {
-            if (CanvasGroup == null)
+            if (canvasGroup == null)
             {
                 return;
             }
-            CanvasGroup.alpha = GetAnimationCurveValue(time);
+            canvasGroup.alpha = GetAnimationCurveValue(time);
         }
 
         public override void SetStartData()
         {
-            startAlpha = CanvasGroup.alpha;
+            startAlpha = canvasGroup.alpha;
         }        
     }
     [System.Serializable]
     public class CanvasGroupAlphaTweenData : TweenData
     {
-        [Space]
-        public CanvasGroup target;
-        public override Tween Create()
+        public override Tween Create(Component component)
         {
-            CanvasGroupAlphaTween tween = new CanvasGroupAlphaTween(this);
+            CanvasGroupAlphaTween tween = new CanvasGroupAlphaTween(this, component as CanvasGroup);
             return tween;
         }
-        public override void GetRequiredComponent(GameObject go)
+
+        public override Type GetTargetType()
         {
-            if (target != null)
-            {
-                return;
-            }
-            if (go.TryGetComponent(out CanvasGroup canvasGroup))
-            {
-                target = canvasGroup;
-            }
-            else target = go.AddComponent<CanvasGroup>();
+            return typeof(CanvasGroup);
         }
     }
 }

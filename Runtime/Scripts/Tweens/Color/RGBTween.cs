@@ -8,7 +8,7 @@ namespace HexTecGames.TweenLib
     {
         private new RGBTweenData Data;
 
-        public RGBTween(RGBTweenData data) : base(data)
+        public RGBTween(RGBTweenData data, Component component) : base(data, component)
         {
             this.Data = data;
         }
@@ -25,9 +25,9 @@ namespace HexTecGames.TweenLib
         public Color color = Color.white;
         public bool ignoreAlpha = true;
 
-        public override Tween Create()
+        public override Tween Create(Component component)
         {
-            RGBTween tween = new RGBTween(this);
+            RGBTween tween = new RGBTween(this, component);
             return tween;
         }
     }

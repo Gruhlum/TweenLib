@@ -48,13 +48,17 @@ namespace HexTecGames.TweenLib
 
             foreach (var tween in tweens)
             {
+                tween.SetStartData();
+            }
+
+            foreach (var tween in tweens)
+            {
                 if (tween.Data.EndlessLoop)
                 {
                     IsEndless = true;
                     break;
                 }
             }
-            //Init(targetGo);
             SetDuration();
         }
 

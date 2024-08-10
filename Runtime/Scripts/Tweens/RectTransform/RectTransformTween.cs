@@ -1,4 +1,5 @@
 using HexTecGames.Basics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +14,10 @@ namespace HexTecGames.TweenLib
 
         private RectTransformTweenData data;
 
-        public RectTransformTween(RectTransformTweenData data) : base(data)
+        public RectTransformTween(RectTransformTweenData data, RectTransform target) : base(data, target)
         {
             this.data = data;
+            rectTransform = target;
         }
 
         public override void ResetEffect()
@@ -59,16 +61,6 @@ namespace HexTecGames.TweenLib
                     return 0;
             }
         }
-
-        //protected override void SetStartObject(GameObject go)
-        //{
-        //    rectTransform = go.GetComponent<RectTransform>();
-        //}
-
-        //protected override void SetStartObject(Component component)
-        //{
-        //    rectTransform = component as RectTransform;
-        //}
     }
 
     [System.Serializable]
@@ -83,17 +75,22 @@ namespace HexTecGames.TweenLib
         [DrawIf(nameof(height), true)] public float heightMultiplier = 1f;
         public RectTransform target;
 
-        public override Tween Create()
+        public override Tween Create(Component component)
         {
-            return new RectTransformTween(this);
+            return new RectTransformTween(this, component as RectTransform);
         }
 
-        public override void GetRequiredComponent(GameObject go)
+        public override Type GetTargetType()
         {
-            if (target == null)
-            {
-                target = go.GetComponent<RectTransform>();
-            }
+            return typeof(RectTransform);
         }
+
+        //public override void CheckForCorrectComponent(GameObject go)
+        //{
+        //    if (target == null)
+        //    {
+        //        target = go.GetComponent<RectTransform>();
+        //    }
+        //}
     }
 }

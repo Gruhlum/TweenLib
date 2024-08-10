@@ -1,4 +1,5 @@
 using HexTecGames.Basics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,20 +10,14 @@ namespace HexTecGames.TweenLib
     [System.Serializable]
     public class TransformTween : VectorTween
     {              
-        //protected Transform targetTransform;
+        protected Transform targetTransform;
 
-        private Transform targetTransform
-        {
-            get
-            {
-                return data.target;
-            }
-        }
 
         private new TransformTweenData data;
 
-        public TransformTween(TransformTweenData data) : base(data)
+        public TransformTween(TransformTweenData data, Transform target) : base(data, target)
         {
+            targetTransform = target;
             this.data = data;
         }
         public override void SetStartData()
@@ -145,19 +140,20 @@ namespace HexTecGames.TweenLib
     public class TransformTweenData : VectorData
     {
         [Space]
-        public Transform target;
         public TargetVector targetVector;
         [DrawIf(nameof(targetVector), TargetVector.Scale, reverse: true)]
         public Space space = default;
-        public override Tween Create()
+
+        public override Tween Create(Component component)
         {
-            TransformTween tween = new TransformTween(this);
+            TransformTween tween = new TransformTween(this, component as Transform);
             return tween;
         }
 
-        public override void GetRequiredComponent(GameObject go)
+
+        public override Type GetTargetType()
         {
-            target = go.transform;
+            return typeof(Transform);
         }
     }
 }

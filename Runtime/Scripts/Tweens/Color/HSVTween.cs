@@ -6,7 +6,7 @@ namespace HexTecGames.TweenLib
 {
     public class HSVTween : ColorTween
     {
-        public HSVTween(HSVTweenData data) : base(data)
+        public HSVTween(HSVTweenData data, Component component) : base(data, component)
         { }
 
         private Color GenerateColor(float value)
@@ -47,9 +47,9 @@ namespace HexTecGames.TweenLib
         public bool useS;
         public bool useV;
 
-        public override Tween Create()
+        public override Tween Create(Component component)
         {
-            HSVTween tween = new HSVTween(this);
+            HSVTween tween = new HSVTween(this, component);
             return tween;
         }
     }

@@ -7,7 +7,7 @@ namespace HexTecGames.TweenLib
 {
     public class TweenPlayer : TweenPlayerBase
     {
-        [SerializeField, SubclassSelector, SerializeReference] private List<TweenData> tweenDatas = default;
+        [SerializeField] private List<TweenTarget> tweenDatas = default;
 
         private void OnValidate()
         {
@@ -15,7 +15,8 @@ namespace HexTecGames.TweenLib
             {
                 if (animation != null)
                 {
-                    animation.GetRequiredComponent(gameObject);
+                    animation.FindCorrectTarget(this.gameObject);
+                    animation.PerformTargetCheck();
                 }
             }
         }
@@ -31,6 +32,10 @@ namespace HexTecGames.TweenLib
         //}
         protected virtual void Reset()
         {
+            tweenDatas = new List<TweenTarget>
+            {
+                new TweenTarget()
+            };
             //animationTargets = new List<GroupTweenTarget>();
             //GroupTweenTarget groupTweenTarget = new GroupTweenTarget();
             //groupTweenTarget.targetGOs.Add(this.gameObject);

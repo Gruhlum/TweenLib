@@ -1,4 +1,5 @@
 using HexTecGames.Basics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace HexTecGames.TweenLib
         [Space, Min(0.001f)] public float Speed = 1;
         public float StartDelay;
         public float EndDelay;
-      
+
         //public bool SetStartDataBeforePlay
         //{
         //    get
@@ -47,9 +48,22 @@ namespace HexTecGames.TweenLib
         //    }
         //}
         //[SerializeField] private bool setStartDataBeforePlay;
-       
 
-        public abstract Tween Create();
-        public abstract void GetRequiredComponent(GameObject go);
+
+        public abstract Tween Create(Component component);
+        public bool CheckForCorrectComponent(Component component)
+        {
+            if (component.GetType() == GetTargetType())
+            {
+                return true;
+            }
+            else return false;
+        }
+        public virtual Component FindCorrectComponent(GameObject go)
+        {
+            return go.GetComponent(GetTargetType());
+        }
+
+        public abstract Type GetTargetType();
     }
 }
