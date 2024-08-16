@@ -41,8 +41,8 @@ namespace HexTecGames.TweenLib
             }
             if (!data.CheckForCorrectComponent(target))
             {
-                target = null;
-                Debug.Log($"Wrong Type: Component must be of type '{data.GetTargetType()}'");
+                target = data.FindCorrectComponent(target.gameObject);
+                //Debug.Log($"Wrong Type: Component must be of type '{data.GetTargetType()}'");
             }
         }
         public Tween Create()

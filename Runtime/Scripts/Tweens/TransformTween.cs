@@ -149,9 +149,7 @@ namespace HexTecGames.TweenLib
             TransformTween tween = new TransformTween(this, component as Transform);
             return tween;
         }
-
-
-        public override Type GetTargetType()
+        protected override Type GetTargetType()
         {
             return typeof(Transform);
         }

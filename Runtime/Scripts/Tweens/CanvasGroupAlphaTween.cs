@@ -63,7 +63,7 @@ namespace HexTecGames.TweenLib
             return tween;
         }
 
-        public override Type GetTargetType()
+        protected override Type GetTargetType()
         {
             return typeof(CanvasGroup);
         }

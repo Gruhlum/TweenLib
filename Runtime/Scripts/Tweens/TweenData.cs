@@ -12,8 +12,8 @@ namespace HexTecGames.TweenLib
         public bool CustomCurve;
         [DrawIf(nameof(CustomCurve), false)] public AnimationType animationType;
         [DrawIf(nameof(CustomCurve), false)] public Curve curve;
-        [DrawIf(nameof(CustomCurve), true)] 
-        public AnimationCurve animationCurve  = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(1, 1) });
+        [DrawIf(nameof(CustomCurve), true)]
+        public AnimationCurve animationCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(1, 1) });
 
         public bool Reverse
         {
@@ -31,7 +31,7 @@ namespace HexTecGames.TweenLib
         public LoopMode LoopMode;
         [DrawIf(nameof(EndlessLoop), false)]
         public int Repeats;
-        
+
         [Space, Min(0.001f)] public float Speed = 1;
         public float StartDelay;
         public float EndDelay;
@@ -51,9 +51,9 @@ namespace HexTecGames.TweenLib
 
 
         public abstract Tween Create(Component component);
-        public bool CheckForCorrectComponent(Component component)
+        public virtual bool CheckForCorrectComponent(Component component)
         {
-            if (component.GetType() == GetTargetType())
+            if (GetTargetType().IsAssignableFrom(component.GetType()))
             {
                 return true;
             }
@@ -64,6 +64,6 @@ namespace HexTecGames.TweenLib
             return go.GetComponent(GetTargetType());
         }
 
-        public abstract Type GetTargetType();
+        protected abstract Type GetTargetType();
     }
 }

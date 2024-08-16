@@ -70,37 +70,14 @@ namespace HexTecGames.TweenLib
     public abstract class ColorTweenData : TweenData
     {
 
-        //public override void CheckForCorrectComponent(GameObject go)
-        //{
-        //    if (component != null)
-        //    {
-        //        if (!(component is SpriteRenderer || component is Image || component is TMP_Text))
-        //        {
-        //            component = null;
-        //            Debug.Log("Wrong component type: Has to be 'SpriteRenderer', 'Image' or 'TMP_Text'", go);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        FindComponent(go);
-        //    }
-        //}
-
-        //private void FindComponent(GameObject go)
-        //{
-        //    if (go.TryGetComponent(out SpriteRenderer sr))
-        //    {
-        //        component = sr;
-        //    }
-        //    else if (go.TryGetComponent(out Image img))
-        //    {
-        //        component = img;
-        //    }
-        //    else if (go.TryGetComponent(out TMP_Text text))
-        //    {
-        //        component = text;
-        //    }
-        //}
+        public override bool CheckForCorrectComponent(Component component)
+        {
+            if (component is Image || component is SpriteRenderer || component is TMP_Text)
+            {
+                return true;
+            }
+            return false;
+        }
         public override Component FindCorrectComponent(GameObject go)
         {
             if (go.TryGetComponent(out SpriteRenderer sr))
@@ -117,7 +94,7 @@ namespace HexTecGames.TweenLib
             }
             else return null;
         }
-        public override Type GetTargetType()
+        protected override Type GetTargetType()
         {
             return typeof(Component);
         }

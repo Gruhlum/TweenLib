@@ -73,14 +73,13 @@ namespace HexTecGames.TweenLib
         [DrawIf(nameof(width), true)] public float widthMultiplier = 1f;
         public bool height;
         [DrawIf(nameof(height), true)] public float heightMultiplier = 1f;
-        public RectTransform target;
 
         public override Tween Create(Component component)
         {
             return new RectTransformTween(this, component as RectTransform);
         }
 
-        public override Type GetTargetType()
+        protected override Type GetTargetType()
         {
             return typeof(RectTransform);
         }

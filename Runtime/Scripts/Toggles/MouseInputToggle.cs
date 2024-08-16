@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 namespace HexTecGames.TweenLib
 {
-    [RequireComponent(typeof(ToggleTweenPlayer))]
     public class MouseInputToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private ToggleTweenPlayer toggleTweenPlayer = default;

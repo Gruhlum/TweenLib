@@ -28,7 +28,7 @@ namespace HexTecGames.TweenLib
                 if (!data.CheckForCorrectComponent(targets[i]))
                 {
                     targets[i] = null;
-                    Debug.Log($"Wrong Type: Component must be of type '{data.GetTargetType()}'");
+                    //Debug.Log($"Wrong Type: Component must be of type '{data.GetTargetType()}'");
                 }
             }        
         }
