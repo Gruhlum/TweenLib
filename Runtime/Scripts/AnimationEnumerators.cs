@@ -65,7 +65,6 @@ namespace HexTecGames.TweenLib
                 yield return new WaitForSeconds(duration);
             }           
         }
-
         public static IEnumerator ToggleActivationAfterDelay(GameObject go, bool active, float delay)
         {
             yield return new WaitForSeconds(delay);
