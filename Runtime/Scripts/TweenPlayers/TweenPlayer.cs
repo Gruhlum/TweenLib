@@ -43,17 +43,32 @@ namespace HexTecGames.TweenLib
             //animationTargets.Add(groupTweenTarget);
         }
 
+        public void SetTargetGameObject(int index, GameObject gameObject)
+        {
+            if (index < 0)
+            {
+                Debug.Log("Negative Index!");
+                return;
+            }
+            if (tweenDatas.Count <= index)
+            {
+                Debug.Log("Index out of range! Invalid tweenData!");
+                return;
+            }
+            tweenDatas[index].FindCorrectTarget(gameObject);
+            InitTweens();
+        }
         protected override List<TweenPlayDataGroup> GenerateTweenPlayDatas()
         {
             List<TweenPlayDataGroup> results = new List<TweenPlayDataGroup>();
             List<Tween> tweens = new List<Tween>();
-            foreach (var anim in tweenDatas)
+            foreach (var tweenTarget in tweenDatas)
             {
-                if (anim == null)
+                if (tweenTarget == null)
                 {
                     continue;
                 }
-                Tween tween = anim.Create();
+                Tween tween = tweenTarget.Create();
                 tweens.Add(tween);
             }
             results.Add(new TweenPlayDataGroup(tweens));
