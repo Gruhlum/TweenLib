@@ -1,4 +1,5 @@
 using HexTecGames.Basics;
+using HexTecGames.EaseFunctions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace HexTecGames.TweenLib
     public abstract class TweenData
     {
         public bool CustomCurve;
-        [DrawIf(nameof(CustomCurve), false)] public AnimationType animationType;
-        [DrawIf(nameof(CustomCurve), false)] public Curve curve;
+        [DrawIf(nameof(CustomCurve), false)] public Easing easing;
+        [DrawIf(nameof(CustomCurve), false)] public Function function;
         [DrawIf(nameof(CustomCurve), true)]
         public AnimationCurve animationCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(1, 1) });
 

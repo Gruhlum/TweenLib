@@ -128,7 +128,6 @@ namespace HexTecGames.TweenLib
                 tweenData.ResetStartDatas();
             }
         }
-
         public void ResetEffect()
         {
             for (int i = 0; i < tweenPlayDatas.Count; i++)

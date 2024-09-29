@@ -7,7 +7,8 @@
     "name": "HexTecGames"
   },
   "dependencies": {
-    "com.hextecgames.basics": "1.0.0"
+    "com.hextecgames.basics": "1.0.0",
+    "com.hextecgames.easefunctions": "1.0.0"
   },
   "samples": [
     {

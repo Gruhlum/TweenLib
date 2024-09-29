@@ -1,4 +1,5 @@
 using HexTecGames.Basics;
+using HexTecGames.EaseFunctions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -132,7 +133,7 @@ namespace HexTecGames.TweenLib
         {
             if (!data.CustomCurve)
             {
-                animationCurve = AnimationData.GetFunction(data.animationType, data.curve);
+                animationCurve = EaseFunction.GetFunction(data.easing, data.function);
                 AnimationLength = 1;
             }
             else AnimationLength = data.animationCurve.keys[^1].time;

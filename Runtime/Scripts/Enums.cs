@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace HexTecGames.TweenLib
 {
-    public enum AnimationType { EaseIn, EaseOut, EaseInOut }
-    public enum Curve { Sine, Quad, Cubic, Quart, Quint, Expo, Circ, Back, Elastic, Bounce }
+
     public enum Mode { Addition, Multiply, Set }
     public enum Space { Local, World }
     public enum TargetVector { Position, Rotation, Scale }
@@ -14,4 +13,5 @@ namespace HexTecGames.TweenLib
     public enum Position { Start, End }
     public enum ColorTarget { Image, SpriteRenderer, TMP_Text }
     public enum ComponentTarget { Current, Parent, Child }
+    //public enum InitMode { OnStart, OnPlay }
 }

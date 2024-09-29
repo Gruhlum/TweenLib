@@ -24,7 +24,6 @@ namespace HexTecGames.TweenLib
         }
         private bool isActive;
 
-
         public bool PlayOnEnable
         {
             get
@@ -37,6 +36,18 @@ namespace HexTecGames.TweenLib
             }
         }
         [SerializeField] private bool playOnEnable = true;
+        public bool ResetStartDataOnPlay
+        {
+            get
+            {
+                return resetStartDataOnPlay;
+            }
+            set
+            {
+                resetStartDataOnPlay = value;
+            }
+        }
+        [SerializeField] private bool resetStartDataOnPlay;
 
         public float TimeScale
         {
@@ -150,6 +161,11 @@ namespace HexTecGames.TweenLib
         }
         public void Play(bool reversed = false)
         {
+            if (ResetStartDataOnPlay)
+            {
+                ResetStartData();
+            }
+
             IsActive = true;
 
             foreach (var playData in tweenPlayDatas)

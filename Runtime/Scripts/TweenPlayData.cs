@@ -62,7 +62,6 @@ namespace HexTecGames.TweenLib
             SetDuration();
         }
 
-
         private void SetDuration()
         {
             duration = 0;
