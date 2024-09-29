@@ -17,6 +17,10 @@ namespace HexTecGames.TweenLib
         {
             FindCorrectTarget(go);
         }
+        public TweenTarget(GameObject go, TweenData data) : this(go)
+        {
+            this.data = data;
+        }
         public void FindCorrectTarget(GameObject go)
         {
             if (data == null)

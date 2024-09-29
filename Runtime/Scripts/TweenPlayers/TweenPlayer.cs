@@ -6,11 +6,25 @@ using UnityEngine;
 namespace HexTecGames.TweenLib
 {
     public class TweenPlayer : TweenPlayerBase
-    {
+    {      
+        [SerializeField] private TweenDataPreset dataToLoad = default;
+        [Space]
         [SerializeField] private List<TweenTarget> tweenDatas = default;
 
         private void OnValidate()
         {
+            if (dataToLoad != null)
+            {
+                var results = dataToLoad.CreateCopy();
+                tweenDatas = new List<TweenTarget>();
+                foreach (var result in results)
+                {
+                    tweenDatas.Add(new TweenTarget(gameObject, result));
+                }
+
+                dataToLoad = null;
+            }
+
             foreach (var animation in tweenDatas)
             {
                 if (animation != null)
@@ -21,26 +35,12 @@ namespace HexTecGames.TweenLib
             }
         }
 
-        //protected List<TweenPlayDataGroup> GenerateSpecificTweenPlayDatas()
-        //{
-        //    List<TweenPlayDataGroup> results = new List<TweenPlayDataGroup>();
-        //    foreach (var tweenItem in tweenDatas)
-        //    {
-        //        //results.AddRange(tweenItem.GenerateTweenPlayData());
-        //    }
-        //    return results;
-        //}
         protected virtual void Reset()
         {
             tweenDatas = new List<TweenTarget>
             {
                 new TweenTarget()
             };
-            //animationTargets = new List<GroupTweenTarget>();
-            //GroupTweenTarget groupTweenTarget = new GroupTweenTarget();
-            //groupTweenTarget.targetGOs.Add(this.gameObject);
-            //groupTweenTarget.animations.Add(null);
-            //animationTargets.Add(groupTweenTarget);
         }
 
         public void SetTargetGameObject(int index, GameObject gameObject)

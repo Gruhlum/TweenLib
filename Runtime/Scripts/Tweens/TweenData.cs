@@ -50,7 +50,6 @@ namespace HexTecGames.TweenLib
         //}
         //[SerializeField] private bool setStartDataBeforePlay;
 
-
         public abstract Tween Create(Component component);
         public virtual bool CheckForCorrectComponent(Component component)
         {
@@ -63,6 +62,11 @@ namespace HexTecGames.TweenLib
         public virtual Component FindCorrectComponent(GameObject go)
         {
             return go.GetComponent(GetTargetType());
+        }
+
+        public TweenData CreateShallowCopy()
+        {
+            return MemberwiseClone() as TweenData;
         }
 
         protected abstract Type GetTargetType();
