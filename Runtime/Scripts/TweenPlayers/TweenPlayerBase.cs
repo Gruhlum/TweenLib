@@ -168,13 +168,17 @@ namespace HexTecGames.TweenLib
 
             IsActive = true;
 
-            foreach (var playData in tweenPlayDatas)
+            if (tweenPlayDatas != null)
             {
-                playData.Start(reversed);
+                foreach (var playData in tweenPlayDatas)
+                {
+                    playData.Start(reversed);
+                }
             }
+
             OnStartPlaying?.Invoke(this);
         }
-        
+
         public void ResetEffects()
         {
             if (tweenPlayDatas == null)
