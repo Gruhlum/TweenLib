@@ -9,7 +9,7 @@ namespace HexTecGames.TweenLib
     {      
         [SerializeField] private TweenDataPreset dataToLoad = default;
         [Space]
-        [SerializeField] private List<TweenTarget> tweenDatas = default;
+        [SerializeField] private List<TweenTarget> tweenDatas = new List<TweenTarget>();
 
         private void OnValidate()
         {

@@ -19,7 +19,7 @@ namespace HexTecGames.TweenLib.Editor
         protected bool reachedEnd;
         protected bool isPlaying;
         private bool hasPlayed;
-
+        DateTime lastFrame;
 
         //public override VisualElement CreateInspectorGUI()
         //{
@@ -102,6 +102,7 @@ namespace HexTecGames.TweenLib.Editor
             {
                 EditorApplication.update += AdvanceTime;
             }
+            lastFrame = DateTime.Now;
             isPlaying = true;
             if (initTweens)
             {
@@ -116,6 +117,8 @@ namespace HexTecGames.TweenLib.Editor
         }
         protected void AdvanceTime()
         {
+            float deltaTime = ((DateTime.Now - lastFrame).Milliseconds / 1000f);
+            lastFrame = DateTime.Now;
             if (reachedEnd)
             {
                 if (DateTime.Now > startTime)
@@ -125,7 +128,7 @@ namespace HexTecGames.TweenLib.Editor
             }
             else
             {
-                if (tweenPlayer.AdvanceTime(CalculateTimeStep()))
+                if (tweenPlayer.AdvanceTime(deltaTime))
                 {
                     reachedEnd = true;
                     startTime = DateTime.Now + TimeSpan.FromSeconds(endDelay);
@@ -137,10 +140,7 @@ namespace HexTecGames.TweenLib.Editor
             StopAnimation();
             reachedEnd = false;
         }
-        protected virtual float CalculateTimeStep()
-        {
-            return Mathf.Min(Time.deltaTime, Time.fixedDeltaTime);
-        }
+
         protected virtual void StopAnimation(bool resetEffects = true)
         {
             ResetValues();

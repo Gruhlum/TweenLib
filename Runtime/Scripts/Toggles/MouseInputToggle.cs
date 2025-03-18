@@ -19,6 +19,10 @@ namespace HexTecGames.TweenLib
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (toggleTweenPlayer == null)
+            {
+                return;
+            }
             if (selectable != null && !selectable.interactable)
             {
                 return;
@@ -32,6 +36,10 @@ namespace HexTecGames.TweenLib
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (toggleTweenPlayer == null)
+            {
+                return;
+            }
             if (!toggleTweenPlayer.enabled)
             {
                 return;

@@ -190,7 +190,6 @@ namespace HexTecGames.TweenLib
         public void Evaluate(float currentTime)
         {
             elapsedTime = currentTime;
-
             if (Data == null)
             {
                 return;
