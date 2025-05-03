@@ -113,7 +113,6 @@ namespace HexTecGames.TweenLib
             for (int i = tweenPlayDatas.Count - 1; i >= 0; i--)
             {
                 tweenPlayDatas[i].Evaluate(timeStep * TimeScale);
-                tweenPlayDatas[i].MoveToEnd();
             }
             foreach (var tweenPlayData in tweenPlayDatas)
             {

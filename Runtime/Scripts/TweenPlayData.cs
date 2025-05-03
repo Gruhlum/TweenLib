@@ -150,6 +150,7 @@ namespace HexTecGames.TweenLib
         }
         public void MoveToEnd()
         {
+            Debug.Log("Move To End!");
             foreach (var tween in tweens)
             {
                 tween.MoveToEnd();
