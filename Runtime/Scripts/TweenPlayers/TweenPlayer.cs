@@ -11,6 +11,7 @@ namespace HexTecGames.TweenLib
         [Space]
         [SerializeField] private List<TweenTarget> tweenDatas = new List<TweenTarget>();
 
+
         private void OnValidate()
         {
             if (dataToLoad != null)

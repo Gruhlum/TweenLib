@@ -148,6 +148,20 @@ namespace HexTecGames.TweenLib
                 tween.Start(reverse);
             }
         }
+        public void MoveToEnd()
+        {
+            foreach (var tween in tweens)
+            {
+                tween.MoveToEnd();
+            }
+        }
+        public void MoveToStart()
+        {
+            foreach (var tween in tweens)
+            {
+                tween.MoveToStart();
+            }
+        }
         public void ResetStartDatas()
         {
             foreach (var tween in tweens)

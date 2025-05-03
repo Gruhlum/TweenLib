@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HexTecGames.TweenLib
 {
-    [CreateAssetMenu(menuName = "HexTecGames/TweenLib/TweenDataTest")]
+    //[CreateAssetMenu(menuName = "HexTecGames/TweenLib/TweenDataTest")]
     public class TweenDataPreset : ScriptableObject
     {
         [SerializeReference, SubclassSelector] public List<TweenData> tweenDatas;

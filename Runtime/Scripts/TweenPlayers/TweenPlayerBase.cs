@@ -77,7 +77,7 @@ namespace HexTecGames.TweenLib
         public event Action<TweenPlayerBase> OnDisabled;
         public event Action<TweenPlayerBase> OnStartPlaying;
 
-        private bool tweensAreInitialized;
+        protected bool tweensAreInitialized;
 
 
         protected virtual void Update()
@@ -113,6 +113,7 @@ namespace HexTecGames.TweenLib
             for (int i = tweenPlayDatas.Count - 1; i >= 0; i--)
             {
                 tweenPlayDatas[i].Evaluate(timeStep * TimeScale);
+                tweenPlayDatas[i].MoveToEnd();
             }
             foreach (var tweenPlayData in tweenPlayDatas)
             {

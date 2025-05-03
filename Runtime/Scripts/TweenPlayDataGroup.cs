@@ -76,6 +76,20 @@ namespace HexTecGames.TweenLib
             else currentData.Start(reverse);
         }
 
+        public void MoveToEnd()
+        {
+            foreach (var data in tweenPlayDatas)
+            {
+                data.MoveToEnd();
+            }
+        }
+        public void MoveToStart()
+        {
+            foreach (var data in tweenPlayDatas)
+            {
+                data.MoveToStart();
+            }
+        }
         private void ReachedEnd()
         {
             IsPlaying = false;

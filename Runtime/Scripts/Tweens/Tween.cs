@@ -174,10 +174,21 @@ namespace HexTecGames.TweenLib
             }
             if (direction)
             {
-                DoAnimation(0);
+                MoveToStart();
             }
-            else DoAnimation(AnimationLength);
+            else MoveToEnd();
         }
+
+        public void MoveToStart()
+        {
+            DoAnimation(0);
+        }
+
+        public void MoveToEnd()
+        {
+            DoAnimation(AnimationLength);
+        }
+
         public abstract void ResetEffect();
         protected float GetAnimationCurveValue(float time)
         {

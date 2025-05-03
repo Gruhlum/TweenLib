@@ -19,7 +19,7 @@ namespace HexTecGames.TweenLib
                 this.state = value;
             }
         }
-        private bool state;
+        [SerializeField] private bool state;
 
         protected override void Reset()
         {
@@ -31,9 +31,22 @@ namespace HexTecGames.TweenLib
         {
             base.OnDisable();
             State = false;
-            ResetEffects();
         }
-
+        protected override void OnEnable()
+        {
+            if (!tweensAreInitialized)
+            {
+                InitTweens();
+            }
+            if (State == true)
+            {
+                foreach (var tween in tweenPlayDatas)
+                {
+                    tween.MoveToEnd();
+                }
+            }
+            base.OnEnable();
+        }
         public void ToggleState()
         {
             SetState(!State);
