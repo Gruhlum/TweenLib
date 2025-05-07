@@ -62,16 +62,9 @@ namespace HexTecGames.TweenLib
         }
         [SerializeField] private float timeScale = 1;
 
-        public bool IsEndless
+        public abstract bool IsEndless
         {
-            get
-            {
-                if (tweenPlayDatas == null || tweenPlayDatas.Count == 0)
-                {
-                    return false;
-                }
-                return tweenPlayDatas.Any(x => x.IsEndless);
-            }
+            get;
         }
 
         public event Action<TweenPlayerBase> OnDisabled;

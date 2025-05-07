@@ -19,18 +19,6 @@ namespace HexTecGames.TweenLib
             }
         }
         [SerializeField] private bool isPlaying;
-        public bool IsEndless
-        {
-            get
-            {
-                return isEndless;
-            }
-            private set
-            {
-                isEndless = value;
-            }
-        }
-        private bool isEndless;
 
         private bool reverse;
 

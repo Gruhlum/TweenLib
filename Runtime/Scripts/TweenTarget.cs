@@ -11,6 +11,14 @@ namespace HexTecGames.TweenLib
         [SerializeField][SubclassSelector, SerializeReference] private TweenData data;
         [SerializeField][Space] private Component target;
 
+        public bool IsEndless
+        {
+            get
+            {
+                return data.EndlessLoop;
+            }
+        }
+
         public TweenTarget()
         { }
         public TweenTarget(GameObject go) : this()

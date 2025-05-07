@@ -1,6 +1,7 @@
 using HexTecGames.Basics;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace HexTecGames.TweenLib
@@ -11,6 +12,17 @@ namespace HexTecGames.TweenLib
         [Space]
         [SerializeField] private List<TweenTarget> tweenDatas = new List<TweenTarget>();
 
+        public override bool IsEndless
+        {
+            get
+            {
+                if (tweenDatas == null || tweenDatas.Count == 0)
+                {
+                    return false;
+                }
+                else return tweenDatas.Any(x => x.IsEndless);
+            }
+        }
 
         private void OnValidate()
         {

@@ -10,6 +10,19 @@ namespace HexTecGames.TweenLib
         [SubclassSelector, SerializeReference] public TweenData data;
         [Space] public List<Component> targets;
 
+        public bool IsEndless
+        {
+            get
+            {
+                if (data == null)
+                {
+                    return false;
+                }
+                else return data.EndlessLoop;
+            }
+        }
+
+
         public GroupTweenTarget()
         { }
        

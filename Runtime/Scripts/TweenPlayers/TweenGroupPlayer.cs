@@ -6,7 +6,7 @@ namespace HexTecGames.TweenLib
 {
     public class GroupTweenPlayer : TweenPlayerBase
     {
-        [SerializeField] public GroupTweenTarget tweenDatas;
+        [SerializeField] public GroupTweenTarget groupTweenTarget;
 
         public float Spacing
         {
@@ -19,6 +19,15 @@ namespace HexTecGames.TweenLib
                 spacing = value;
             }
         }
+
+        public override bool IsEndless
+        {
+            get
+            {
+                return groupTweenTarget.IsEndless;
+            }
+        }
+
         [SerializeField, Tooltip("How many seconds of delay between each gameObject")] private float spacing;
 
         public override void InitTweens()
@@ -48,7 +57,7 @@ namespace HexTecGames.TweenLib
         {
             List<TweenPlayDataGroup> results = new List<TweenPlayDataGroup>
             {
-                new TweenPlayDataGroup(tweenDatas.Create())
+                new TweenPlayDataGroup(groupTweenTarget.Create())
             };
             return results;
         }
