@@ -159,11 +159,11 @@ namespace HexTecGames.TweenLib
 
             temporaryReverse = reversed;
 
-            if (Reversed)
-            {
-                DoAnimation(AnimationLength);
-            }
-            else DoAnimation(0);
+            //if (Reversed)
+            //{
+            //    DoAnimation(AnimationLength);
+            //}
+            //else DoAnimation(0);
         }
         public void Stop()
         {
@@ -186,7 +186,6 @@ namespace HexTecGames.TweenLib
 
         public void MoveToEnd()
         {
-            
             DoAnimation(AnimationLength);
         }
 

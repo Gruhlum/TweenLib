@@ -9,7 +9,7 @@ namespace HexTecGames.TweenLib
     public class TweenPlayData
     {
         private List<Tween> tweens;
-        
+
         private float timer = 0;
 
         float duration;
@@ -136,8 +136,7 @@ namespace HexTecGames.TweenLib
             OnFinishedPlaying?.Invoke(this);
         }
         public void Start(bool reverse)
-        {            
-            IsPlaying = true;
+        {
             if (timer > 0)
             {
                 timer = duration - timer;
@@ -147,10 +146,16 @@ namespace HexTecGames.TweenLib
             {
                 tween.Start(reverse);
             }
+
+            if (IsPlaying && timer <= 0)
+            {
+                // We recieved two inputs on the same frame
+                Stop();
+            }
+            else IsPlaying = true;
         }
         public void MoveToEnd()
         {
-            Debug.Log("Move To End!");
             foreach (var tween in tweens)
             {
                 tween.MoveToEnd();
@@ -169,8 +174,7 @@ namespace HexTecGames.TweenLib
             {
                 tween.SetStartData();
             }
-        }      
-
+        }
         public void ResetEffect()
         {
             if (tweens == null)

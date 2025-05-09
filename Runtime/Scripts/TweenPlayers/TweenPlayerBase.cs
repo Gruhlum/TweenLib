@@ -72,7 +72,6 @@ namespace HexTecGames.TweenLib
 
         protected bool tweensAreInitialized;
 
-
         protected virtual void Update()
         {
             if (!IsActive)
@@ -102,7 +101,6 @@ namespace HexTecGames.TweenLib
         }
         public bool AdvanceTime(float timeStep)
         {
-            //Debug.Log(tweenPlayDatas.Count + " - " + tweenPlayDatas.Count(x => x.IsPlaying == true));
             for (int i = tweenPlayDatas.Count - 1; i >= 0; i--)
             {
                 tweenPlayDatas[i].Evaluate(timeStep * TimeScale);

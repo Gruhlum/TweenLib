@@ -115,7 +115,7 @@ namespace HexTecGames.TweenLib.Editor
         {
             tweenPlayer.InitTweens();
         }
-        protected void AdvanceTime()
+        public void AdvanceTime()
         {
             float deltaTime = ((DateTime.Now - lastFrame).Milliseconds / 1000f);
             lastFrame = DateTime.Now;
