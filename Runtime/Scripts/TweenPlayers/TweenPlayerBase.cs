@@ -150,9 +150,9 @@ namespace HexTecGames.TweenLib
                 yield return null;
             }
         }
-        public void Play(bool reversed = false)
+        public void Play(bool reversed = false, bool resetStartData = false)
         {
-            if (ResetStartDataOnPlay)
+            if (ResetStartDataOnPlay || resetStartData)
             {
                 ResetStartData();
             }
