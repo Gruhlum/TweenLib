@@ -36,7 +36,7 @@ namespace HexTecGames.TweenLib
             }
         }
         [SerializeField] private bool playOnEnable = true;
-        public bool ResetStartDataOnPlay
+        public virtual bool ResetStartDataOnPlay
         {
             get
             {
@@ -47,7 +47,7 @@ namespace HexTecGames.TweenLib
                 resetStartDataOnPlay = value;
             }
         }
-        [SerializeField] private bool resetStartDataOnPlay;
+        [SerializeField] protected bool resetStartDataOnPlay;
 
         public float TimeScale
         {
@@ -139,6 +139,7 @@ namespace HexTecGames.TweenLib
                 Debug.Log("No tweens");
                 Deactivate();
             }
+            //else ResetStartData();
         }
         protected abstract List<TweenPlayDataGroup> GenerateTweenPlayDatas();
 
@@ -202,6 +203,21 @@ namespace HexTecGames.TweenLib
             foreach (var playData in tweenPlayDatas)
             {
                 playData.ResetStartDatas();
+            }
+        }
+
+        public void MoveToStart()
+        {
+            foreach (var item in tweenPlayDatas)
+            {
+                item.MoveToStart();
+            }
+        }
+        public void MoveToEnd()
+        {
+            foreach (var item in tweenPlayDatas)
+            {
+                item.MoveToEnd();
             }
         }
     }

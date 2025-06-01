@@ -21,6 +21,24 @@ namespace HexTecGames.TweenLib
         }
         [SerializeField] private bool state;
 
+        public override bool ResetStartDataOnPlay
+        {
+            get
+            {
+                if (State != startState)
+                {
+                    return base.ResetStartDataOnPlay;
+                }
+                else return false;
+            }
+            set
+            {
+                base.ResetStartDataOnPlay = value;
+            }
+        }
+
+        private bool startState;
+
         protected override void Reset()
         {
             base.Reset();
@@ -34,6 +52,8 @@ namespace HexTecGames.TweenLib
         }
         protected override void OnEnable()
         {
+            startState = State;
+
             if (!tweensAreInitialized)
             {
                 InitTweens();

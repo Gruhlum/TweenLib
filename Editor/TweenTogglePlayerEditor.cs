@@ -19,24 +19,46 @@ namespace HexTecGames.TweenLib.Editor
                 return;
             }
 
-            tweenPlayer = (TweenPlayer)target;
-           
-            if (isExpanded || Application.isPlaying)
+            ToggleTweenPlayer tweenPlayer = (ToggleTweenPlayer)target;
+
+            if (Application.isPlaying)
             {
-                if (CreateButton("Toggle Off"))
+                if (tweenPlayer.State)
                 {
-                    StartAnimation(true, false);
-                    isExpanded = false;
+                    if (CreateButton("Toggle Off"))
+                    {
+                        tweenPlayer.ToggleState();
+                    }
+                }
+                else
+                {
+                    if (CreateButton("Toggle On"))
+                    {
+                        tweenPlayer.ToggleState();
+                    }
+
                 }
             }
             else
             {
-                if (CreateButton("Toggle On"))
+                if (isExpanded)
                 {
-                    StartAnimation(false, !(isExpanded || isPlaying));
-                    isExpanded = true;
+                    if (CreateButton("Toggle Off"))
+                    {
+                        StartAnimation(true, false);
+                        isExpanded = false;
+                    }
+                }
+                else
+                {
+                    if (CreateButton("Toggle On"))
+                    {
+                        StartAnimation(false, !(isExpanded || isPlaying));
+                        isExpanded = true;
+                    }
                 }
             }
+            
             DrawDefaultInspector();
         }
 

@@ -54,6 +54,6 @@ namespace HexTecGames.TweenLib
         public bool Y;
         [DrawIf(nameof(Y), true)] public float multiplierY = 1;
         public bool Z;
-        [DrawIf(nameof(Z), true)] public float multiplierZ = 1;       
+        [DrawIf(nameof(Z), true)] public float multiplierZ = 1;
     }
 }

@@ -21,26 +21,12 @@ namespace HexTecGames.TweenLib.Editor
         private bool hasPlayed;
         DateTime lastFrame;
 
-        //public override VisualElement CreateInspectorGUI()
-        //{
-        //    TweenPlayer tweenPlayer = (TweenPlayer)target;
 
-        //    var root = new VisualElement();
 
-        //    var foldout = new Foldout();
-
-        //    //if (tweenPlayer.animations.Count > 0)
-        //    //{
-        //    //    InspectorElement animationElement = new InspectorElement();
-        //    //    InspectorElement.FillDefaultInspector(animationElement, new SerializedObject(tweenPlayer.animations[0]), this);
-        //    //    foldout.Add(animationElement);
-        //    //}
-
-        //    InspectorElement.FillDefaultInspector(foldout, serializedObject, this);
-        //    root.Add(foldout);
-            
-        //    return root;
-        //}
+        private void OnEnable()
+        {
+            tweenPlayer = (TweenPlayerBase)target;
+        }
 
         public override void OnInspectorGUI()
         {
@@ -49,8 +35,6 @@ namespace HexTecGames.TweenLib.Editor
                 DrawDefaultInspector();
                 return;
             }
-
-            tweenPlayer = (TweenPlayerBase)target;
 
             if (isPlaying || Application.isPlaying)
             {

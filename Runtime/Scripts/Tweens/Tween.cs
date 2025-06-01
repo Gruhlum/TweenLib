@@ -26,7 +26,19 @@ namespace HexTecGames.TweenLib
                 {
                     return -1;
                 }
-                return (Length * (Data.Repeats + 1)) + StartDelay;
+                return (Length * (Data.Repeats + 1) + (Data.LoopWaitTime * Data.Repeats)) + StartDelay;
+            }
+        }
+
+        public float TotalAnimationLength
+        {
+            get
+            {
+                if (Data.Repeats == 0 || Data.LoopWaitTime == 0)
+                {
+                    return AnimationLength;
+                }
+                return AnimationLength + Data.LoopWaitTime;
             }
         }
         public float AnimationLength
@@ -131,7 +143,7 @@ namespace HexTecGames.TweenLib
 
         public void UpdateAnimationCurve()
         {
-            if (!data.CustomCurve)
+            if (!data.customCurve)
             {
                 animationCurve = EaseFunction.GetFunction(data.easing, data.function);
                 AnimationLength = 1;
@@ -192,7 +204,7 @@ namespace HexTecGames.TweenLib
         public abstract void ResetEffect();
         protected float GetAnimationCurveValue(float time)
         {
-            if (Data.CustomCurve)
+            if (Data.customCurve)
             {
                 return Data.animationCurve.Evaluate(time);
             }
@@ -209,32 +221,52 @@ namespace HexTecGames.TweenLib
             elapsedTime -= startDelay;
             elapsedTime *= Data.Speed;
 
+            bool playDirection = Reversed;
+
+            //                                       4      +  0.5 = 4.5         /           1.5 = 3
+            int totalFinishedRepeats = Mathf.FloorToInt(elapsedTime / TotalAnimationLength);
+            int totalRepeats = Mathf.FloorToInt((elapsedTime + Data.LoopWaitTime) / TotalAnimationLength);
+
+            if (totalFinishedRepeats != totalRepeats)
+            {
+                float val = Mathf.Min((elapsedTime + Data.LoopWaitTime) % TotalAnimationLength, Data.LoopWaitTime);
+                //Debug.Log(elapsedTime + " - " + (elapsedTime + Data.LoopWaitTime) % cycleLength + " - " + val);
+                elapsedTime -= val;
+            }
+            elapsedTime -= Data.LoopWaitTime * totalFinishedRepeats;
+            //elapsedTime -= loopWaitSubtract;
+
+
+            //Debug.Log("Elapsed: " + elapsedTime + " Finished: " + totalFinishedRepeats + " Started: " + totalRepeats);
+
+
+            //Debug.Log(elapsedTime + " - " +  totalLoopWaitTime);
+
             if (elapsedTime < 0)
             {
                 elapsedTime = 0;
             }
-            if (!Data.EndlessLoop && elapsedTime > AnimationLength * (Data.Repeats + 1))
-            {
-                return;
-            }
-
-            bool playDirection = Reversed;
 
             if ((Data.EndlessLoop || Data.Repeats > 0) && Data.LoopMode == LoopMode.Mirror)
             {
-                bool isUneven = Mathf.FloorToInt(elapsedTime / AnimationLength) % 2 != 0;
-                //Debug.Log(elapsedTime + " - " + "- " + AnimationLength + " - " + isUneven);
+                bool isUneven = totalRepeats % 2 != 0;
                 if (isUneven)
                 {
                     playDirection = !playDirection;
                 }
             }
+
+            //Debug.Log(playDirection);
+
             if (playDirection)
             {
+                //Debug.Log(elapsedTime + " - " + (AnimationLength - (elapsedTime) % AnimationLength));
+
                 DoAnimation(AnimationLength - (elapsedTime) % AnimationLength);
             }
             else
             {
+                //Debug.Log(elapsedTime + " - " + (elapsedTime % AnimationLength));
                 DoAnimation(elapsedTime % AnimationLength);
             }
         }

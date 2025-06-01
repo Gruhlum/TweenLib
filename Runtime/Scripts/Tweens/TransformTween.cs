@@ -9,9 +9,8 @@ namespace HexTecGames.TweenLib
 {
     [System.Serializable]
     public class TransformTween : VectorTween
-    {              
+    {
         protected Transform targetTransform;
-
 
         private new TransformTweenData data;
 
