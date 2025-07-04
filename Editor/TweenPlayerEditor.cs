@@ -53,7 +53,7 @@ namespace HexTecGames.TweenLib.Editor
                         StartAnimation(false, true);
                     }
                 }
-                
+
             }
             else
             {
@@ -92,7 +92,7 @@ namespace HexTecGames.TweenLib.Editor
             {
                 InitTweens();
             }
-            
+
             tweenPlayer.Play(reversed);
         }
         protected virtual void InitTweens()
@@ -132,14 +132,14 @@ namespace HexTecGames.TweenLib.Editor
             if (resetEffects)
             {
                 tweenPlayer.ResetEffects();
-            }           
+            }
         }
         protected void ResetValues()
         {
             isPlaying = false;
             reachedEnd = false;
             endTimer = 0;
-            
+
         }
     }
 }

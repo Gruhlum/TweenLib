@@ -153,6 +153,10 @@ namespace HexTecGames.TweenLib
         }
         public void Play(bool reversed = false, bool resetStartData = false)
         {
+            if (!tweensAreInitialized)
+            {
+                InitTweens();
+            }
             if (ResetStartDataOnPlay || resetStartData)
             {
                 ResetStartData();
