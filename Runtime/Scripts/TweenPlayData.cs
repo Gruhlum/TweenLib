@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ namespace HexTecGames.TweenLib
 
         private float timer = 0;
 
-        float duration;
+        private float duration;
 
         public bool IsEndless
         {
@@ -46,12 +45,12 @@ namespace HexTecGames.TweenLib
         {
             this.tweens = tweens;
 
-            foreach (var tween in tweens)
+            foreach (Tween tween in tweens)
             {
                 tween.SetStartData();
             }
 
-            foreach (var tween in tweens)
+            foreach (Tween tween in tweens)
             {
                 if (tween.Data.EndlessLoop)
                 {
@@ -66,7 +65,7 @@ namespace HexTecGames.TweenLib
         {
             duration = 0;
             IsEndless = false;
-            foreach (var tween in tweens)
+            foreach (Tween tween in tweens)
             {
                 if (tween.Data.EndlessLoop)
                 {
@@ -104,14 +103,14 @@ namespace HexTecGames.TweenLib
             if (!IsEndless && timer >= duration)
             {
                 IsPlaying = false;
-                foreach (var tween in tweens)
+                foreach (Tween tween in tweens)
                 {
                     tween.Stop();
                 }
                 OnFinishedPlaying?.Invoke(this);
                 return true;
             }
-            foreach (var tween in tweens)
+            foreach (Tween tween in tweens)
             {
                 tween.Evaluate(timer);
             }
@@ -119,7 +118,7 @@ namespace HexTecGames.TweenLib
         }
         public void AddDelay(float delay, Position position)
         {
-            foreach (var tween in tweens)
+            foreach (Tween tween in tweens)
             {
                 tween.AddDelay(delay, position);
             }
@@ -129,7 +128,7 @@ namespace HexTecGames.TweenLib
         {
             IsPlaying = false;
             timer = 0;
-            foreach (var tween in tweens)
+            foreach (Tween tween in tweens)
             {
                 tween.Stop();
             }
@@ -142,7 +141,7 @@ namespace HexTecGames.TweenLib
                 timer = duration - timer;
             }
 
-            foreach (var tween in tweens)
+            foreach (Tween tween in tweens)
             {
                 tween.Start(reverse);
             }
@@ -156,21 +155,21 @@ namespace HexTecGames.TweenLib
         }
         public void MoveToEnd()
         {
-            foreach (var tween in tweens)
+            foreach (Tween tween in tweens)
             {
                 tween.MoveToEnd();
             }
         }
         public void MoveToStart()
         {
-            foreach (var tween in tweens)
+            foreach (Tween tween in tweens)
             {
                 tween.MoveToStart();
             }
         }
         public void ResetStartDatas()
         {
-            foreach (var tween in tweens)
+            foreach (Tween tween in tweens)
             {
                 tween.SetStartData();
             }
@@ -181,7 +180,7 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            foreach (var tween in tweens)
+            foreach (Tween tween in tweens)
             {
                 tween.ResetEffect();
             }

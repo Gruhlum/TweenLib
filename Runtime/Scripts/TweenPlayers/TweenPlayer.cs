@@ -1,5 +1,3 @@
-using HexTecGames.Basics;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +5,7 @@ using UnityEngine;
 namespace HexTecGames.TweenLib
 {
     public class TweenPlayer : TweenPlayerBase
-    {      
+    {
         [SerializeField] private TweenDataPreset dataToLoad = default;
         [Space]
         [SerializeField] private List<TweenTarget> tweenDatas = new List<TweenTarget>();
@@ -28,9 +26,9 @@ namespace HexTecGames.TweenLib
         {
             if (dataToLoad != null)
             {
-                var results = dataToLoad.CreateCopy();
+                List<TweenData> results = dataToLoad.CreateCopy();
                 tweenDatas = new List<TweenTarget>();
-                foreach (var result in results)
+                foreach (TweenData result in results)
                 {
                     tweenDatas.Add(new TweenTarget(gameObject, result));
                 }
@@ -38,7 +36,7 @@ namespace HexTecGames.TweenLib
                 dataToLoad = null;
             }
 
-            foreach (var animation in tweenDatas)
+            foreach (TweenTarget animation in tweenDatas)
             {
                 if (animation != null)
                 {
@@ -75,7 +73,7 @@ namespace HexTecGames.TweenLib
         {
             List<TweenPlayDataGroup> results = new List<TweenPlayDataGroup>();
             List<Tween> tweens = new List<Tween>();
-            foreach (var tweenTarget in tweenDatas)
+            foreach (TweenTarget tweenTarget in tweenDatas)
             {
                 if (tweenTarget == null)
                 {

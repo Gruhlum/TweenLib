@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +24,7 @@ namespace HexTecGames.TweenLib
 
         public GroupTweenTarget()
         { }
-       
+
         public void PerformTargetCheck()
         {
             if (data == null)
@@ -43,12 +42,12 @@ namespace HexTecGames.TweenLib
                     targets[i] = null;
                     //Debug.Log($"Wrong Type: Component must be of type '{data.GetTargetType()}'");
                 }
-            }        
+            }
         }
         public List<Tween> Create()
         {
             List<Tween> results = new List<Tween>();
-            foreach (var target in targets)
+            foreach (Component target in targets)
             {
                 results.Add(data.Create(target));
             }

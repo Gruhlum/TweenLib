@@ -1,6 +1,4 @@
 using HexTecGames.Basics;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,8 +9,8 @@ namespace HexTecGames.TweenLib
     /// </summary>
     [RequireComponent(typeof(TweenPlayerBase))]
     public class InteractableToggle : MonoBehaviour
-	{
-		public enum ToggleType { CanvasGroup, Selectable }
+    {
+        public enum ToggleType { CanvasGroup, Selectable }
         public ToggleType toggleType;
         [SerializeField] private TweenPlayerBase tweenPlayer = default;
         [SerializeField, DrawIf(nameof(toggleType), ToggleType.Selectable)] private Selectable selectable = default;
@@ -30,8 +28,8 @@ namespace HexTecGames.TweenLib
             tweenPlayer.OnStartPlaying += TweenPlayer_OnStartPlaying;
             tweenPlayer.OnDisabled += TweenPlayer_OnDisabled;
         }
-      
-        void OnDestroy()
+
+        private void OnDestroy()
         {
             tweenPlayer.OnStartPlaying -= TweenPlayer_OnStartPlaying;
             tweenPlayer.OnDisabled -= TweenPlayer_OnDisabled;

@@ -19,7 +19,7 @@ namespace HexTecGames.TweenLib
         }
         private IEnumerator PlayTweensInSequence(List<TweenPlayerBase> tweenPlayers, bool reverse)
         {
-            foreach (var tweenPlayer in tweenPlayers)
+            foreach (TweenPlayerBase tweenPlayer in tweenPlayers)
             {
                 yield return tweenPlayer.PlayCoroutine(reverse);
             }

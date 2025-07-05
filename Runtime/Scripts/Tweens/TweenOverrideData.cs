@@ -1,6 +1,5 @@
-using HexTecGames.TweenLib;
-using System.Collections;
 using System.Collections.Generic;
+using HexTecGames.TweenLib;
 using UnityEngine;
 
 namespace HexTecGames
@@ -21,9 +20,9 @@ namespace HexTecGames
 
             actualDatas = new List<TweenData>();
 
-            foreach (var data in parent.tweenDatas)
+            foreach (TweenData data in parent.tweenDatas)
             {
-                var result = data.CreateShallowCopy();
+                TweenData result = data.CreateShallowCopy();
                 actualDatas.Add(result);
             }
         }

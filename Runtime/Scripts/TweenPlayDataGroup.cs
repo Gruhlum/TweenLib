@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -66,14 +65,14 @@ namespace HexTecGames.TweenLib
 
         public void MoveToEnd()
         {
-            foreach (var data in tweenPlayDatas)
+            foreach (TweenPlayData data in tweenPlayDatas)
             {
                 data.MoveToEnd();
             }
         }
         public void MoveToStart()
         {
-            foreach (var data in tweenPlayDatas)
+            foreach (TweenPlayData data in tweenPlayDatas)
             {
                 data.MoveToStart();
             }
@@ -125,7 +124,7 @@ namespace HexTecGames.TweenLib
         }
         public void ResetStartDatas()
         {
-            foreach (var tweenData in tweenPlayDatas)
+            foreach (TweenPlayData tweenData in tweenPlayDatas)
             {
                 tweenData.ResetStartDatas();
             }

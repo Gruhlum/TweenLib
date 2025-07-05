@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ namespace HexTecGames.TweenLib
         public List<TweenData> CreateCopy()
         {
             List<TweenData> results = new List<TweenData>();
-            foreach (var data in tweenDatas)
+            foreach (TweenData data in tweenDatas)
             {
                 results.Add(data.CreateShallowCopy());
             }

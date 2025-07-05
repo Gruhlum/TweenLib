@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SocialPlatforms;
+
 
 namespace HexTecGames.TweenLib
 {
@@ -60,7 +57,7 @@ namespace HexTecGames.TweenLib
             }
             if (State == true)
             {
-                foreach (var tween in tweenPlayDatas)
+                foreach (TweenPlayDataGroup tween in tweenPlayDatas)
                 {
                     tween.MoveToEnd();
                 }

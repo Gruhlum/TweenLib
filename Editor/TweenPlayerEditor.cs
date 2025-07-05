@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace HexTecGames.TweenLib.Editor
 {
@@ -13,13 +9,13 @@ namespace HexTecGames.TweenLib.Editor
     {
         protected TweenPlayerBase tweenPlayer;
 
-        DateTime startTime;
+        private DateTime startTime;
         protected float endDelay = 1f;
         protected float endTimer = 0;
         protected bool reachedEnd;
         protected bool isPlaying;
         private bool hasPlayed;
-        DateTime lastFrame;
+        private DateTime lastFrame;
 
 
 
@@ -101,7 +97,7 @@ namespace HexTecGames.TweenLib.Editor
         }
         public void AdvanceTime()
         {
-            float deltaTime = ((DateTime.Now - lastFrame).Milliseconds / 1000f);
+            float deltaTime = (DateTime.Now - lastFrame).Milliseconds / 1000f;
             lastFrame = DateTime.Now;
             if (reachedEnd)
             {

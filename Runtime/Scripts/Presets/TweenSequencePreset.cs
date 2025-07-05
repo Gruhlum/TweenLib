@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ namespace HexTecGames.TweenLib
         public override TweenPlayDataGroup GenerateTweenPlayData(GameObject go)
         {
             List<TweenPlayData> results = new List<TweenPlayData>();
-            foreach (var segment in segments)
+            foreach (TweenSegment segment in segments)
             {
                 results.Add(segment.CreateTweenPlayData(go));
             }

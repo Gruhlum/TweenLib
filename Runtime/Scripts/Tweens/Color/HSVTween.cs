@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace HexTecGames.TweenLib
@@ -11,9 +9,9 @@ namespace HexTecGames.TweenLib
 
         private Color GenerateColor(float value)
         {
-            HSVTweenData data = (HSVTweenData)Data;
+            HSVTweenData data = (HSVTweenData)this.Data;
 
-            Color.RGBToHSV(startColor, out float H, out float S, out float V);
+            Color.RGBToHSV(this.startColor, out float H, out float S, out float V);
             if (data.mode == Mode.Multiply)
             {
                 if (data.useH)

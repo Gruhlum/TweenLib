@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ namespace HexTecGames.TweenLib
         {
             List<Tween> results = new List<Tween>();
 
-            foreach (var animation in animations)
+            foreach (TweenPreset animation in animations)
             {
                 results.AddRange(animation.GenerateTweens(go));
             }

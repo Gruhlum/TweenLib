@@ -1,8 +1,6 @@
-using HexTecGames.Basics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace HexTecGames.TweenLib
@@ -105,7 +103,7 @@ namespace HexTecGames.TweenLib
             {
                 tweenPlayDatas[i].Evaluate(timeStep * TimeScale);
             }
-            foreach (var tweenPlayData in tweenPlayDatas)
+            foreach (TweenPlayDataGroup tweenPlayData in tweenPlayDatas)
             {
                 if (tweenPlayData.IsPlaying)
                 {
@@ -166,7 +164,7 @@ namespace HexTecGames.TweenLib
 
             if (tweenPlayDatas != null)
             {
-                foreach (var playData in tweenPlayDatas)
+                foreach (TweenPlayDataGroup playData in tweenPlayDatas)
                 {
                     playData.Start(reversed);
                 }
@@ -181,7 +179,7 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            foreach (var playData in tweenPlayDatas)
+            foreach (TweenPlayDataGroup playData in tweenPlayDatas)
             {
                 playData.ResetEffect();
             }
@@ -192,7 +190,7 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            foreach (var playData in tweenPlayDatas)
+            foreach (TweenPlayDataGroup playData in tweenPlayDatas)
             {
                 playData.Stop();
             }
@@ -204,7 +202,7 @@ namespace HexTecGames.TweenLib
             {
                 return;
             }
-            foreach (var playData in tweenPlayDatas)
+            foreach (TweenPlayDataGroup playData in tweenPlayDatas)
             {
                 playData.ResetStartDatas();
             }
@@ -212,14 +210,14 @@ namespace HexTecGames.TweenLib
 
         public void MoveToStart()
         {
-            foreach (var item in tweenPlayDatas)
+            foreach (TweenPlayDataGroup item in tweenPlayDatas)
             {
                 item.MoveToStart();
             }
         }
         public void MoveToEnd()
         {
-            foreach (var item in tweenPlayDatas)
+            foreach (TweenPlayDataGroup item in tweenPlayDatas)
             {
                 item.MoveToEnd();
             }

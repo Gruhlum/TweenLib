@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace HexTecGames.TweenLib
@@ -52,7 +49,7 @@ namespace HexTecGames.TweenLib
         public override void SetStartData()
         {
             startAlpha = canvasGroup.alpha;
-        }        
+        }
     }
     [System.Serializable]
     public class CanvasGroupAlphaTweenData : TweenData

@@ -1,7 +1,5 @@
-using HexTecGames.Basics;
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using HexTecGames.Basics;
 using UnityEngine;
 
 namespace HexTecGames.TweenLib
@@ -54,7 +52,7 @@ namespace HexTecGames.TweenLib
                 case Mode.Addition:
                     return number1 + number2;
                 case Mode.Multiply:
-                    return number1 + number1 * number2;
+                    return number1 + (number1 * number2);
                 case Mode.Set:
                     return number2;
                 default:

@@ -1,6 +1,3 @@
-using HexTecGames.TweenLib;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace HexTecGames.TweenLib

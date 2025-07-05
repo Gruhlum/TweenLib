@@ -1,6 +1,6 @@
 {
   "name": "com.hextecgames.tweenlib",
-  "version": "3.1.5",
+  "version": "3.1.6",
   "displayName": "TweenLib",
   "description": "Tween Library for easy and fast animations",
   "author": {
@@ -16,5 +16,6 @@
       "description": "Basic UI example",
       "path": "Samples/Example 1"
     }
-  ]
+  ],
+  "unity": "2022.3"
 }

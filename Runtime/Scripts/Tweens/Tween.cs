@@ -1,9 +1,5 @@
-using HexTecGames.Basics;
-using HexTecGames.EaseFunctions;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+using HexTecGames.EaseFunctions;
 using UnityEngine;
 
 namespace HexTecGames.TweenLib
@@ -14,7 +10,7 @@ namespace HexTecGames.TweenLib
         {
             get
             {
-                return (AnimationLength / Data.Speed);
+                return AnimationLength / Data.Speed;
             }
         }
 
@@ -26,7 +22,7 @@ namespace HexTecGames.TweenLib
                 {
                     return -1;
                 }
-                return (Length * (Data.Repeats + 1) + (Data.LoopWaitTime * Data.Repeats)) + StartDelay;
+                return (Length * (Data.Repeats + 1)) + (Data.LoopWaitTime * Data.Repeats) + StartDelay;
             }
         }
 
@@ -262,7 +258,7 @@ namespace HexTecGames.TweenLib
             {
                 //Debug.Log(elapsedTime + " - " + (AnimationLength - (elapsedTime) % AnimationLength));
 
-                DoAnimation(AnimationLength - (elapsedTime) % AnimationLength);
+                DoAnimation(AnimationLength - (elapsedTime % AnimationLength));
             }
             else
             {
