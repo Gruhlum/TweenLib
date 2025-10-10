@@ -112,10 +112,12 @@ namespace HexTecGames.TweenLib
         [Space][SerializeField] private bool reverse = default;
 
         [SerializeField] private bool endlessLoop;
-        [SerializeField] private LoopMode loopMode;
-        [SerializeField] private float loopWaitTime = default;
         [DrawIf(nameof(endlessLoop), false)]
         [SerializeField] private int repeats;
+        [DrawIf(nameof(endlessLoop), true)]
+        [SerializeField] private LoopMode loopMode;
+        [DrawIf(nameof(endlessLoop), true)]
+        [SerializeField] private float loopWaitTime = default;
         [Space]
         [SerializeField, Min(0.001f)] private float speed = 1;
         [SerializeField] private float startDelay;

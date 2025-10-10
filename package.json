@@ -1,6 +1,6 @@
 {
   "name": "com.hextecgames.tweenlib",
-  "version": "3.1.7",
+  "version": "3.1.8",
   "displayName": "TweenLib",
   "description": "Tween Library for easy and fast animations",
   "author": {
@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "com.hextecgames.basics": "1.0.0",
-    "com.hextecgames.easefunctions": "1.0.0"
+    "com.hextecgames.easefunctions": "1.0.0",
+    "com.unity.textmeshpro": "1.0.0"
   },
   "samples": [
     {
