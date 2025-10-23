@@ -70,7 +70,7 @@ namespace HexTecGames.TweenLib
 
         protected bool tweensAreInitialized;
 
-        protected virtual void Update()
+        protected virtual void LateUpdate()
         {
             if (!IsActive)
             {
