@@ -204,7 +204,10 @@ namespace HexTecGames.TweenLib
             {
                 return Data.animationCurve.Evaluate(time);
             }
-            else return animationCurve(time);
+            else
+            {
+                return EaseFunction.GetValue(data.easing, data.function, time);
+            } 
         }
         public void Evaluate(float currentTime)
         {
@@ -226,17 +229,9 @@ namespace HexTecGames.TweenLib
             if (totalFinishedRepeats != totalRepeats)
             {
                 float val = Mathf.Min((elapsedTime + Data.LoopWaitTime) % TotalAnimationLength, Data.LoopWaitTime);
-                //Debug.Log(elapsedTime + " - " + (elapsedTime + Data.LoopWaitTime) % cycleLength + " - " + val);
                 elapsedTime -= val;
             }
             elapsedTime -= Data.LoopWaitTime * totalFinishedRepeats;
-            //elapsedTime -= loopWaitSubtract;
-
-
-            //Debug.Log("Elapsed: " + elapsedTime + " Finished: " + totalFinishedRepeats + " Started: " + totalRepeats);
-
-
-            //Debug.Log(elapsedTime + " - " +  totalLoopWaitTime);
 
             if (elapsedTime < 0)
             {
@@ -252,17 +247,12 @@ namespace HexTecGames.TweenLib
                 }
             }
 
-            //Debug.Log(playDirection);
-
             if (playDirection)
             {
-                //Debug.Log(elapsedTime + " - " + (AnimationLength - (elapsedTime) % AnimationLength));
-
                 DoAnimation(AnimationLength - (elapsedTime % AnimationLength));
             }
             else
             {
-                //Debug.Log(elapsedTime + " - " + (elapsedTime % AnimationLength));
                 DoAnimation(elapsedTime % AnimationLength);
             }
         }
